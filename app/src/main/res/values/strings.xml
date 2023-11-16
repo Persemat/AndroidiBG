@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">SportQ</string>
+    <string name="app_name" translatable="false">SportQ</string>
+    <string name="logo">Logo Application</string>
+    <string name="login" translatable="false">Login</string>
+    <string name="email" translatable="false">E-mail</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="google_login">Login with Google</string>
+    <string name="new_account">New to SportQ?</string>
+    <string name="register">Register</string>
+    <string name="profile">Profile</string>
+    <string name="search">Search</string>
+    <string name="home" translatable="false">Home</string>
 </resources>
