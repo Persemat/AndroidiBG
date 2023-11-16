@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="logo">Logo Applicazione</string>
+    <string name="forgot_password">Password dimenticata?</string>
+    <string name="google_login">Login con Google</string>
+    <string name="new_account">Nuovo a SportQ?</string>
+    <string name="register">Registrati</string>
+    <string name="profile">Profilo</string>
+    <string name="search">Ricerca</string>
+</resources>
