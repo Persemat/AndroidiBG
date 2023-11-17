@@ -7,4 +7,6 @@
     <string name="register">Registrati</string>
     <string name="profile">Profilo</string>
     <string name="search">Ricerca</string>
+    <string name="error_data">I dati non sono corretti</string>
+    <string name="error_email">Email non corretta</string>
 </resources>

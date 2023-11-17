@@ -12,4 +12,6 @@
     <string name="search">Search</string>
     <string name="home" translatable="false">Home</string>
     <string name="title_activity_maps" translatable="false">MapsActivity</string>
+    <string name="error_data">Data are not correct</string>
+    <string name="error_email">Email is not correct</string>
 </resources>
