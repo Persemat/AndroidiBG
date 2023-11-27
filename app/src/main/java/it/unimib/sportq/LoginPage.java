@@ -2,6 +2,7 @@ package it.unimib.sportq;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -39,7 +40,8 @@ public class LoginPage extends AppCompatActivity {
              */
 
             if (isEmailCorrect(email) && isPasswordCorrect(password)) {
-
+                Intent homeIntent = new Intent(this, HomePage.class);
+                startActivity(homeIntent);
             } else {
                 Snackbar.make(
                         findViewById(android.R.id.content),
@@ -59,6 +61,12 @@ public class LoginPage extends AppCompatActivity {
         return result;
     }
     private boolean isPasswordCorrect(String password) {
-        return password != null && password.length() >= 8;
+        boolean result = password != null && password.length() >= 8;
+        if (!result) {
+            passwordTextInputLayout.setError("Password is not correct");
+        } else {
+            passwordTextInputLayout.setError(null);
+        }
+        return result;
     }
 }
