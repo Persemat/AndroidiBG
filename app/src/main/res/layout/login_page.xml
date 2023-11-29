@@ -210,7 +210,7 @@
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/register"
+                android:text="@string/sign_up"
                 android:textSize="14sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/textview_new_account"
                 app:layout_constraintEnd_toEndOf="parent"

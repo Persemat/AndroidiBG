@@ -3,10 +3,18 @@
     <string name="logo">Logo Applicazione</string>
     <string name="forgot_password">Password dimenticata?</string>
     <string name="google_login">Login con Google</string>
+    <string name="account_first_name">Nome</string>
+    <string name="account_last_name">Cognome</string>
+    <string name="create_password">Crea password</string>
+    <string name="repeat_password">Ripeti password</string>
     <string name="new_account">Nuovo a SportQ?</string>
-    <string name="register">Registrati</string>
+    <string name="already_have_account">Hai già un account?</string>
+    <string name="sign_up">Registrati</string>
     <string name="profile">Profilo</string>
     <string name="search">Ricerca</string>
     <string name="error_data">I dati non sono corretti</string>
     <string name="error_email">Email non corretta</string>
+
+
+
 </resources>
