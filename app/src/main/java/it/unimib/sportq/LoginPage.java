@@ -49,6 +49,12 @@ public class LoginPage extends AppCompatActivity {
                         Snackbar.LENGTH_SHORT).show();
             }
         });
+
+        Button signUpButton = findViewById(R.id.button_sign_up);
+        signUpButton.setOnClickListener(item -> {
+            Intent signUp = new Intent(this, RegistrationPage.class);
+            startActivity(signUp);
+        });
     }
 
     private boolean isEmailCorrect(String email) {

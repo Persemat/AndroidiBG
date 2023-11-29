@@ -5,8 +5,8 @@
     <string name="google_login">Login con Google</string>
     <string name="account_first_name">Nome</string>
     <string name="account_last_name">Cognome</string>
-    <string name="create_password">Crea password</string>
-    <string name="repeat_password">Ripeti password</string>
+    <string name="new_password">Crea password</string>
+    <string name="confirm_password">Conferma password</string>
     <string name="new_account">Nuovo a SportQ?</string>
     <string name="already_have_account">Hai già un account?</string>
     <string name="sign_up">Registrati</string>

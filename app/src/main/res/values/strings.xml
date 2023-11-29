@@ -4,7 +4,7 @@
     <string name="login" translatable="false">Login</string>
     <string name="email" translatable="false">E-mail</string>
     <string name="password" translatable="false">Password</string>
-    <string name="repeat_password">Repeat password</string>
+    <string name="confirm_password">Confirm password</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="google_login">Login with Google</string>
     <string name="new_account">New to SportQ?</string>
@@ -16,7 +16,7 @@
     <string name="title_activity_maps" translatable="false">MapsActivity</string>
     <string name="error_data">Data are not correct</string>
     <string name="error_email">Email is not correct</string>
-    <string name="create_password">Create password</string>
+    <string name="new_password">New password</string>
     <string name="account_first_name">First name</string>
     <string name="account_last_name">Last name</string>
 </resources>
