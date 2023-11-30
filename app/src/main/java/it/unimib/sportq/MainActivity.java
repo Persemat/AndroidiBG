@@ -2,6 +2,7 @@ package it.unimib.sportq;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseUser user;
     TextView textView;
+    Button logoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         textView = findViewById(R.id.user_email);
+        logoutButton = findViewById(R.id.logout_button);
         user = auth.getCurrentUser();
         if(user == null) {
             Intent intent = new Intent(getApplicationContext(), LoginPage.class);
@@ -31,5 +34,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             textView.setText(user.getEmail());
         }
+
+        logoutButton.setOnClickListener(item -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent login = new Intent(getApplicationContext(), LoginPage.class);
+            startActivity(login);
+            finish();
+        });
     }
 }
