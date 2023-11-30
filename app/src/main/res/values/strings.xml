@@ -19,4 +19,6 @@
     <string name="new_password">New password</string>
     <string name="account_first_name">First name</string>
     <string name="account_last_name">Last name</string>
+    <string name="authentication_failed">Authentication failed</string>
+    <string name="authentication_correct">Authentication correct</string>
 </resources>

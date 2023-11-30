@@ -1,6 +1,7 @@
 
 package it.unimib.sportq;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,12 +9,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
-public class RegistrationPage extends AppCompatActivity {
+public class    RegistrationPage extends AppCompatActivity {
 
     private static String TAG = RegistrationPage.class.getSimpleName();
     private TextInputLayout firstNameTextInputLayout;
@@ -21,11 +27,13 @@ public class RegistrationPage extends AppCompatActivity {
     private TextInputLayout emailTextInputLayout;
     private TextInputLayout newPasswordTextInputLayout;
     private TextInputLayout confirmPasswordTextInputLayout;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_page);
+        mAuth = FirebaseAuth.getInstance();
 
         firstNameTextInputLayout = findViewById(R.id.text_input_layout_first_name);
         lastNameTextInputLayout = findViewById(R.id.text_input_layout_last_name);
@@ -52,6 +60,28 @@ public class RegistrationPage extends AppCompatActivity {
                         getString(R.string.error_data),
                         Snackbar.LENGTH_SHORT).show();
             }
+
+            mAuth.createUserWithEmailAndPassword(email, confirm_password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                // Log.d(TAG, "createUserWithEmail:success");
+                                Snackbar.make(
+                                        findViewById(android.R.id.content),
+                                        getString(R.string.authentication_correct),
+                                        Snackbar.LENGTH_SHORT).show();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                // Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                Snackbar.make(
+                                        findViewById(android.R.id.content),
+                                        getString(R.string.authentication_failed),
+                                        Snackbar.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         });
 
         Button loginButton = findViewById(R.id.button_login);

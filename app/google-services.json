@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1094300535160",
+    "project_id": "login-sportq-firebase",
+    "storage_bucket": "login-sportq-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094300535160:android:78fe878999d390f098a08d",
+        "android_client_info": {
+          "package_name": "it.unimib.sportq"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2kCy1tBBNyq-MxMpJe0mDXpnWxlhMizk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

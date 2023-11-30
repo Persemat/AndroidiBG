@@ -106,7 +106,9 @@
                 app:layout_constraintStart_toStartOf="@+id/left_guideline"
                 app:layout_constraintTop_toBottomOf="@+id/text_input_layout_email"
                 app:passwordToggleEnabled="true"
-                app:startIconDrawable="@drawable/ic_baseline_vpn_key_24">
+                app:startIconDrawable="@drawable/ic_baseline_vpn_key_24"
+                app:boxStrokeColor="@color/grey_separator"
+                app:hintTextColor="@color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
