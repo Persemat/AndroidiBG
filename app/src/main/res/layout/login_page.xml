@@ -74,10 +74,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="24dp"
+                android:textColorHint="@color/white"
+
+                app:errorTextColor="@color/red"
+                app:boxStrokeErrorColor="@color/red"
+                app:errorIconTint="@color/red"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/left_guideline"
                 app:layout_constraintTop_toBottomOf="@+id/textview_login"
-                app:startIconDrawable="@drawable/ic_baseline_email_24">
+                app:startIconDrawable="@drawable/ic_baseline_email_24"
+                app:boxStrokeColor="@color/grey_separator"
+                app:hintTextColor="@color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -93,6 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="24dp"
+                android:textColorHint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/left_guideline"
                 app:layout_constraintTop_toBottomOf="@+id/text_input_layout_email"
