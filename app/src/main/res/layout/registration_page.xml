@@ -184,39 +184,39 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_input_layout_confirm_password"
                 app:rippleColor="@color/purple_first" />
 
+            <TextView
+                android:id="@+id/textview_already_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/already_have_account"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@+id/button_sign_up"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="14dp"
+                android:layout_marginStart="20dp"/>
 
+            <Button
+                android:id="@+id/button_login"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textview_already_account"
+                app:layout_constraintTop_toBottomOf="@+id/button_sign_up"
+                app:textAllCaps="false" />
 
             <RelativeLayout
                 android:id="@+id/relative_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="45dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/button_sign_up">
 
-                <TextView
-                    android:id="@+id/textview_already_account"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="49dp"
-                    android:text="@string/already_have_account"
-                    android:textSize="14sp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="24dp"
-                    />
-
-                <Button
-                    android:id="@+id/button_login"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/login"
-                    android:textSize="14sp"
-                    app:textAllCaps="false"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="24dp"/>
 
                 <View
                     android:id="@+id/line1"
@@ -255,6 +255,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="24dp"
+                android:layout_marginBottom="24dp"
                 android:text="@string/google_login"
                 android:textColor="@color/google_login_text"
                 android:textSize="14sp"
