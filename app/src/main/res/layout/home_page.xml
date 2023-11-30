@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/top_appbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/purple_logo"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/app_name"
         app:titleCentered="true"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:titleTextColor="@color/white"
-        />
+        app:titleTextColor="@color/white" />
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_height="0dp"
         android:background="@color/purple_logo_third"
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_appbar"
+        app:layout_constraintTop_toBottomOf="@+id/top_appbar"
         app:layout_constraintVertical_bias="1.0">
 
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainerView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
     </ScrollView>
 
     <LinearLayout
@@ -50,8 +55,8 @@
             app:itemTextColor="@color/white"
             app:itemIconSize="30dp"
             />
-    </LinearLayout>
 
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
