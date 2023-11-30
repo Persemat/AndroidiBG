@@ -44,7 +44,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomePage"
+            android:name=".MainActivity"
             android:exported="true">
         </activity>
         <activity android:name=".RegistrationPage"

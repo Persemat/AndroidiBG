@@ -14,8 +14,8 @@
     <string name="search">Ricerca</string>
     <string name="error_data">I dati non sono corretti</string>
     <string name="error_email">Email non corretta</string>
-    <string name="authentication_failed">Authenticazione fallita</string>
-    <string name="authentication_correct">Authenticazione corretta</string>
+    <string name="authentication_failed">Autenticazione fallita</string>
+    <string name="authentication_correct">Autenticazione corretta</string>
 
 
 

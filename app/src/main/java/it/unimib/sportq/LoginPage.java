@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,8 +29,9 @@ public class LoginPage extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Intent intent = new Intent(this, HomePage.class);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
+            finish();
         }
     }
     @Override
@@ -43,6 +43,14 @@ public class LoginPage extends AppCompatActivity {
         emailTextInputLayout = findViewById(R.id.text_input_layout_email);
         passwordTextInputLayout = findViewById(R.id.text_input_layout_password);
 
+        // CLICCANDO SU IL PULSANTE DI SIGN UP SI PASSA ALLA SCHERMATA DI SIGN UP
+        Button signUpButton = findViewById(R.id.button_sign_up);
+        signUpButton.setOnClickListener(item -> {
+            Intent signUp = new Intent(getApplicationContext(), RegistrationPage.class);
+            startActivity(signUp);
+            finish();
+        });
+
         // INIZIO GESTIONE PULSANTE DI LOGIN
         Button loginButton = findViewById(R.id.button_login);
         loginButton.setOnClickListener(item -> {
@@ -50,7 +58,8 @@ public class LoginPage extends AppCompatActivity {
             String email = emailTextInputLayout.getEditText().getText().toString();
             String password = passwordTextInputLayout.getEditText().getText().toString();
 
-            mAuth.signInWithEmailAndPassword(email, password)
+            if (isEmailCorrect(email) && isPasswordCorrect(password)) {
+                mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -60,6 +69,8 @@ public class LoginPage extends AppCompatActivity {
                                         findViewById(android.R.id.content),
                                         getString(R.string.authentication_correct),
                                         Snackbar.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Snackbar.make(
@@ -69,10 +80,6 @@ public class LoginPage extends AppCompatActivity {
                             }
                         }
                     });
-
-            if (isEmailCorrect(email) && isPasswordCorrect(password)) {
-                Intent intent = new Intent(this, HomePage.class);
-                startActivity(intent);
             } else {
                 Snackbar.make(
                         findViewById(android.R.id.content),
@@ -80,13 +87,6 @@ public class LoginPage extends AppCompatActivity {
                         Snackbar.LENGTH_SHORT).show();
             }
         }); // FINE GESTIONE PULSANTE LOGIN
-
-        // CLICCANDO SU IL PULSANTE DI SIGN UP SI PASSA ALLA SCHERMATA DI SIGN UP
-        Button signUpButton = findViewById(R.id.button_sign_up);
-        signUpButton.setOnClickListener(item -> {
-            Intent signUp = new Intent(this, RegistrationPage.class);
-            startActivity(signUp);
-        });
     }
 
     // FUNZIONI PER VERIFICA DELLA CORREZIONE MAIL E PASSWORD

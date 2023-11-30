@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,8 +33,9 @@ public class    RegistrationPage extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Intent intent = new Intent(this, HomePage.class);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 
@@ -51,7 +51,18 @@ public class    RegistrationPage extends AppCompatActivity {
         newPasswordTextInputLayout = findViewById(R.id.text_input_layout_new_password);
         confirmPasswordTextInputLayout = findViewById(R.id.text_input_layout_confirm_password);
 
+
+        Button loginButton = findViewById(R.id.button_login);
+        // GESTISCE IL CLICK DEL PULSANTE LOGIN
+        loginButton.setOnClickListener(item -> {
+            Intent login = new Intent(getApplicationContext(), LoginPage.class);
+            startActivity(login);
+            finish();
+        });
+
+
         Button signUpButton = findViewById(R.id.button_sign_up);
+        // GESTISCE IL CLICK DEL PULSANTE SIGN UP
         signUpButton.setOnClickListener(item -> {
             // Log.d(TAG, "Button Clicked");
             String first_name = firstNameTextInputLayout.getEditText().getText().toString();
@@ -60,47 +71,58 @@ public class    RegistrationPage extends AppCompatActivity {
             String new_password = newPasswordTextInputLayout.getEditText().getText().toString();
             String confirm_password = confirmPasswordTextInputLayout.getEditText().getText().toString();
 
-
-            if (isEmailCorrect(email) && isPasswordCorrect(new_password, confirm_password)) {
-                Intent homeIntent = new Intent(this, HomePage.class);
-                startActivity(homeIntent);
+            if (isEmailCorrect(email) && isPasswordCorrect(new_password, confirm_password)
+                && isNameCorrect(first_name) && isLastNameCorrect(last_name)) {
+                mAuth.createUserWithEmailAndPassword(email, confirm_password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    // Log.d(TAG, "createUserWithEmail:success");
+                                    Snackbar.make(
+                                            findViewById(android.R.id.content),
+                                            getString(R.string.authentication_correct),
+                                            Snackbar.LENGTH_SHORT).show();
+                                    Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(homeIntent);
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    // Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                    Snackbar.make(
+                                            findViewById(android.R.id.content),
+                                            getString(R.string.authentication_failed),
+                                            Snackbar.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
             } else {
                 Snackbar.make(
                         findViewById(android.R.id.content),
                         getString(R.string.error_data),
                         Snackbar.LENGTH_SHORT).show();
             }
-
-            mAuth.createUserWithEmailAndPassword(email, confirm_password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                // Log.d(TAG, "createUserWithEmail:success");
-                                Snackbar.make(
-                                        findViewById(android.R.id.content),
-                                        getString(R.string.authentication_correct),
-                                        Snackbar.LENGTH_SHORT).show();
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                // Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                Snackbar.make(
-                                        findViewById(android.R.id.content),
-                                        getString(R.string.authentication_failed),
-                                        Snackbar.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
         });
-
-        Button loginButton = findViewById(R.id.button_login);
-        loginButton.setOnClickListener(item -> {
-            Intent login = new Intent(this, LoginPage.class);
-            startActivity(login);
-        });
+        // FINE GESTIONE PULSANTE SIGN UP
     }
-
+    private boolean isNameCorrect(String name) {
+        boolean result = name.length()>0;
+        if (!result) {
+            firstNameTextInputLayout.setError("First name is not correct");
+        } else {
+            firstNameTextInputLayout.setError(null);
+        }
+        return result;
+    }
+    private boolean isLastNameCorrect(String lastName) {
+        boolean result = lastName.length()>0;
+        if (!result) {
+            lastNameTextInputLayout.setError("Last name is not correct");
+        } else {
+            lastNameTextInputLayout.setError(null);
+        }
+        return result;
+    }
     private boolean isEmailCorrect(String email) {
         boolean result = EmailValidator.getInstance().isValid(email);
         if (!result) {
