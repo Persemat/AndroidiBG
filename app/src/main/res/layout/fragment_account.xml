@@ -4,11 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FragmentAccount"
-    android:background="@color/white">
+    android:background="@color/purple_logo_third">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/logout_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/logout"
+            android:textSize="20sp"
+            android:drawableTint="@color/white"
+            android:drawableEnd="@drawable/baseline_output_24"
+            android:layout_gravity="center"/>
+
+    </ScrollView>
 
 </FrameLayout>
