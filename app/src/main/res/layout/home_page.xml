@@ -12,8 +12,10 @@
         android:background="@color/purple_logo"
         app:layout_constraintBottom_toTopOf="@+id/scrollView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
         app:title="@string/app_name"
         app:titleCentered="true"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -21,7 +23,7 @@
 
     <ScrollView
         android:id="@+id/scrollView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/purple_logo_third"
         android:fillViewport="true"
@@ -30,13 +32,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_appbar"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerView2"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:padding="16dp"
+            android:text="Contenuto significativo della ScrollView"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+
     </ScrollView>
 
     <LinearLayout
