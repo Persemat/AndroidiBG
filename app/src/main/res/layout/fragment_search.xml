@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchFragment">
+
+<com.google.android.material.appbar.MaterialToolbar
+    android:id="@+id/top_appbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/purple_logo"
+    app:layout_constraintBottom_toTopOf="@+id/scrollView"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0"
+    app:title="@string/app_name"
+    app:titleCentered="true"
+    app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1"
+    app:titleTextColor="@color/white" />
+
+<ScrollView
+    android:id="@+id/scrollView"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:background="@color/purple_logo_third"
+    android:fillViewport="true"
+    app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/top_appbar"
+    app:layout_constraintVertical_bias="0">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/purple_logo_third"
+            android:padding="4dp">
+
+            <ImageView
+                android:id="@+id/calcetto"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:src="@+id/logo"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/calcetto_a_5" />
+
+            <Button
+                android:id="@+id/button"
+                style="@style/Widget.Material3.Button.TextButton.Dialog.Flush"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/sport_calcetto"
+                app:iconPadding="4dp"
+                app:iconTint="#000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="0dp"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@id/calcetto"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.25" />
+
+
+            <TextView
+                android:id="@+id/body"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="10dp"
+
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/calcetto" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</ScrollView>
+
+<LinearLayout
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent">
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bottom_navigation_menu"
+        android:background="@color/purple_logo"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:itemIconSize="30dp"
+        />
+
+</LinearLayout>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
