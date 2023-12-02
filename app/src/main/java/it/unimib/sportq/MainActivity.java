@@ -3,12 +3,14 @@ package it.unimib.sportq;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -45,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-
             if(item.getItemId() == R.id.home)
             {
                 replaceFragment(new FragmentHome());
