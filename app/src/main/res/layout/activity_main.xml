@@ -43,11 +43,11 @@
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/purple_logo"
+        android:background="@color/purple_second"
         app:itemIconSize="30dp"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
-        app:itemRippleColor="@color/purple_logo"
+        app:itemIconTint="@color/purple_logo"
+        app:itemTextColor="@color/purple_logo"
+        app:itemRippleColor="@color/purple_second"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
 
