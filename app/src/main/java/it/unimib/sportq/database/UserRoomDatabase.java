@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
 
 import it.unimib.sportq.model.User;
 
-@Database(entities = {User.class}, version = 1)
+@Database(entities = {User.class}, version = 1, exportSchema = false)
 public abstract class UserRoomDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();

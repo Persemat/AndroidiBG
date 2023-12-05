@@ -50,8 +50,8 @@ public class FragmentAccount extends Fragment {
         if(firebaseUser == null) {
             Intent intent = new Intent(getContext(), LoginPage.class);
             startActivity(intent);
+            requireActivity().finish();
         }
-
         UserRoomDatabase userDatabase = UserRoomDatabase.getDatabase(getContext());
         UserDao userDao = userDatabase.userDao();
 
@@ -80,6 +80,7 @@ public class FragmentAccount extends Fragment {
 
         });
         */
+
         return view;
     }
 
