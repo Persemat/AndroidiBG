@@ -28,9 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
     FirebaseUser user;
-    TextView textView;
-    TextView textView2;
-    Button logoutButton;
     BottomNavigationView bottomNavigationView;
     private Fragment homeFragment;
     private Fragment searchFragment;
@@ -62,33 +59,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
-        if(user == null) {
-            Intent intent = new Intent(getApplicationContext(), LoginPage.class);
-            startActivity(intent);
-            finish();
-        }
-
-        logoutButton = findViewById(R.id.logout_button);
-        logoutButton.setOnClickListener(item -> {
-            FirebaseAuth.getInstance().signOut();
-            Intent login = new Intent(getApplicationContext(), LoginPage.class);
-            startActivity(login);
-            finish();
-        });
-
-*/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
-
-
-
-
-
     }
 
     private void replaceFragment(androidx.fragment.app.Fragment fragment)
@@ -100,58 +70,3 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*
-        textView = findViewById(R.id.user_email);
-        textView2 = findViewById(R.id.user_name);
-        textView.setText(user.getEmail());
-         */
-
-        /*
-        if (savedInstanceState==null)
-        {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .setReorderingAllowed(true)
-                    .add(R.id.fragment_container_view, FragmentAccount.class, null)
-                    .commit();
-        }
-         */

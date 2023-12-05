@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -17,6 +18,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import org.apache.commons.validator.routines.EmailValidator;
+
+import it.unimib.sportq.database.UserDao;
+import it.unimib.sportq.database.UserRoomDatabase;
+import it.unimib.sportq.model.User;
 
 public class    RegistrationPage extends AppCompatActivity {
 
@@ -71,6 +76,7 @@ public class    RegistrationPage extends AppCompatActivity {
             String new_password = newPasswordTextInputLayout.getEditText().getText().toString();
             String confirm_password = confirmPasswordTextInputLayout.getEditText().getText().toString();
 
+            // TODO: da rivedere le regole della correttezza delle credenziali
             if (isEmailCorrect(email) && isPasswordCorrect(new_password, confirm_password)
                 && isNameCorrect(first_name) && isLastNameCorrect(last_name)) {
                 mAuth.createUserWithEmailAndPassword(email, confirm_password)
@@ -78,14 +84,29 @@ public class    RegistrationPage extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    // Log.d(TAG, "createUserWithEmail:success");
+                                    /*
                                     Snackbar.make(
                                             findViewById(android.R.id.content),
                                             getString(R.string.authentication_correct),
                                             Snackbar.LENGTH_SHORT).show();
+                                    */
+                                    UserRoomDatabase userDatabase = UserRoomDatabase.getDatabase(getApplicationContext());
+                                    UserDao userDao = userDatabase.userDao();
+
+                                    int idImg = R.drawable.baseline_account_circle_24;
+
+                                    // User nuovoUtente = new User(first_name, last_name, email, idImg);
+                                    User user = new User();
+                                    user.setEmail(email);
+                                    user.setFirst_name(first_name);
+                                    user.setLast_name(last_name);
+                                    user.setImage_avatar(idImg);
+
+                                    userDao.insertUser(user);
+
                                     Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(homeIntent);
+                                    finish();
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     // Log.w(TAG, "createUserWithEmail:failure", task.getException());
