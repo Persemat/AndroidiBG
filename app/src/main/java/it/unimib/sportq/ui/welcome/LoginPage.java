@@ -26,17 +26,6 @@ public class LoginPage extends AppCompatActivity {
     private TextInputLayout emailTextInputLayout;
     private TextInputLayout passwordTextInputLayout;
     FirebaseAuth mAuth;
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +80,19 @@ public class LoginPage extends AppCompatActivity {
             }
         }); // FINE GESTIONE PULSANTE LOGIN
     }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
 
     // FUNZIONI PER VERIFICA DELLA CORREZIONE MAIL E PASSWORD
     private boolean isEmailCorrect(String email) {

@@ -67,7 +67,7 @@ public class    RegistrationPage extends AppCompatActivity {
 
             // TODO: da rivedere le regole della correttezza delle credenziali
             if (isEmailCorrect(email) && isPasswordCorrect(new_password, confirm_password)
-                && isNameCorrect(first_name) && isLastNameCorrect(last_name) && mAuth != null) {
+                && isNameCorrect(first_name) && isLastNameCorrect(last_name)) {
                 mAuth.createUserWithEmailAndPassword(email, confirm_password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -178,7 +178,7 @@ public class    RegistrationPage extends AppCompatActivity {
                 confirmPasswordTextInputLayout.setError("Passwords are not equals");
             } else {
                 confirmPasswordTextInputLayout.setError(null);
-                result = true;
+                return true;
             }
         }
         return result;

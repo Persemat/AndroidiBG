@@ -53,12 +53,10 @@ public class FragmentAccount extends Fragment {
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
         if(firebaseUser == null) {
-            /*
             Intent intent = new Intent(getContext(), LoginPage.class);
             startActivity(intent);
-            requireActivity().finish();
-            return view;
-             */
+            // requireActivity().finish();
+            // return view;
         } else {
             UserRoomDatabase userDatabase = UserRoomDatabase.getDatabase(getContext());
             UserDao userDao = userDatabase.userDao();
@@ -82,23 +80,21 @@ public class FragmentAccount extends Fragment {
 
                     email = view.findViewById(R.id.user_email);
                     email.setText(user.getEmail());
-
-                    logoutButton = view.findViewById(R.id.logout_button);
-                    logoutButton.setOnClickListener(item -> {
-                        FirebaseAuth.getInstance().signOut();
-                        Intent login = new Intent(getActivity(), LoginPage.class);
-                        startActivity(login);
-                    });
                 }
             });
+            logoutButton = view.findViewById(R.id.logout_button);
+            logoutButton.setOnClickListener(item -> {
+                FirebaseAuth.getInstance().signOut();
+                Intent login = new Intent(getActivity(), LoginPage.class);
+                startActivity(login);
+            });
+
+            /* TODO: metodo per modificare avatar profilo
+            avatar.setOnClickListener(item ->{
+
+                });
+            */
         }
-
-        /* TODO: metodo per modificare avatar profilo
-        avatar.setOnClickListener(item ->{
-
-        });
-        */
-
         return view;
     }
 
