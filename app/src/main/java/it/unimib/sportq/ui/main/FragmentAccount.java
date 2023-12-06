@@ -1,8 +1,16 @@
 package it.unimib.sportq.ui.main;
 
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 
@@ -11,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +43,10 @@ public class FragmentAccount extends Fragment {
 
     private TextView last_name;
 
+    ActivityResultLauncher<Intent> imagePickLauncher;
+
+    Uri selectedImageUri;
+
     FirebaseAuth auth;
     FirebaseUser firebaseUser;
 
@@ -43,6 +56,21 @@ public class FragmentAccount extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        imagePickLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if(result.getResultCode() == Activity.RESULT_OK)
+            {
+                Intent data = result.getData();
+                if(data != null && data.getData() != null)
+                {
+                    selectedImageUri = data.getData();
+                }
+            }
+
+        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,6 +123,10 @@ public class FragmentAccount extends Fragment {
                 });
             */
         }
+        ////////////////////////////////////////////////////////////////////////////////////
+
+        //avatar.setOnClickListener(item ->{
+        //});
         return view;
     }
 
