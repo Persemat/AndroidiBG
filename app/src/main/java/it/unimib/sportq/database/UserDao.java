@@ -1,5 +1,6 @@
 package it.unimib.sportq.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -13,7 +14,10 @@ import it.unimib.sportq.model.User;
 @Dao
 public interface UserDao {
     @Query("SELECT * FROM user")
-    List<User> getAllUsers();
+    LiveData<List<User>> getAllUsers();
+
+    @Query("DELETE FROM user")
+    void deleteAll();
 
     @Query("SELECT * FROM user WHERE email = :email")
     User getUserByEmail(String email);

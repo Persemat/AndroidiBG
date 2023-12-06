@@ -1,24 +1,17 @@
-package it.unimib.sportq;
+package it.unimib.sportq.ui.main;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import it.unimib.sportq.R;
 import it.unimib.sportq.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {

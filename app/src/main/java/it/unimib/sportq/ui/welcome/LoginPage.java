@@ -1,4 +1,4 @@
-package it.unimib.sportq;
+package it.unimib.sportq.ui.welcome;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import org.apache.commons.validator.routines.EmailValidator;
+
+import it.unimib.sportq.ui.main.MainActivity;
+import it.unimib.sportq.R;
 
 public class LoginPage extends AppCompatActivity {
 

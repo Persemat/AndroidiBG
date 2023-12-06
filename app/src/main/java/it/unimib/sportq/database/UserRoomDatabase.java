@@ -2,9 +2,11 @@ package it.unimib.sportq.database;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -16,22 +18,44 @@ public abstract class UserRoomDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();
 
-    private static volatile UserRoomDatabase instance;
+    private static volatile UserRoomDatabase INSTANCE;
 
     private static final int NUMBER_OF_THREADS = Runtime.getRuntime().availableProcessors();
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
+    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+
+            /*
+            // If you want to keep data through app restarts,
+            // comment out the following block
+            databaseWriteExecutor.execute(() -> {
+                // Populate the database in the background.
+                // If you want to start with more words, just add them.
+                UserDao dao = INSTANCE.userDao();
+                dao.deleteAll();
+
+                User user = new Word("Hello");
+                dao.insert(word);
+                word = new Word("World");
+                dao.insert(word);
+            });
+            */
+        }
+    };
     public static UserRoomDatabase getDatabase(final Context context) {
-        if (instance == null) {
+        if (INSTANCE == null) {
             synchronized (UserRoomDatabase.class) {
-                if (instance == null) {
-                    instance = Room.databaseBuilder(context.getApplicationContext(),
-                            UserRoomDatabase.class, "User_DB").build();
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                            UserRoomDatabase.class, "User_DB").addCallback(sRoomDatabaseCallback).build();
                 }
             }
         }
-        return instance;
+        return INSTANCE;
     }
 
 

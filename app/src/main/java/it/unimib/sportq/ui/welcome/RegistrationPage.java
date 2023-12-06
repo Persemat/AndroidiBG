@@ -1,5 +1,5 @@
 
-package it.unimib.sportq;
+package it.unimib.sportq.ui.welcome;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,6 +18,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
+import it.unimib.sportq.UserViewModel;
+import it.unimib.sportq.ui.main.MainActivity;
+import it.unimib.sportq.R;
 import it.unimib.sportq.database.UserDao;
 import it.unimib.sportq.database.UserRoomDatabase;
 import it.unimib.sportq.model.User;
@@ -32,6 +34,7 @@ public class    RegistrationPage extends AppCompatActivity {
     private TextInputLayout newPasswordTextInputLayout;
     private TextInputLayout confirmPasswordTextInputLayout;
     FirebaseAuth mAuth;
+    private UserViewModel mUserViewModel;
 
     @Override
     public void onStart() {
