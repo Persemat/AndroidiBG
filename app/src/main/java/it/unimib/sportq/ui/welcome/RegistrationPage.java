@@ -37,28 +37,15 @@ public class    RegistrationPage extends AppCompatActivity {
     private UserViewModel mUserViewModel;
 
     @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_page);
-        mAuth = FirebaseAuth.getInstance();
 
         firstNameTextInputLayout = findViewById(R.id.text_input_layout_first_name);
         lastNameTextInputLayout = findViewById(R.id.text_input_layout_last_name);
         emailTextInputLayout = findViewById(R.id.text_input_layout_email);
         newPasswordTextInputLayout = findViewById(R.id.text_input_layout_new_password);
         confirmPasswordTextInputLayout = findViewById(R.id.text_input_layout_confirm_password);
-
 
         Button loginButton = findViewById(R.id.button_login);
         // GESTISCE IL CLICK DEL PULSANTE LOGIN
@@ -67,7 +54,6 @@ public class    RegistrationPage extends AppCompatActivity {
             startActivity(login);
             finish();
         });
-
 
         Button signUpButton = findViewById(R.id.button_sign_up);
         // GESTISCE IL CLICK DEL PULSANTE SIGN UP
@@ -81,36 +67,42 @@ public class    RegistrationPage extends AppCompatActivity {
 
             // TODO: da rivedere le regole della correttezza delle credenziali
             if (isEmailCorrect(email) && isPasswordCorrect(new_password, confirm_password)
-                && isNameCorrect(first_name) && isLastNameCorrect(last_name)) {
+                && isNameCorrect(first_name) && isLastNameCorrect(last_name) && mAuth != null) {
                 mAuth.createUserWithEmailAndPassword(email, confirm_password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    /*
-                                    Snackbar.make(
-                                            findViewById(android.R.id.content),
-                                            getString(R.string.authentication_correct),
-                                            Snackbar.LENGTH_SHORT).show();
-                                    */
+
                                     UserRoomDatabase userDatabase = UserRoomDatabase.getDatabase(getApplicationContext());
-                                    UserDao userDao = userDatabase.userDao();
+                                    // GESTIONE DEL DATABASE SE E' STATO CREATO CORRETTAMENTE
+                                    if (userDatabase != null) {
+                                        UserDao userDao = userDatabase.userDao();
 
-                                    int idImg = R.drawable.baseline_account_circle_24;
+                                        int idImg = R.drawable.baseline_account_circle_24;
 
-                                    // User nuovoUtente = new User(first_name, last_name, email, idImg);
-                                    User user = new User();
-                                    user.setEmail(email);
-                                    user.setFirst_name(first_name);
-                                    user.setLast_name(last_name);
-                                    user.setImage_avatar(idImg);
+                                        User user = new User();
+                                        user.setEmail(email);
+                                        user.setFirst_name(first_name);
+                                        user.setLast_name(last_name);
+                                        user.setImage_avatar(idImg);
 
-                                    userDao.insertUser(user);
+                                        userDao.insertUser(user);
 
-                                    Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(homeIntent);
-                                    finish();
-                                } else {
+
+                                        Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+                                        startActivity(homeIntent);
+                                        finish();
+
+                                    } else {
+                                        // SE IL DATABASE è NULL
+                                        Snackbar.make(
+                                                findViewById(android.R.id.content),
+                                                getString(R.string.database_error),
+                                                Snackbar.LENGTH_SHORT).show();
+                                    }
+                                }
+                                else {
                                     // If sign in fails, display a message to the user.
                                     // Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                     Snackbar.make(
@@ -118,9 +110,9 @@ public class    RegistrationPage extends AppCompatActivity {
                                             getString(R.string.authentication_failed),
                                             Snackbar.LENGTH_SHORT).show();
                                 }
-                            }
-                        });
-            } else {
+                            }});
+            }
+            else {
                 Snackbar.make(
                         findViewById(android.R.id.content),
                         getString(R.string.error_data),
@@ -129,6 +121,25 @@ public class    RegistrationPage extends AppCompatActivity {
         });
         // FINE GESTIONE PULSANTE SIGN UP
     }
+
+    /*
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (mAuth != null) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            Snackbar.make(
+                    findViewById(android.R.id.content),
+                    getString(R.string.authentication_failed),
+                    Snackbar.LENGTH_SHORT).show();
+        }
+    }
+     */
+
     private boolean isNameCorrect(String name) {
         boolean result = name.length()>0;
         if (!result) {
@@ -166,7 +177,8 @@ public class    RegistrationPage extends AppCompatActivity {
             if (!(confirm_password.equals(new_password))) {
                 confirmPasswordTextInputLayout.setError("Passwords are not equals");
             } else {
-                return true;
+                confirmPasswordTextInputLayout.setError(null);
+                result = true;
             }
         }
         return result;

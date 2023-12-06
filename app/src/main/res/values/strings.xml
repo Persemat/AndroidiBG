@@ -22,4 +22,5 @@
     <string name="authentication_failed">Authentication failed</string>
     <string name="authentication_correct">Authentication correct</string>
     <string name="logout">Logout</string>
+    <string name="database_error">Database error</string>
 </resources>

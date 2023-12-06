@@ -20,7 +20,7 @@ public interface UserDao {
     void deleteAll();
 
     @Query("SELECT * FROM user WHERE email = :email")
-    User getUserByEmail(String email);
+    LiveData<User> getUserByEmail(String email);
 
     @Insert
     void insertUser(User user);

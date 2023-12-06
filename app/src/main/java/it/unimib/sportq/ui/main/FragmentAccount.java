@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,8 @@ public class FragmentAccount extends Fragment {
     FirebaseAuth auth;
     FirebaseUser firebaseUser;
 
+    LiveData<User> userLiveData;
+
     public FragmentAccount() {
         // Required empty public constructor
     }
@@ -50,32 +53,44 @@ public class FragmentAccount extends Fragment {
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
         if(firebaseUser == null) {
+            /*
             Intent intent = new Intent(getContext(), LoginPage.class);
             startActivity(intent);
             requireActivity().finish();
+            return view;
+             */
+        } else {
+            UserRoomDatabase userDatabase = UserRoomDatabase.getDatabase(getContext());
+            UserDao userDao = userDatabase.userDao();
+
+            userLiveData = userDao.getUserByEmail(firebaseUser.getEmail());
+
+            userLiveData.observe(getViewLifecycleOwner(), user -> {
+                if (user == null) {
+                    Intent intent = new Intent(getContext(), LoginPage.class);
+                    startActivity(intent);
+                    requireActivity().finish();
+                } else {
+                    first_name = view.findViewById(R.id.user_firstname);
+                    first_name.setText(user.getFirst_name());
+
+                    last_name = view.findViewById(R.id.user_lastname);
+                    last_name.setText(user.getLast_name());
+
+                    avatar = view.findViewById(R.id.avatar_image);
+
+                    email = view.findViewById(R.id.user_email);
+                    email.setText(user.getEmail());
+
+                    logoutButton = view.findViewById(R.id.logout_button);
+                    logoutButton.setOnClickListener(item -> {
+                        FirebaseAuth.getInstance().signOut();
+                        Intent login = new Intent(getActivity(), LoginPage.class);
+                        startActivity(login);
+                    });
+                }
+            });
         }
-        UserRoomDatabase userDatabase = UserRoomDatabase.getDatabase(getContext());
-        UserDao userDao = userDatabase.userDao();
-
-        User user = userDao.getUserByEmail(firebaseUser.getEmail());
-
-        first_name = view.findViewById(R.id.user_firstname);
-        first_name.setText(user.getFirst_name());
-
-        last_name = view.findViewById(R.id.user_lastname);
-        last_name.setText(user.getLast_name());
-
-        avatar = view.findViewById(R.id.avatar_image);
-
-        email = view.findViewById(R.id.user_email);
-        email.setText(user.getEmail());
-
-        logoutButton = view.findViewById(R.id.logout_button);
-        logoutButton.setOnClickListener(item -> {
-            FirebaseAuth.getInstance().signOut();
-            Intent login = new Intent(getActivity(), LoginPage.class);
-            startActivity(login);
-        });
 
         /* TODO: metodo per modificare avatar profilo
         avatar.setOnClickListener(item ->{
@@ -85,9 +100,5 @@ public class FragmentAccount extends Fragment {
 
         return view;
     }
-
-
-
-
 
 }

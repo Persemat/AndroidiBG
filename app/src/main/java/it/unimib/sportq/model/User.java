@@ -17,12 +17,6 @@ public class User {
 
     public User() {
     }
-    public User(@NonNull String email, @NonNull String first_name, @NonNull String last_name, int image_avatar) {
-        this.email = email;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.image_avatar = image_avatar;
-    }
 
     @NonNull
     public String getEmail() {
