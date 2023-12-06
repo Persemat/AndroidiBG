@@ -78,6 +78,7 @@ public class FragmentAccount extends Fragment {
                     last_name.setText(user.getLast_name());
 
                     avatar = view.findViewById(R.id.avatar_image);
+                    avatar.setImageResource(user.getImage_avatar());
 
                     email = view.findViewById(R.id.user_email);
                     email.setText(user.getEmail());
