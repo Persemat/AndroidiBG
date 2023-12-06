@@ -54,7 +54,7 @@ dependencies {
 
     implementation("com.google.firebase:firebase-auth:22.3.0")
 
-    implementation ("com.github.dhaval2404:imagepicker-support:1.7.1")
+    implementation ("com.github.Dhaval2404:ImagePicker:v2.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
