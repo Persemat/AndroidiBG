@@ -17,10 +17,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -34,6 +37,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import it.unimib.sportq.R;
 import it.unimib.sportq.UserViewModel;
+import it.unimib.sportq.adapter.AvatarAdapter;
 import it.unimib.sportq.database.UserDao;
 import it.unimib.sportq.database.UserRoomDatabase;
 import it.unimib.sportq.model.User;
@@ -46,11 +50,10 @@ public class FragmentAccount extends Fragment {
 
     private static String TAG = FragmentAccount.class.getSimpleName();
     private Button logoutButton;
+
     private TextView email;
     private ImageView avatar;
-
     private TextView first_name;
-
     private TextView last_name;
 
     ActivityResultLauncher<Intent> imagePickLauncher;
@@ -139,20 +142,45 @@ public class FragmentAccount extends Fragment {
             startActivity(login);
         });
 
-        /*
-        // GESTIONE DEL CLICK DELL'IMMAGINE AVATAR
-        avatar.setOnClickListener(item ->{
-            ImagePicker.with(this).cropSquare().compress(512).maxResultSize(512, 512).createIntent(new Function1<Intent, Unit>() {
-                @Override
-                public Unit invoke(Intent intent) {
-                    imagePickLauncher.launch(intent);
-                    return null;
-                }
-            });
+        View popupView = LayoutInflater.from(getContext()).inflate(R.layout.popup_avatar, null);
+        GridView gridView = popupView.findViewById(R.id.grid_view_avatar);
+        AvatarAdapter adapter = new AvatarAdapter(requireContext(), avatar);
+        gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Ottieni l'ID dell'immagine cliccata
+                int selectedImageId = (int) view.getTag();
+
+                // Sostituisci l'immagine principale con l'immagine selezionata
+                avatar.setImageResource(selectedImageId);
+            }
         });
 
-         */
+        // GESTIONE DEL CLICK DELL'IMMAGINE AVATAR
+        avatar.setOnClickListener(v -> showPopup(v));
+
+
         return view;
     }
 
+    private void showPopup(View anchorView) {
+
+        Context context = anchorView.getContext();
+
+        View popupView = LayoutInflater.from(context).inflate(R.layout.popup_avatar, null);
+
+        PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
+        // Inizializza il GridView nel popupView
+        GridView gridView = popupView.findViewById(R.id.grid_view_avatar);
+        AvatarAdapter adapter = new AvatarAdapter(requireContext(), avatar);
+        gridView.setAdapter(adapter);
+
+        // animazione di entrata se lo desideri
+        popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
+
+        // Visualizzazione del popup nella posizione desiderata, ad esempio, al centro dell'ancora
+        popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0);
+    }
 }
