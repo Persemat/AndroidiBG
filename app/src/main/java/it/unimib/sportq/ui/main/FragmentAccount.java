@@ -106,8 +106,8 @@ public class FragmentAccount extends Fragment {
             requireActivity().finish();
             // return view;
         } else {
-            UserRoomDatabase userDatabase = UserRoomDatabase.getDatabase(getContext());
-            UserDao userDao = userDatabase.userDao();
+            //UserRoomDatabase userDatabase = UserRoomDatabase.getDatabase(getContext());
+            //UserDao userDao = userDatabase.userDao();
 
             userLiveData = userViewModel.getUserByEmail(firebaseUser.getEmail());
 
