@@ -68,6 +68,7 @@ public class    RegistrationPage extends AppCompatActivity {
             String email = emailTextInputLayout.getEditText().getText().toString();
             String new_password = newPasswordTextInputLayout.getEditText().getText().toString();
             String confirm_password = confirmPasswordTextInputLayout.getEditText().getText().toString();
+            int idImageAvatar = getResources().getIdentifier("baseline_account_circle_24", "drawable", getPackageName());
 
             // TODO: da rivedere le regole della correttezza delle credenziali
             if (isEmailCorrect(email) && isPasswordCorrect(new_password, confirm_password)
@@ -82,6 +83,7 @@ public class    RegistrationPage extends AppCompatActivity {
                                     user.setEmail(email);
                                     user.setFirst_name(first_name);
                                     user.setLast_name(last_name);
+                                    user.setImage_avatar(idImageAvatar);
                                     userViewModel.insert(user);
 
                                     Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);

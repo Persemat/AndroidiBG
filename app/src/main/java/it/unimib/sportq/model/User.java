@@ -49,7 +49,7 @@ public class User {
         return image_avatar;
     }
 
-    public void setImage_avatar(int image_avatar) {
+    public void setImage_avatar(@NonNull int image_avatar) {
         this.image_avatar = image_avatar;
     }
 }

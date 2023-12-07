@@ -74,6 +74,7 @@ public class FragmentAccount extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
         imagePickLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if(result.getResultCode() == Activity.RESULT_OK){
                 Intent data = result.getData();
@@ -83,7 +84,7 @@ public class FragmentAccount extends Fragment {
                 }
             }
 
-        });
+        }); */
     }
 
     @Override
@@ -97,7 +98,10 @@ public class FragmentAccount extends Fragment {
         UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         logoutButton = view.findViewById(R.id.logout_button);
+        first_name = view.findViewById(R.id.user_firstname);
+        last_name = view.findViewById(R.id.user_lastname);
         avatar = view.findViewById(R.id.avatar_image);
+        email = view.findViewById(R.id.user_email);
 
         if(firebaseUser == null) {
             Log.d(TAG, "Utente Firebase non trovato");
@@ -118,16 +122,11 @@ public class FragmentAccount extends Fragment {
                     startActivity(intent);
                     requireActivity().finish();
                 } else {
-                    first_name = view.findViewById(R.id.user_firstname);
                     first_name.setText(user.getFirst_name());
-
-                    last_name = view.findViewById(R.id.user_lastname);
                     last_name.setText(user.getLast_name());
-
-                    avatar = view.findViewById(R.id.avatar_image);
-                    avatar.setImageResource(user.getImage_avatar());
-
-                    email = view.findViewById(R.id.user_email);
+                    //int idAvatarImage = user.getImage_avatar();
+                    //Log.d(TAG, "Id: " + idAvatarImage);
+                    //avatar.setImageResource(idAvatarImage);
                     email.setText(user.getEmail());
                 }
             });
@@ -140,6 +139,7 @@ public class FragmentAccount extends Fragment {
             startActivity(login);
         });
 
+        /*
         // GESTIONE DEL CLICK DELL'IMMAGINE AVATAR
         avatar.setOnClickListener(item ->{
             ImagePicker.with(this).cropSquare().compress(512).maxResultSize(512, 512).createIntent(new Function1<Intent, Unit>() {
@@ -151,6 +151,7 @@ public class FragmentAccount extends Fragment {
             });
         });
 
+         */
         return view;
     }
 
