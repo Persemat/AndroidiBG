@@ -14,7 +14,9 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 import it.unimib.sportq.R;
+import it.unimib.sportq.UserViewModel;
 import it.unimib.sportq.database.UserDao;
 import it.unimib.sportq.database.UserRoomDatabase;
 import it.unimib.sportq.model.User;
@@ -41,6 +44,7 @@ import kotlin.jvm.functions.Function1;
 
 public class FragmentAccount extends Fragment {
 
+    private static String TAG = FragmentAccount.class.getSimpleName();
     private Button logoutButton;
     private TextView email;
     private ImageView avatar;
@@ -90,19 +94,26 @@ public class FragmentAccount extends Fragment {
 
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
+        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+
+        logoutButton = view.findViewById(R.id.logout_button);
+        avatar = view.findViewById(R.id.avatar_image);
+
         if(firebaseUser == null) {
+            Log.d(TAG, "Utente Firebase non trovato");
             Intent intent = new Intent(getContext(), LoginPage.class);
             startActivity(intent);
-            // requireActivity().finish();
+            requireActivity().finish();
             // return view;
         } else {
             UserRoomDatabase userDatabase = UserRoomDatabase.getDatabase(getContext());
             UserDao userDao = userDatabase.userDao();
 
-            userLiveData = userDao.getUserByEmail(firebaseUser.getEmail());
+            userLiveData = userViewModel.getUserByEmail(firebaseUser.getEmail());
 
             userLiveData.observe(getViewLifecycleOwner(), user -> {
                 if (user == null) {
+                    Log.d(TAG, "Utente Room non trovato");
                     Intent intent = new Intent(getContext(), LoginPage.class);
                     startActivity(intent);
                     requireActivity().finish();
@@ -120,21 +131,16 @@ public class FragmentAccount extends Fragment {
                     email.setText(user.getEmail());
                 }
             });
-            logoutButton = view.findViewById(R.id.logout_button);
-            logoutButton.setOnClickListener(item -> {
-                FirebaseAuth.getInstance().signOut();
-                Intent login = new Intent(getActivity(), LoginPage.class);
-                startActivity(login);
-            });
-
-            /* TODO: metodo per modificare avatar profilo
-            avatar.setOnClickListener(item ->{
-
-                });
-            */
         }
-        ////////////////////////////////////////////////////////////////////////////////////
 
+        // GESTIONE DEL CLICK DEL PULSANTE LOGOUT
+        logoutButton.setOnClickListener(item -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent login = new Intent(getActivity(), LoginPage.class);
+            startActivity(login);
+        });
+
+        // GESTIONE DEL CLICK DELL'IMMAGINE AVATAR
         avatar.setOnClickListener(item ->{
             ImagePicker.with(this).cropSquare().compress(512).maxResultSize(512, 512).createIntent(new Function1<Intent, Unit>() {
                 @Override
@@ -144,6 +150,7 @@ public class FragmentAccount extends Fragment {
                 }
             });
         });
+
         return view;
     }
 

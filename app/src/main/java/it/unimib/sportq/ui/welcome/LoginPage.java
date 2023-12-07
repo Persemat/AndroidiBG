@@ -2,6 +2,7 @@ package it.unimib.sportq.ui.welcome;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
+import it.unimib.sportq.UserViewModel;
+import it.unimib.sportq.model.User;
 import it.unimib.sportq.ui.main.MainActivity;
 import it.unimib.sportq.R;
 
@@ -25,18 +28,25 @@ public class LoginPage extends AppCompatActivity {
     private static String TAG = LoginPage.class.getSimpleName();
     private TextInputLayout emailTextInputLayout;
     private TextInputLayout passwordTextInputLayout;
+    Button signUpButton;
+    Button loginButton;
     FirebaseAuth mAuth;
+    UserViewModel userViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
 
         mAuth = FirebaseAuth.getInstance();
+        // Inizializzazione di userViewModel
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+
         emailTextInputLayout = findViewById(R.id.text_input_layout_email);
         passwordTextInputLayout = findViewById(R.id.text_input_layout_password);
+        signUpButton = findViewById(R.id.button_sign_up);
+        loginButton = findViewById(R.id.button_login);
 
         // CLICCANDO SU IL PULSANTE DI SIGN UP SI PASSA ALLA SCHERMATA DI SIGN UP
-        Button signUpButton = findViewById(R.id.button_sign_up);
         signUpButton.setOnClickListener(item -> {
             Intent signUp = new Intent(getApplicationContext(), RegistrationPage.class);
             startActivity(signUp);
@@ -44,7 +54,7 @@ public class LoginPage extends AppCompatActivity {
         });
 
         // INIZIO GESTIONE PULSANTE DI LOGIN
-        Button loginButton = findViewById(R.id.button_login);
+
         loginButton.setOnClickListener(item -> {
             // Log.d(TAG, "Button Clicked");
             String email = emailTextInputLayout.getEditText().getText().toString();
@@ -56,13 +66,30 @@ public class LoginPage extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Snackbar.make(
-                                        findViewById(android.R.id.content),
-                                        getString(R.string.authentication_correct),
-                                        Snackbar.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(intent);
+                                FirebaseUser currentUser = mAuth.getCurrentUser();
+                                if (currentUser != null) {
+                                    String userEmail = currentUser.getEmail();
+
+                                    // Verifica se l'utente esiste nel database Room
+                                    userViewModel.getUserByEmail(userEmail).observe(LoginPage.this, user -> {
+                                        if (user == null) {
+                                            // L'utente non esiste nel database Room, lo aggiungiamo
+                                            User newUser = new User();
+                                            // Dettagli dell'utente da Firebase
+                                            //
+                                            // Inserimento User nel database
+                                            userViewModel.insert(newUser);
+                                        } else {
+                                            // L'utente esiste già nel database Room
+                                            // Esegui altre azioni se necessario
+                                        }
+
+                                        // Avvia l'Activity principale
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    });
+                                }
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Snackbar.make(
@@ -85,7 +112,7 @@ public class LoginPage extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if(currentUser != null){
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);

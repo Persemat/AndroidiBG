@@ -3,6 +3,7 @@ package it.unimib.sportq.ui.welcome;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,12 +35,15 @@ public class    RegistrationPage extends AppCompatActivity {
     private TextInputLayout newPasswordTextInputLayout;
     private TextInputLayout confirmPasswordTextInputLayout;
     FirebaseAuth mAuth;
-    private UserViewModel mUserViewModel;
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_page);
+        mAuth = FirebaseAuth.getInstance();
+        // Inizializzazione di userViewModel
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         firstNameTextInputLayout = findViewById(R.id.text_input_layout_first_name);
         lastNameTextInputLayout = findViewById(R.id.text_input_layout_last_name);
@@ -47,16 +51,16 @@ public class    RegistrationPage extends AppCompatActivity {
         newPasswordTextInputLayout = findViewById(R.id.text_input_layout_new_password);
         confirmPasswordTextInputLayout = findViewById(R.id.text_input_layout_confirm_password);
 
-        Button loginButton = findViewById(R.id.button_login);
         // GESTISCE IL CLICK DEL PULSANTE LOGIN
+        Button loginButton = findViewById(R.id.button_login);
         loginButton.setOnClickListener(item -> {
             Intent login = new Intent(getApplicationContext(), LoginPage.class);
             startActivity(login);
             finish();
         });
 
-        Button signUpButton = findViewById(R.id.button_sign_up);
         // GESTISCE IL CLICK DEL PULSANTE SIGN UP
+        Button signUpButton = findViewById(R.id.button_sign_up);
         signUpButton.setOnClickListener(item -> {
             // Log.d(TAG, "Button Clicked");
             String first_name = firstNameTextInputLayout.getEditText().getText().toString();
@@ -73,34 +77,16 @@ public class    RegistrationPage extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
+                                    // Inserimento dell'utente nel database Room
+                                    User user = new User();
+                                    user.setEmail(email);
+                                    user.setFirst_name(first_name);
+                                    user.setLast_name(last_name);
+                                    userViewModel.insert(user);
 
-                                    UserRoomDatabase userDatabase = UserRoomDatabase.getDatabase(getApplicationContext());
-                                    // GESTIONE DEL DATABASE SE E' STATO CREATO CORRETTAMENTE
-                                    if (userDatabase != null) {
-                                        UserDao userDao = userDatabase.userDao();
-
-                                        int idImg = R.drawable.baseline_account_circle_24;
-
-                                        User user = new User();
-                                        user.setEmail(email);
-                                        user.setFirst_name(first_name);
-                                        user.setLast_name(last_name);
-                                        user.setImage_avatar(idImg);
-
-                                        userDao.insertUser(user);
-
-
-                                        Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
-                                        startActivity(homeIntent);
-                                        finish();
-
-                                    } else {
-                                        // SE IL DATABASE è NULL
-                                        Snackbar.make(
-                                                findViewById(android.R.id.content),
-                                                getString(R.string.database_error),
-                                                Snackbar.LENGTH_SHORT).show();
-                                    }
+                                    Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(homeIntent);
+                                    finish();
                                 }
                                 else {
                                     // If sign in fails, display a message to the user.
@@ -122,23 +108,18 @@ public class    RegistrationPage extends AppCompatActivity {
         // FINE GESTIONE PULSANTE SIGN UP
     }
 
-    /*
+
     @Override
     public void onStart() {
         super.onStart();
-
-        if (mAuth != null) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
-        } else {
-            Snackbar.make(
-                    findViewById(android.R.id.content),
-                    getString(R.string.authentication_failed),
-                    Snackbar.LENGTH_SHORT).show();
         }
     }
-     */
+
 
     private boolean isNameCorrect(String name) {
         boolean result = name.length()>0;
