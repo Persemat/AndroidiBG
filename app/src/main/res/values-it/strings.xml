@@ -21,6 +21,7 @@
     <string name="avatar_description">Immagine Avatar</string>
     <string name="delete_account">Cancella Account</string>
     <string name="error">Qualcosa è andato storto</string>
+    <string name="close">Chiudi</string>
 
 
 </resources>

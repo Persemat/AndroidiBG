@@ -207,7 +207,6 @@ public class FragmentAccount extends Fragment {
                         Log.d(TAG, "Immagine User Id: " + user.getImage_avatar());
                     }
                 });
-
             }
         });
 
@@ -231,13 +230,19 @@ public class FragmentAccount extends Fragment {
         Context context = anchorView.getContext();
 
         View popupView = LayoutInflater.from(context).inflate(R.layout.popup_avatar, null);
-
+        Button closeButton = popupView.findViewById(R.id.close_popup);
         PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 
         // Inizializza il GridView nel popupView
         GridView gridView = popupView.findViewById(R.id.grid_view_avatar);
         AvatarAdapter adapter = new AvatarAdapter(requireContext(), avatar);
         gridView.setAdapter(adapter);
+
+        // Gestisci il click del pulsante di chiusura del popup
+        closeButton.setOnClickListener(v -> {
+            // Esegui le azioni desiderate quando il pulsante di chiusura del popup viene premuto
+            popupWindow.dismiss(); // Chiudi il popup
+        });
 
         // animazione di entrata se lo desideri
         popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
