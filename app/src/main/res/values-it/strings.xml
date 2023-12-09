@@ -20,6 +20,7 @@
     <string name="database_error">Errore database</string>
     <string name="avatar_description">Immagine Avatar</string>
     <string name="delete_account">Cancella Account</string>
+    <string name="error">Qualcosa è andato storto</string>
 
 
 </resources>

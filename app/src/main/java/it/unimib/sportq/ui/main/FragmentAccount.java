@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
@@ -31,6 +32,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -50,6 +54,7 @@ public class FragmentAccount extends Fragment {
 
     private static String TAG = FragmentAccount.class.getSimpleName();
     private Button logoutButton;
+    private Button deleteButton;
 
     private TextView email;
     private ImageView avatar;
@@ -102,6 +107,7 @@ public class FragmentAccount extends Fragment {
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         logoutButton = view.findViewById(R.id.logout_button);
+        deleteButton = view.findViewById(R.id.delete_account_button);
         first_name = view.findViewById(R.id.user_firstname);
         last_name = view.findViewById(R.id.user_lastname);
         avatar = view.findViewById(R.id.avatar_image);
@@ -141,6 +147,39 @@ public class FragmentAccount extends Fragment {
             FirebaseAuth.getInstance().signOut();
             Intent login = new Intent(getActivity(), LoginPage.class);
             startActivity(login);
+            requireActivity().finish();
+        });
+
+        // GESTIONE DEL CLICK DEL PULSANTE DELETE ACCOUNT
+        deleteButton.setOnClickListener(item -> {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                // Elimina l'utente da Firebase Authentication
+                user.delete()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "User account deleted from Firebase.");
+
+                                // Ottenere l'utente dal database Room utilizzando ViewModel
+                                userLiveData = userViewModel.getUserByEmail(user.getEmail());
+                                userLiveData.observe(getViewLifecycleOwner(), existingUser -> {
+                                    if (existingUser != null) {
+                                        // Eliminare l'utente dal database Room
+                                        userViewModel.delete(existingUser);
+                                        Log.d(TAG, "User deleted from Room database.");
+                                        Intent login = new Intent(getActivity(), LoginPage.class);
+                                        startActivity(login);
+                                        requireActivity().finish();
+                                    }
+                                });
+                            } else {
+                                Snackbar.make(
+                                        view.findViewById(android.R.id.content),
+                                        getString(R.string.error),
+                                        Snackbar.LENGTH_SHORT).show();
+                            }
+                        });
+            }
         });
 
         View popupView = LayoutInflater.from(getContext()).inflate(R.layout.popup_avatar, null);
