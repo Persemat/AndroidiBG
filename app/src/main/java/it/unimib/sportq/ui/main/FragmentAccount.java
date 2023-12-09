@@ -64,6 +64,7 @@ public class FragmentAccount extends Fragment {
     FirebaseUser firebaseUser;
 
     LiveData<User> userLiveData;
+    UserViewModel userViewModel;
 
     public FragmentAccount() {
         // Required empty public constructor
@@ -98,7 +99,7 @@ public class FragmentAccount extends Fragment {
 
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
-        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         logoutButton = view.findViewById(R.id.logout_button);
         first_name = view.findViewById(R.id.user_firstname);
@@ -127,9 +128,9 @@ public class FragmentAccount extends Fragment {
                 } else {
                     first_name.setText(user.getFirst_name());
                     last_name.setText(user.getLast_name());
-                    //int idAvatarImage = user.getImage_avatar();
-                    //Log.d(TAG, "Id: " + idAvatarImage);
-                    //avatar.setImageResource(idAvatarImage);
+                    // Log.d(TAG, "Image_avatar: " + user.getImage_avatar());
+                    int selectedImageId = user.getImage_avatar();
+                    avatar.setImageResource(selectedImageId);
                     email.setText(user.getEmail());
                 }
             });
@@ -149,19 +150,41 @@ public class FragmentAccount extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "onItemClick() triggered");
                 // Ottieni l'ID dell'immagine cliccata
                 int selectedImageId = (int) view.getTag();
 
-                // Sostituisci l'immagine principale con l'immagine selezionata
-                avatar.setImageResource(selectedImageId);
+                userLiveData = userViewModel.getUserByEmail(firebaseUser.getEmail());
+                userLiveData.observe(getViewLifecycleOwner(), user -> {
+                    if (user == null) {
+                        Log.d(TAG, "Utente Room non trovato");
+                    } else {
+                        // Aggiorna l'avatar dell'utente con l'ID dell'immagine selezionata
+                        user.setImage_avatar(selectedImageId);
+                        // Aggiorna l'utente nel ViewModel
+                        userViewModel.update(user);
+                        // Sostituisci l'immagine principale con l'immagine selezionata
+                        avatar.setImageResource(selectedImageId);
+                        Log.d(TAG, "Immagine User Id: " + user.getImage_avatar());
+                    }
+                });
+
             }
         });
 
         // GESTIONE DEL CLICK DELL'IMMAGINE AVATAR
         avatar.setOnClickListener(v -> showPopup(v));
 
-
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // Rimuovi tutti gli Observer associati a userLiveData
+        if (userLiveData != null) {
+            userLiveData.removeObservers(getViewLifecycleOwner());
+        }
     }
 
     private void showPopup(View anchorView) {

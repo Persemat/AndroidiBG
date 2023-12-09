@@ -13,6 +13,7 @@ public class User {
     private String first_name;
     @NonNull
     private String last_name;
+    @NonNull
     private int image_avatar;
 
     public User() {

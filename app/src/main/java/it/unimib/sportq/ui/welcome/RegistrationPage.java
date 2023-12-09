@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -68,7 +69,8 @@ public class    RegistrationPage extends AppCompatActivity {
             String email = emailTextInputLayout.getEditText().getText().toString();
             String new_password = newPasswordTextInputLayout.getEditText().getText().toString();
             String confirm_password = confirmPasswordTextInputLayout.getEditText().getText().toString();
-            int idImageAvatar = getResources().getIdentifier("baseline_account_circle_24", "drawable", getPackageName());
+            int idImageAvatar = R.drawable.baseline_account_circle_24;
+            // Log.d(TAG, "Id Avatar: " + idImageAvatar);
 
             // TODO: da rivedere le regole della correttezza delle credenziali
             if (isEmailCorrect(email) && isPasswordCorrect(new_password, confirm_password)
