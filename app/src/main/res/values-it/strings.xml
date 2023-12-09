@@ -18,6 +18,7 @@
     <string name="authentication_correct">Autenticazione corretta</string>
     <string name="logout">Esci</string>
     <string name="database_error">Errore database</string>
+    <string name="avatar_description">Immagine Avatar</string>
 
 
 </resources>

@@ -21,19 +21,22 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="40dp"
             android:src="@drawable/baseline_account_circle_24"
+            android:contentDescription="@string/avatar_description"
             />
 
         <TextView
             android:id="@+id/user_firstname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="nome"
+            android:text="@string/account_first_name"
+
             app:layout_constraintTop_toBottomOf="@+id/avatar_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/user_lastname"
             app:layout_constraintHorizontal_chainStyle="packed"
+
+            android:gravity="center"
             android:textSize="20sp"
-            android:layout_marginLeft="30dp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
 
@@ -41,11 +44,15 @@
             android:id="@+id/user_lastname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="cognome"
+            android:text="@string/account_last_name"
+
+            app:layout_constraintTop_toBottomOf="@+id/avatar_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/user_firstname"
-            app:layout_constraintTop_toBottomOf="@+id/avatar_image"
-            android:layout_marginLeft="10dp"
+            app:layout_constraintHorizontal_chainStyle="packed"
+
+            android:layout_marginStart="1dp"
+            android:gravity="center"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
@@ -55,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintVertical_chainStyle="packed"
-            android:text="email"
+            android:text="@string/email"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
