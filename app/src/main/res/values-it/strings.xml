@@ -19,6 +19,7 @@
     <string name="logout">Esci</string>
     <string name="database_error">Errore database</string>
     <string name="avatar_description">Immagine Avatar</string>
+    <string name="delete_account">Cancella Account</string>
 
 
 </resources>
