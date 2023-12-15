@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".FragmentSport">
+
+
+    <TextView
+        android:id="@+id/detailName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="14dp"
+        android:text="Sport"
+        android:textColor="@color/purple_first"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="160dp"
+        android:layout_height="150dp"
+        android:id="@+id/card_image"
+        android:layout_gravity="start"
+        android:layout_marginStart="15dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp">
+
+       <ImageView
+           android:layout_width="190dp"
+           android:layout_height="150dp"
+           android:id="@+id/detailImage"
+           android:layout_gravity="center"
+           android:src="@drawable/calcetto"
+           android:scaleType="centerCrop"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        />
+</LinearLayout>

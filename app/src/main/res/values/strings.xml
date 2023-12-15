@@ -27,4 +27,8 @@
     <string name="delete_account">Delete Account</string>
     <string name="error">Something went wrong</string>
     <string name="close">Close</string>
+    <string name="calcetto_sport">Soccer</string>
+    <string name="players">n°player</string>
+
+
 </resources>
