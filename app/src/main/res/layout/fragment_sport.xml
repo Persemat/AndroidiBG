@@ -33,7 +33,7 @@
            android:layout_height="150dp"
            android:id="@+id/detailImage"
            android:layout_gravity="center"
-           android:src="@drawable/calcetto"
+           android:src="@drawable/calcio"
            android:scaleType="centerCrop"/>
 
     </androidx.cardview.widget.CardView>

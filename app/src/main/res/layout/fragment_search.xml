@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.FragmentSearch"
-    android:background="@color/grey_separator">
+    android:background="@color/purple_logo_third">
 
     <ListView
         android:layout_width="match_parent"
