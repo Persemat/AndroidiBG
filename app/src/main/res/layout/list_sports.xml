@@ -9,16 +9,17 @@
     app:cardCornerRadius="20dp"
     app:cardElevation="8dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?android:selectableItemBackground">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:id="@+id/listImage"
+            android:id="@+id/view_image"
             android:src="@drawable/calcio"
             android:scaleType="centerCrop"
             android:layout_marginStart="10dp"
@@ -28,20 +29,20 @@
         <TextView
             android:layout_width="120dp"
             android:layout_height="30dp"
-            android:id="@+id/listName"
+            android:id="@+id/view_sport"
             android:text="@string/calcetto_sport"
             android:textColor="@color/purple_first"
             android:textSize="20sp"
             android:layout_marginTop="25dp"
             android:layout_marginStart="30dp"
-            android:layout_toEndOf="@id/listImage"/>
+            android:layout_toEndOf="@id/view_image"/>
         <TextView
             android:layout_width="80dp"
             android:layout_height="30dp"
-            android:id="@+id/listPlayer"
+            android:id="@+id/view_player"
             android:text="@string/players"
             android:textSize="16sp"
-            android:layout_toEndOf="@id/listName"
+            android:layout_toEndOf="@id/view_sport"
             android:layout_marginTop="25dp"
             android:layout_marginStart="70dp"
             android:textColor="@color/purple_second"/>

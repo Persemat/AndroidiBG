@@ -1,12 +1,16 @@
-package it.unimib.sportq;
+package it.unimib.sportq.ui.main;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import it.unimib.sportq.R;
+import it.unimib.sportq.databinding.FragmentSportBinding;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,10 +49,10 @@ public class FragmentSport extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
