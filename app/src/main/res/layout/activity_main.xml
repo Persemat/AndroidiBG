@@ -44,6 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/purple_second"
+        android:elevation="8dp"
         app:itemIconSize="30dp"
         app:itemIconTint="@color/purple_logo"
         app:itemTextColor="@color/purple_logo"

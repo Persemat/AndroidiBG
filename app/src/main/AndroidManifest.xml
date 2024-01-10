@@ -35,7 +35,7 @@
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".ui.welcome.RegistrationPage"
+            android:name=".ui.welcome.LoginPage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,7 +44,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.welcome.LoginPage"
+            android:name=".ui.welcome.RegistrationPage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
