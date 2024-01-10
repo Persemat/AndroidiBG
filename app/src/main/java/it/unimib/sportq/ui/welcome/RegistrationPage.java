@@ -88,7 +88,7 @@ public class    RegistrationPage extends AppCompatActivity {
                                     user.setImage_avatar(idImageAvatar);
                                     userViewModel.insert(user);
 
-                                    Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+                                    Intent homeIntent = new Intent(RegistrationPage.this, MainActivity.class);
                                     startActivity(homeIntent);
                                     finish();
                                 }

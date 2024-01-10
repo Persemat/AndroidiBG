@@ -76,16 +76,12 @@ public class LoginPage extends AppCompatActivity {
                                             // L'utente non esiste nel database Room, lo aggiungiamo
                                             User newUser = new User();
                                             // Dettagli dell'utente da Firebase
-                                            //
                                             // Inserimento User nel database
                                             userViewModel.insert(newUser);
-                                        } else {
-                                            // L'utente esiste già nel database Room
-                                            // Esegui altre azioni se necessario
                                         }
 
                                         // Avvia l'Activity principale
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        Intent intent = new Intent(LoginPage.this, MainActivity.class);
                                         startActivity(intent);
                                         finish();
                                     });

@@ -2,6 +2,8 @@ package it.unimib.sportq.ui.main;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -22,10 +24,23 @@ public class FragmentHome extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment BlankFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static FragmentHome newInstance(String param1, String param2) {
+        FragmentHome fragment = new FragmentHome();
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -34,10 +49,15 @@ public class FragmentHome extends Fragment {
         // Inflate the layout for this fragment
 
         View view=inflater.inflate(R.layout.fragment_home, container, false);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         frase_motivazionale = view.findViewById(R.id.motivational_quotes);
         frase_motivazionale.setText(randomQuotes());
-        return view;
     }
 
     public String randomQuotes()

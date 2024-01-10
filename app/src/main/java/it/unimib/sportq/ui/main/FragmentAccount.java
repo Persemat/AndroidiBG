@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.Gravity;
@@ -75,10 +76,20 @@ public class FragmentAccount extends Fragment {
         // Required empty public constructor
     }
 
-    //andrebbe in AndroidUtil, qua va bene lo stesso? io non lo so
-    public static void setProfilePic(Context context, Uri imageUri, ImageView imageView){
-        Glide.with(context).load(imageUri).apply(RequestOptions.circleCropTransform()).into(imageView);
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment BlankFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static FragmentAccount newInstance(String param1, String param2) {
+        FragmentAccount fragment = new FragmentAccount();
+        return fragment;
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,7 +112,12 @@ public class FragmentAccount extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_account, container, false);
+        return view;
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
@@ -145,9 +161,7 @@ public class FragmentAccount extends Fragment {
         // GESTIONE DEL CLICK DEL PULSANTE LOGOUT
         logoutButton.setOnClickListener(item -> {
             FirebaseAuth.getInstance().signOut();
-            Intent login = new Intent(getActivity(), LoginPage.class);
-            startActivity(login);
-            requireActivity().finish();
+            Navigation.findNavController(item).navigate(R.id.action_fragmentAccount_to_loginPage);
         });
 
         // GESTIONE DEL CLICK DEL PULSANTE DELETE ACCOUNT
@@ -167,9 +181,7 @@ public class FragmentAccount extends Fragment {
                                         // Eliminare l'utente dal database Room
                                         userViewModel.delete(existingUser);
                                         Log.d(TAG, "User deleted from Room database.");
-                                        Intent login = new Intent(getActivity(), LoginPage.class);
-                                        startActivity(login);
-                                        requireActivity().finish();
+                                        Navigation.findNavController(item).navigate(R.id.action_fragmentAccount_to_registrationPage);
                                     }
                                 });
                             } else {
@@ -212,8 +224,6 @@ public class FragmentAccount extends Fragment {
 
         // GESTIONE DEL CLICK DELL'IMMAGINE AVATAR
         avatar.setOnClickListener(v -> showPopup(v));
-
-        return view;
     }
 
     @Override
