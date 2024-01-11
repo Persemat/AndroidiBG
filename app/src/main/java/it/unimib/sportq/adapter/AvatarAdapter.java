@@ -13,7 +13,7 @@ public class AvatarAdapter extends BaseAdapter {
     private Context mContext;
 
     // Array di immagini o dati che desideri visualizzare nella GridView
-    private Integer[] mThumbIds = {
+    private int[] mThumbIds = {
             R.drawable.albu,
             R.drawable.ale,
             R.drawable.michi,
@@ -21,12 +21,8 @@ public class AvatarAdapter extends BaseAdapter {
             R.drawable.wapi
     };
 
-    private ImageView mainImageView;
-
-    public AvatarAdapter(Context context, ImageView mainImageView) {
+    public AvatarAdapter(Context context) {
         mContext = context;
-        this.mainImageView = mainImageView;
-
     }
 
     @Override
@@ -41,9 +37,8 @@ public class AvatarAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return mThumbIds[position];
     }
-
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
@@ -53,17 +48,6 @@ public class AvatarAdapter extends BaseAdapter {
             imageView.setLayoutParams(new GridView.LayoutParams(200, 200)); // Personalizza le dimensioni delle immagini
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Ottieni l'ID dell'immagine cliccata
-                    int selectedImageId = (int) v.getTag();
-
-                    // Sostituisci l'immagine principale con l'immagine selezionata
-                    mainImageView.setImageResource(selectedImageId);
-                }
-            });
-
         } else {
             // Se la vista esiste già, riutilizzala
             imageView = (ImageView) convertView;
@@ -71,6 +55,7 @@ public class AvatarAdapter extends BaseAdapter {
 
         imageView.setTag(mThumbIds[position]);
         imageView.setImageResource(mThumbIds[position]);
+
         return imageView;
     }
 }
