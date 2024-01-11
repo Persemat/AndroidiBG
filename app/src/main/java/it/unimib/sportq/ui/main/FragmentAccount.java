@@ -131,9 +131,7 @@ public class FragmentAccount extends Fragment {
 
         if(firebaseUser == null) {
             Log.d(TAG, "Utente Firebase non trovato");
-            Intent intent = new Intent(getContext(), LoginPage.class);
-            startActivity(intent);
-            requireActivity().finish();
+            Navigation.findNavController(view).navigate(R.id.action_fragmentAccount_to_loginPage);
             // return view;
         } else {
             //UserRoomDatabase userDatabase = UserRoomDatabase.getDatabase(getContext());
