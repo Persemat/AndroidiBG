@@ -5,12 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.FragmentAccount"
-    android:background="@color/purple_logo_third">
+    android:background="@color/secondary_container">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <ImageView
             android:id="@+id/avatar_image"
@@ -33,11 +32,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/user_lastname"
             app:layout_constraintHorizontal_chainStyle="packed"
+            android:layout_marginTop="15dp"
 
             android:gravity="center"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/black"/>
+            android:textColor="@color/purple_logo"/>
 
         <TextView
             android:id="@+id/user_lastname"
@@ -49,12 +49,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/user_firstname"
             app:layout_constraintHorizontal_chainStyle="packed"
+            android:layout_marginTop="15dp"
 
             android:layout_marginStart="5sp"
             android:gravity="center"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/black"/>
+            android:textColor="@color/purple_logo"/>
 
         <TextView
             android:id="@+id/user_email"
@@ -62,7 +63,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/email"
-            android:textColor="@color/black"
+            android:textColor="@color/purple_logo"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
