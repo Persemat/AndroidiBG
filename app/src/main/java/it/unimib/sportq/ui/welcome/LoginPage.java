@@ -1,22 +1,35 @@
 package it.unimib.sportq.ui.welcome;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.apache.commons.validator.routines.EmailValidator;
+
+import java.util.HashMap;
+import java.util.Objects;
 
 import it.unimib.sportq.UserViewModel;
 import it.unimib.sportq.model.User;
@@ -30,6 +43,7 @@ public class LoginPage extends AppCompatActivity {
     private TextInputLayout passwordTextInputLayout;
     Button signUpButton;
     Button loginButton;
+    Button googleLoginButton;
     FirebaseAuth mAuth;
     UserViewModel userViewModel;
     @Override
@@ -38,6 +52,7 @@ public class LoginPage extends AppCompatActivity {
         setContentView(R.layout.login_page);
 
         mAuth = FirebaseAuth.getInstance();
+
         // Inizializzazione di userViewModel
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
@@ -45,6 +60,8 @@ public class LoginPage extends AppCompatActivity {
         passwordTextInputLayout = findViewById(R.id.text_input_layout_password);
         signUpButton = findViewById(R.id.button_sign_up);
         loginButton = findViewById(R.id.button_login);
+        googleLoginButton = findViewById(R.id.button_google_login);
+
 
         // CLICCANDO SU IL PULSANTE DI SIGN UP SI PASSA ALLA SCHERMATA DI SIGN UP
         signUpButton.setOnClickListener(item -> {
@@ -54,7 +71,6 @@ public class LoginPage extends AppCompatActivity {
         });
 
         // INIZIO GESTIONE PULSANTE DI LOGIN
-
         loginButton.setOnClickListener(item -> {
             // Log.d(TAG, "Button Clicked");
             String email = emailTextInputLayout.getEditText().getText().toString();
@@ -103,7 +119,6 @@ public class LoginPage extends AppCompatActivity {
             }
         }); // FINE GESTIONE PULSANTE LOGIN
     }
-
 
     @Override
     public void onStart() {
