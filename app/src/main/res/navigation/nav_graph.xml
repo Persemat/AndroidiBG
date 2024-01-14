@@ -8,7 +8,11 @@
     <fragment
         android:id="@+id/fragmentHome"
         android:name="it.unimib.sportq.ui.main.FragmentHome"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_fragmentHome_to_fragmentHistory"
+            app:destination="@id/fragmentHistory" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentSearch"
         android:name="it.unimib.sportq.ui.main.FragmentSearch"
@@ -33,4 +37,12 @@
         android:name="it.unimib.sportq.ui.welcome.RegistrationPage"
         tools:layout="@layout/registration_page"
         />
+    <fragment
+        android:id="@+id/fragmentHistory"
+        android:name="it.unimib.sportq.ui.main.FragmentHistory"
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_fragmentHistory_to_fragmentHome"
+            app:destination="@id/fragmentHome" />
+    </fragment>
 </navigation>

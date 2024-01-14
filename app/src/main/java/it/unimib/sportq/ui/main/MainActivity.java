@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation_view);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.fragmentHome, R.id.fragmentSearch, R.id.fragmentAccount).build();
+                R.id.fragmentHome, R.id.fragmentSearch, R.id.fragmentAccount,
+                R.id.fragmentHistory).build();
 
         // For the Toolbar
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);

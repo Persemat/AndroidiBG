@@ -29,13 +29,50 @@
                 android:gravity="center"/>
 
             <TextView
+                android:id="@+id/prenotazioni_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prenotazioni attive"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/motivational_quotes"
+                app:layout_constraintStart_toStartOf="parent"
+
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <View
+                android:id="@+id/divider_prenotazioni"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintTop_toBottomOf="@+id/prenotazioni_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"/>
+
+            <LinearLayout
+                android:id="@+id/prenotazioni_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/divider_prenotazioni"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <!-- Dentro questo layout ci andranno tutte le prenotazioni-->
+
+            </LinearLayout>
+
+            <TextView
                 android:id="@+id/storico_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Storico Prenotazioni"
                 android:textSize="25sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/motivational_quotes"
+                app:layout_constraintTop_toBottomOf="@+id/prenotazioni_container"
                 app:layout_constraintStart_toStartOf="parent"
 
                 android:layout_marginTop="16dp"
@@ -77,42 +114,6 @@
                     android:layout_margin="16dp"/>
             </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/prenotazioni_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Prenotazioni attive"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/cardview_storico"
-                app:layout_constraintStart_toStartOf="parent"
-
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"/>
-
-            <View
-                android:id="@+id/divider_prenotazioni"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
-                app:layout_constraintTop_toBottomOf="@+id/prenotazioni_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"/>
-
-            <LinearLayout
-                android:id="@+id/prenotazioni_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/divider_prenotazioni"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <!-- Dentro questo layout ci andranno tutte le prenotazioni-->
-
-            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
