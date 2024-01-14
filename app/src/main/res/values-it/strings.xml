@@ -22,6 +22,7 @@
     <string name="delete_account">Cancella Account</string>
     <string name="error">Qualcosa è andato storto</string>
     <string name="close">Chiudi</string>
+    <string name="zero_prenotations_history">Ci sono 0 prenotazioni nello storico...</string>
 
 
 </resources>
