@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ public class LoginPage extends AppCompatActivity {
     Button signUpButton;
     Button loginButton;
     Button googleLoginButton;
+    Button forgotPasswordButton;
     FirebaseAuth mAuth;
     FirebaseDatabase database;
     GoogleSignInClient mGoogleSignInClient;
@@ -71,6 +73,23 @@ public class LoginPage extends AppCompatActivity {
         signUpButton = findViewById(R.id.button_sign_up);
         loginButton = findViewById(R.id.button_login);
         googleLoginButton = findViewById(R.id.button_google_login);
+        forgotPasswordButton = findViewById(R.id.button_forgot_password);
+
+        // GESTIONE CLICK PASSWORD DIMENTICATA
+        forgotPasswordButton.setOnClickListener(item -> {
+            String email = emailTextInputLayout.getEditText().getText().toString();
+            if (isEmailCorrect(email)) {
+                mAuth.sendPasswordResetEmail(email)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "Email sent.");
+                                }
+                            }
+                        });
+            }
+        });
 
         // CLICCANDO SU IL PULSANTE DI SIGN UP SI PASSA ALLA SCHERMATA DI SIGN UP
         signUpButton.setOnClickListener(item -> {

@@ -105,9 +105,8 @@ public class    RegistrationPage extends AppCompatActivity {
             int idImageAvatar = R.drawable.baseline_account_circle_24;
             // Log.d(TAG, "Id Avatar: " + idImageAvatar);
 
-            // TODO: da rivedere le regole della correttezza delle credenziali
-            if (isEmailCorrect(email) && isPasswordCorrect(new_password, confirm_password)
-                && isNameCorrect(first_name) && isLastNameCorrect(last_name)) {
+            if (isNameCorrect(first_name) && isLastNameCorrect(last_name)
+                    && isEmailCorrect(email) && isPasswordCorrect(new_password, confirm_password)) {
                 mAuth.createUserWithEmailAndPassword(email, confirm_password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -268,12 +267,12 @@ public class    RegistrationPage extends AppCompatActivity {
             confirmPasswordTextInputLayout.setError("");
         } else {
             newPasswordTextInputLayout.setError(null);
-            if (!(confirm_password.equals(new_password))) {
-                confirmPasswordTextInputLayout.setError("Passwords are not equals");
-            } else {
-                confirmPasswordTextInputLayout.setError(null);
-                return true;
-            }
+        }
+        if (!(confirm_password.equals(new_password))) {
+            confirmPasswordTextInputLayout.setError("Passwords are not equals");
+            result = false;
+        } else {
+            confirmPasswordTextInputLayout.setError(null);
         }
         return result;
     }
