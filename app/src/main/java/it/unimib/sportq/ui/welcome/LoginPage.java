@@ -83,6 +83,7 @@ public class LoginPage extends AppCompatActivity {
         googleLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 googleSignIn();
             }
         });
@@ -215,7 +216,6 @@ public class LoginPage extends AppCompatActivity {
 
         userViewModel.insert(newUser);
     }
-
 
     @Override
     public void onStart() {

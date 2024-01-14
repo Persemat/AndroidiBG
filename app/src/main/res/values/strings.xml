@@ -27,4 +27,5 @@
     <string name="delete_account">Delete Account</string>
     <string name="error">Something went wrong</string>
     <string name="close">Close</string>
+    <string name="default_web_client_id" translatable="false">1094300535160-u8m7htkg1p9n9mftc5b5hte4c9naa2s8.apps.googleusercontent.com</string>
 </resources>
