@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unimib.sportq.R;
-import it.unimib.sportq.adapter.SearchRecyclerViewAdapter;
-import it.unimib.sportq.model.ListData;
+
 
 /**
  * A simple {@link Fragment} subclass.
