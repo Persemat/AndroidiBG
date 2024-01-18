@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragmentHome">
+
+    <fragment
+        android:id="@+id/fragmentHome"
+        android:name="it.unimib.sportq.ui.main.FragmentHome"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_fragmentHome_to_fragmentHistory"
+            app:destination="@id/fragmentHistory" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentSearch"
+        android:name="it.unimib.sportq.ui.main.FragmentSearch"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/fragmentAccount"
+        android:name="it.unimib.sportq.ui.main.FragmentAccount"
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_fragmentAccount_to_loginPage"
+            app:destination="@id/loginPage" />
+        <action
+            android:id="@+id/action_fragmentAccount_to_registrationPage"
+            app:destination="@id/registrationPage" />
+    </fragment>
+    <activity
+        android:id="@+id/loginPage"
+        android:name="it.unimib.sportq.ui.welcome.LoginPage"
+        tools:layout="@layout/login_page" />
+    <activity
+        android:id="@+id/registrationPage"
+        android:name="it.unimib.sportq.ui.welcome.RegistrationPage"
+        tools:layout="@layout/registration_page"
+        />
+    <fragment
+        android:id="@+id/fragmentHistory"
+        android:name="it.unimib.sportq.ui.main.FragmentHistory"
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_fragmentHistory_to_fragmentHome"
+            app:destination="@id/fragmentHome" />
+    </fragment>
+</navigation>

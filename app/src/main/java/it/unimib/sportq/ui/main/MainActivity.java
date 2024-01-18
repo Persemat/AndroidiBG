@@ -1,60 +1,43 @@
 package it.unimib.sportq.ui.main;
 
-import android.app.Fragment;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import it.unimib.sportq.R;
-import it.unimib.sportq.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-
-    ActivityMainBinding binding;
     private static String TAG = MainActivity.class.getSimpleName();
-
-    BottomNavigationView bottomNavigationView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_main);
 
-        replaceFragment(new FragmentHome());
+        Toolbar toolbar = findViewById(R.id.top_appbar);
+        setSupportActionBar(toolbar);
 
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().
+                findFragmentById(R.id.nav_host_fragment);
+        NavController navController = navHostFragment.getNavController();
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation_view);
 
-        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-            if(item.getItemId() == R.id.home)
-            {
-                replaceFragment(new FragmentHome());
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.fragmentHome, R.id.fragmentSearch, R.id.fragmentAccount,
+                R.id.fragmentHistory).build();
 
-            }else if (item.getItemId()== R.id.profile)
-            {
-                replaceFragment(new FragmentAccount());
-            }else if(item.getItemId()==R.id.search)
-            {
-                replaceFragment(new FragmentSearch());
-            }
-
-            return true;
-        });
-
+        // For the Toolbar
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        // For the BottomNavigationView
+        NavigationUI.setupWithNavController(bottomNav, navController);
     }
-
-    private void replaceFragment(androidx.fragment.app.Fragment fragment)
-    {
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment);
-        fragmentTransaction.commit();
-
-    }
-
 }
+

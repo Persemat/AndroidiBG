@@ -5,28 +5,32 @@
     android:layout_width="350dp"
     android:layout_height="310dp"
     android:layout_gravity="center"
-    android:background="@color/grey_separator">
+    android:background="@drawable/rounded_background">
 
         <GridView
             android:id="@+id/grid_view_avatar"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="250dp"
+            android:layout_margin="15dp"
             android:columnWidth="100dp"
-            android:horizontalSpacing="10dp"
+            android:horizontalSpacing="8dp"
+            android:verticalSpacing="8dp"
             android:numColumns="3"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/close_popup"/>
 
         <Button
             android:id="@+id/close_popup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/close"
+            android:backgroundTint="@color/purple_logo"
+            app:layout_constraintTop_toBottomOf="@+id/grid_view_avatar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="5dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

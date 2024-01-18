@@ -27,6 +27,9 @@
     <string name="delete_account">Delete Account</string>
     <string name="error">Something went wrong</string>
     <string name="close">Close</string>
+    <string name="default_web_client_id" translatable="false">1094300535160-u8m7htkg1p9n9mftc5b5hte4c9naa2s8.apps.googleusercontent.com</string>
+    <string name="zero_prenotations_history">There are 0 history prenotations...</string>
+    <string name="back_button" translatable="false">Back button</string>
     <string name="calcetto_sport">Soccer</string>
     <string name="players">n°player</string>
 

@@ -5,30 +5,118 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.FragmentHome"
-    android:background="@color/pink">
+    android:background="@color/secondary_container">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/motivational_quotes"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="prova"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:gravity="center"
-            />
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/motivational_quotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="prova"
+                android:textColor="@color/purple_logo"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/prenotazioni_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prenotazioni attive"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/motivational_quotes"
+                app:layout_constraintStart_toStartOf="parent"
+
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <View
+                android:id="@+id/divider_prenotazioni"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintTop_toBottomOf="@+id/prenotazioni_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"/>
+
+            <LinearLayout
+                android:id="@+id/prenotazioni_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/divider_prenotazioni"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <!-- Dentro questo layout ci andranno tutte le prenotazioni-->
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/storico_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Storico Prenotazioni"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/prenotazioni_container"
+                app:layout_constraintStart_toStartOf="parent"
+
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"/>
+
+            <View
+                android:id="@+id/divider_storico"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintTop_toBottomOf="@+id/storico_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- CardView per "Storico Prenotazioni" -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_storico"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:cardElevation="4dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:layout_constraintTop_toBottomOf="@+id/divider_storico"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="20dp">
+
+                <!-- Contenuto del CardView -->
+                <TextView
+                    android:id="@+id/textViewCentered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/zero_prenotations_history"
+                    android:textSize="20dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp"/>
+            </androidx.cardview.widget.CardView>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </FrameLayout>

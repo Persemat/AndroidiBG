@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.Gravity;
@@ -32,6 +33,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -53,17 +57,11 @@ import kotlin.jvm.functions.Function1;
 public class FragmentAccount extends Fragment {
 
     private static String TAG = FragmentAccount.class.getSimpleName();
-    private Button logoutButton;
-    private Button deleteButton;
 
     private TextView email;
     private ImageView avatar;
     private TextView first_name;
     private TextView last_name;
-
-    ActivityResultLauncher<Intent> imagePickLauncher;
-
-    Uri selectedImageUri;
 
     FirebaseAuth auth;
     FirebaseUser firebaseUser;
@@ -75,39 +73,34 @@ public class FragmentAccount extends Fragment {
         // Required empty public constructor
     }
 
-    //andrebbe in AndroidUtil, qua va bene lo stesso? io non lo so
-    public static void setProfilePic(Context context, Uri imageUri, ImageView imageView){
-        Glide.with(context).load(imageUri).apply(RequestOptions.circleCropTransform()).into(imageView);
+    // TODO: Rename and change types and number of parameters
+    public static FragmentAccount newInstance(String param1, String param2) {
+        FragmentAccount fragment = new FragmentAccount();
+        return fragment;
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*
-        imagePickLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if(result.getResultCode() == Activity.RESULT_OK){
-                Intent data = result.getData();
-                if(data != null && data.getData() != null){
-                    selectedImageUri = data.getData();
-                    setProfilePic(getContext(), selectedImageUri, avatar);
-                }
-            }
-
-        }); */
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_account, container, false);
+        return inflater.inflate(R.layout.fragment_account, container, false);
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
-        logoutButton = view.findViewById(R.id.logout_button);
-        deleteButton = view.findViewById(R.id.delete_account_button);
+        Button logoutButton = view.findViewById(R.id.logout_button);
+        Button deleteButton = view.findViewById(R.id.delete_account_button);
         first_name = view.findViewById(R.id.user_firstname);
         last_name = view.findViewById(R.id.user_lastname);
         avatar = view.findViewById(R.id.avatar_image);
@@ -115,28 +108,19 @@ public class FragmentAccount extends Fragment {
 
         if(firebaseUser == null) {
             Log.d(TAG, "Utente Firebase non trovato");
-            Intent intent = new Intent(getContext(), LoginPage.class);
-            startActivity(intent);
-            requireActivity().finish();
-            // return view;
+            Navigation.findNavController(view).navigate(R.id.action_fragmentAccount_to_loginPage);
         } else {
-            //UserRoomDatabase userDatabase = UserRoomDatabase.getDatabase(getContext());
-            //UserDao userDao = userDatabase.userDao();
-
             userLiveData = userViewModel.getUserByEmail(firebaseUser.getEmail());
 
             userLiveData.observe(getViewLifecycleOwner(), user -> {
                 if (user == null) {
                     Log.d(TAG, "Utente Room non trovato");
-                    Intent intent = new Intent(getContext(), LoginPage.class);
-                    startActivity(intent);
-                    requireActivity().finish();
+                    Navigation.findNavController(view).navigate(R.id.action_fragmentAccount_to_loginPage);
                 } else {
                     first_name.setText(user.getFirst_name());
                     last_name.setText(user.getLast_name());
-                    // Log.d(TAG, "Image_avatar: " + user.getImage_avatar());
-                    int selectedImageId = user.getImage_avatar();
-                    avatar.setImageResource(selectedImageId);
+                    avatar.setImageResource(user.getImage_avatar());
+                    Log.d(TAG, "Id avatar: " + user.getImage_avatar());
                     email.setText(user.getEmail());
                 }
             });
@@ -144,10 +128,9 @@ public class FragmentAccount extends Fragment {
 
         // GESTIONE DEL CLICK DEL PULSANTE LOGOUT
         logoutButton.setOnClickListener(item -> {
-            FirebaseAuth.getInstance().signOut();
-            Intent login = new Intent(getActivity(), LoginPage.class);
-            startActivity(login);
-            requireActivity().finish();
+            auth.getInstance().signOut();
+            signOutFromGoogle();
+            Navigation.findNavController(item).navigate(R.id.action_fragmentAccount_to_loginPage);
         });
 
         // GESTIONE DEL CLICK DEL PULSANTE DELETE ACCOUNT
@@ -167,9 +150,8 @@ public class FragmentAccount extends Fragment {
                                         // Eliminare l'utente dal database Room
                                         userViewModel.delete(existingUser);
                                         Log.d(TAG, "User deleted from Room database.");
-                                        Intent login = new Intent(getActivity(), LoginPage.class);
-                                        startActivity(login);
-                                        requireActivity().finish();
+                                        signOutFromGoogle();
+                                        Navigation.findNavController(item).navigate(R.id.action_fragmentAccount_to_registrationPage);
                                     }
                                 });
                             } else {
@@ -181,10 +163,42 @@ public class FragmentAccount extends Fragment {
                         });
             }
         });
+        // GESTIONE DEL CLICK DELL'IMMAGINE AVATAR
+        avatar.setOnClickListener(v -> showPopup(v));
 
-        View popupView = LayoutInflater.from(getContext()).inflate(R.layout.popup_avatar, null);
+    } // FINE METODO ONVIEWCREATED()
+
+    private void signOutFromGoogle() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(requireContext(), gso);
+
+        googleSignInClient.signOut()
+                .addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d(TAG, "User signed out from google.");
+                        Intent intent = new Intent(getActivity(), LoginPage.class);
+                        startActivity(intent);
+                        requireActivity().finish();
+                    }
+                });
+    }
+    private void showPopup(View anchorView) {
+
+        // Infla il layout del pop up
+        View popupView = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.popup_avatar, null);
+        // Assegnamento del bottone per chiusura pop up
+        Button closeButton = popupView.findViewById(R.id.close_popup);
+        // Creazione del pop up
+        PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        // Inizializzazione del gridView nel popupView
         GridView gridView = popupView.findViewById(R.id.grid_view_avatar);
-        AvatarAdapter adapter = new AvatarAdapter(requireContext(), avatar);
+        // Creazione e impostazione dell'adapter per il gridView
+        AvatarAdapter adapter = new AvatarAdapter(anchorView.getContext());
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -200,20 +214,25 @@ public class FragmentAccount extends Fragment {
                     } else {
                         // Aggiorna l'avatar dell'utente con l'ID dell'immagine selezionata
                         user.setImage_avatar(selectedImageId);
+                        // Log.d(TAG, "Avatar updated");
                         // Aggiorna l'utente nel ViewModel
                         userViewModel.update(user);
-                        // Sostituisci l'immagine principale con l'immagine selezionata
-                        avatar.setImageResource(selectedImageId);
-                        Log.d(TAG, "Immagine User Id: " + user.getImage_avatar());
+                        userLiveData.removeObservers(getViewLifecycleOwner());
                     }
                 });
             }
         });
 
-        // GESTIONE DEL CLICK DELL'IMMAGINE AVATAR
-        avatar.setOnClickListener(v -> showPopup(v));
+        // animazione di entrata se lo desideri
+        popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
+        // Visualizzazione del popup nella posizione desiderata, ad esempio, al centro dell'ancora
+        popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0);
 
-        return view;
+        // Gestisci il click del pulsante di chiusura del popup
+        closeButton.setOnClickListener(v -> {
+            // Esegui le azioni desiderate quando il pulsante di chiusura del popup viene premuto
+            popupWindow.dismiss(); // Chiudi il popup
+        });
     }
 
     @Override
@@ -224,30 +243,4 @@ public class FragmentAccount extends Fragment {
             userLiveData.removeObservers(getViewLifecycleOwner());
         }
     }
-
-    private void showPopup(View anchorView) {
-
-        Context context = anchorView.getContext();
-
-        View popupView = LayoutInflater.from(context).inflate(R.layout.popup_avatar, null);
-        Button closeButton = popupView.findViewById(R.id.close_popup);
-        PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-
-        // Inizializza il GridView nel popupView
-        GridView gridView = popupView.findViewById(R.id.grid_view_avatar);
-        AvatarAdapter adapter = new AvatarAdapter(requireContext(), avatar);
-        gridView.setAdapter(adapter);
-
-        // Gestisci il click del pulsante di chiusura del popup
-        closeButton.setOnClickListener(v -> {
-            // Esegui le azioni desiderate quando il pulsante di chiusura del popup viene premuto
-            popupWindow.dismiss(); // Chiudi il popup
-        });
-
-        // animazione di entrata se lo desideri
-        popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
-
-        // Visualizzazione del popup nella posizione desiderata, ad esempio, al centro dell'ancora
-        popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0);
-    }
-}
+} // FINE CLASSE FRAGMENT ACCOUNT
