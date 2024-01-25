@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/avatar_image"
             android:layout_width="150dp"
             android:layout_height="150dp"
@@ -19,8 +19,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="40dp"
+            android:padding="5dp"
+            app:shapeAppearanceOverlay="@style/circular_image"
+            app:strokeWidth="3dp"
+            app:strokeColor="@color/purple_logo"
             android:contentDescription="@string/avatar_description"
-            android:src="@drawable/baseline_account_circle_24"
             />
 
         <TextView

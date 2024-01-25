@@ -9,32 +9,31 @@
 
 
     <TextView
-        android:id="@+id/detailName"
+        android:id="@+id/sport_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="14dp"
-        android:text="Sport"
+        android:text="Nome Sport"
         android:textColor="@color/purple_first"
         android:textSize="24sp"
         android:textStyle="bold" />
 
     <androidx.cardview.widget.CardView
-        android:layout_width="160dp"
+        android:layout_width="150dp"
         android:layout_height="150dp"
         android:id="@+id/card_image"
-        android:layout_gravity="start"
-        android:layout_marginStart="15dp"
+        android:layout_gravity="center"
         app:cardCornerRadius="20dp"
-        app:cardElevation="8dp">
+        app:cardElevation="8dp"
+        android:layout_marginTop="15dp">
 
        <ImageView
-           android:layout_width="190dp"
-           android:layout_height="150dp"
-           android:id="@+id/detailImage"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/sport_image"
            android:layout_gravity="center"
-           android:src="@drawable/calcio"
-           android:scaleType="centerCrop"/>
+           android:scaleType="centerCrop" />
 
     </androidx.cardview.widget.CardView>
 

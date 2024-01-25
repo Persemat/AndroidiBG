@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.fragmentHome, R.id.fragmentSearch, R.id.fragmentAccount,
-                R.id.fragmentHistory).build();
+                R.id.fragmentHistory, R.id.fragmentSport).build();
 
         // For the Toolbar
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);

@@ -30,8 +30,15 @@
     <string name="default_web_client_id" translatable="false">1094300535160-u8m7htkg1p9n9mftc5b5hte4c9naa2s8.apps.googleusercontent.com</string>
     <string name="zero_prenotations_history">There are 0 history prenotations...</string>
     <string name="back_button" translatable="false">Back button</string>
-    <string name="calcetto_sport">Soccer</string>
-    <string name="players">n°player</string>
 
+    <string name="soccer">Soccer</string>
+    <string name="basket" translatable="false">Basket</string>
+    <string name="tennis" translatable="false">Tennis</string>
+    <string name="football" translatable="false">Football</string>
+    <string name="baseball" translatable="false">Baseball</string>
+    <string name="volleyball">Volleyball</string>
+    <string name="bowling" translatable="false">Bowling</string>
+    <string name="badminton" translatable="false">Badminton</string>
+    <string name="pool">Pool</string>
 
 </resources>

@@ -16,7 +16,11 @@
     <fragment
         android:id="@+id/fragmentSearch"
         android:name="it.unimib.sportq.ui.main.FragmentSearch"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_fragmentSearch_to_fragmentSport"
+            app:destination="@id/fragmentSport"/>
+    </fragment>
     <fragment
         android:id="@+id/fragmentAccount"
         android:name="it.unimib.sportq.ui.main.FragmentAccount"
@@ -44,5 +48,10 @@
         <action
             android:id="@+id/action_fragmentHistory_to_fragmentHome"
             app:destination="@id/fragmentHome" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentSport"
+        android:name="it.unimib.sportq.ui.main.FragmentSport"
+        tools:layout="@layout/fragment_sport" >
     </fragment>
 </navigation>

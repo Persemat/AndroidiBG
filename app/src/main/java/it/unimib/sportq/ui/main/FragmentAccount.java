@@ -1,16 +1,8 @@
 package it.unimib.sportq.ui.main;
 
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-import static androidx.core.content.ContextCompat.getSystemService;
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -30,9 +22,6 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -42,17 +31,11 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
 import it.unimib.sportq.R;
 import it.unimib.sportq.UserViewModel;
 import it.unimib.sportq.adapter.AvatarAdapter;
-import it.unimib.sportq.database.UserDao;
-import it.unimib.sportq.database.UserRoomDatabase;
 import it.unimib.sportq.model.User;
 import it.unimib.sportq.ui.welcome.LoginPage;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
-
 
 public class FragmentAccount extends Fragment {
 
@@ -73,7 +56,6 @@ public class FragmentAccount extends Fragment {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static FragmentAccount newInstance(String param1, String param2) {
         FragmentAccount fragment = new FragmentAccount();
         return fragment;

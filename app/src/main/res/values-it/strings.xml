@@ -23,8 +23,8 @@
     <string name="error">Qualcosa è andato storto</string>
     <string name="close">Chiudi</string>
     <string name="zero_prenotations_history">Ci sono 0 prenotazioni nello storico...</string>
-
-    <string name="calcetto_sport">Calcetto</string>
-    <string name="players">n°giocatori</string>
+    <string name="soccer">Calcio</string>
+    <string name="volleyball">Pallavolo</string>
+    <string name="pool">Biliardo</string>
 
 </resources>

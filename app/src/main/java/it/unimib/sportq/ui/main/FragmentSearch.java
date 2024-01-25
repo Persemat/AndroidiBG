@@ -6,9 +6,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import it.unimib.sportq.adapter.SearchRecyclerViewAdapter;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +31,7 @@ import it.unimib.sportq.model.Sport;
  * create an instance of this fragment.
  */
 public class FragmentSearch extends Fragment {
+    private static String TAG = FragmentSearch.class.getSimpleName();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -93,8 +98,17 @@ public class FragmentSearch extends Fragment {
                 new SearchRecyclerViewAdapter.OnItemClickListener(){
                     @Override
                     public void onSportItemClick(Sport sportList) {
-                       //da modificare, per ora come esempio
-                        Snackbar.make(view, sportList.getName(), Snackbar.LENGTH_SHORT).show();
+                        String sportName = sportList.getName();
+                        int sportImage = sportList.getImage();
+
+                        Log.d(TAG, "Sport name: " + sportName);
+                        Log.d(TAG, "Sport Image Id: " + sportImage);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("sportName", sportName);
+                        bundle.putInt("sportImage", sportImage);
+
+                        Navigation.findNavController(view).navigate(R.id.action_fragmentSearch_to_fragmentSport, bundle);
                     }
                 });
 
@@ -106,13 +120,15 @@ public class FragmentSearch extends Fragment {
         List<Sport> sportList = new ArrayList<>();
 
         // Aggiungi gli sport alla lista
-        sportList.add(new Sport("Calcio", R.drawable.calcio));
-        sportList.add(new Sport("Basket", R.drawable.calcio));
-        sportList.add(new Sport("Tennis", R.drawable.tennis));
-        sportList.add(new Sport("Football", R.drawable.football_avatar));
-        sportList.add(new Sport("Hockey", R.drawable.hockey_avatar));
-        sportList.add(new Sport("Pallavolo", R.drawable.pallavolo));
-        sportList.add(new Sport("Ping Pong", R.drawable.pingpong_avatar));
+        sportList.add(new Sport(getString(R.string.soccer), R.drawable.logo_calcio));
+        sportList.add(new Sport(getString(R.string.basket), R.drawable.logo_basket));
+        sportList.add(new Sport(getString(R.string.tennis), R.drawable.logo_tennis));
+        sportList.add(new Sport(getString(R.string.football), R.drawable.logo_football));
+        sportList.add(new Sport(getString(R.string.baseball), R.drawable.logo_baseball));
+        sportList.add(new Sport(getString(R.string.volleyball), R.drawable.logo_pallavolo));
+        sportList.add(new Sport(getString(R.string.bowling), R.drawable.logo_bowling));
+        sportList.add(new Sport(getString(R.string.badminton), R.drawable.logo_badminton));
+        sportList.add(new Sport(getString(R.string.pool), R.drawable.logo_biliardo));
 
         return sportList;
     }
