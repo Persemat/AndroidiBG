@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -33,11 +32,9 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 import java.util.HashMap;
 
-import it.unimib.sportq.UserViewModel;
+import it.unimib.sportq.AppViewModel;
 import it.unimib.sportq.ui.main.MainActivity;
 import it.unimib.sportq.R;
-import it.unimib.sportq.database.UserDao;
-import it.unimib.sportq.database.UserRoomDatabase;
 import it.unimib.sportq.model.User;
 
 public class    RegistrationPage extends AppCompatActivity {
@@ -52,7 +49,7 @@ public class    RegistrationPage extends AppCompatActivity {
     FirebaseDatabase database;
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN = 20;
-    private UserViewModel userViewModel;
+    private AppViewModel appViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +64,7 @@ public class    RegistrationPage extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         // Inizializzazione di userViewModel
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
 
         firstNameTextInputLayout = findViewById(R.id.text_input_layout_first_name);
         lastNameTextInputLayout = findViewById(R.id.text_input_layout_last_name);
@@ -118,7 +115,7 @@ public class    RegistrationPage extends AppCompatActivity {
                                     user.setFirst_name(first_name);
                                     user.setLast_name(last_name);
                                     user.setImage_avatar(idImageAvatar);
-                                    userViewModel.insert(user);
+                                    appViewModel.insertUser(user);
 
                                     Intent homeIntent = new Intent(RegistrationPage.this, MainActivity.class);
                                     startActivity(homeIntent);
@@ -182,7 +179,7 @@ public class    RegistrationPage extends AppCompatActivity {
                             database.getReference().child("users").child(firebaseUser.getUid()).setValue(map);
 
                             // Verifica se l'utente esiste nel database Room
-                            userViewModel.getUserByEmail(firebaseUser.getEmail()).observe(RegistrationPage.this, user -> {
+                            appViewModel.getUserByEmail(firebaseUser.getEmail()).observe(RegistrationPage.this, user -> {
                                 if (user == null) {
                                     // Se l'utente non esiste nel database Room
                                     // Salva i dati aggiuntivi ottenuti dall'account Google nel database Room
@@ -220,7 +217,7 @@ public class    RegistrationPage extends AppCompatActivity {
         newUser.setLast_name(lastName);
         newUser.setImage_avatar(R.drawable.baseline_account_circle_24);
 
-        userViewModel.insert(newUser);
+        appViewModel.insertUser(newUser);
     }
     @Override
     public void onStart() {

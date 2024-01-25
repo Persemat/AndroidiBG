@@ -3,7 +3,6 @@ package it.unimib.sportq.ui.welcome;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.HasDefaultViewModelProviderFactory;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -33,7 +32,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 import java.util.HashMap;
 
-import it.unimib.sportq.UserViewModel;
+import it.unimib.sportq.AppViewModel;
 import it.unimib.sportq.model.User;
 import it.unimib.sportq.ui.main.MainActivity;
 import it.unimib.sportq.R;
@@ -51,7 +50,7 @@ public class LoginPage extends AppCompatActivity {
     FirebaseDatabase database;
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN = 20;
-    UserViewModel userViewModel;
+    AppViewModel appViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +65,7 @@ public class LoginPage extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         // Inizializzazione di userViewModel
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
 
         emailTextInputLayout = findViewById(R.id.text_input_layout_email);
         passwordTextInputLayout = findViewById(R.id.text_input_layout_password);
@@ -102,7 +101,6 @@ public class LoginPage extends AppCompatActivity {
         googleLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 googleSignIn();
             }
         });
@@ -124,13 +122,13 @@ public class LoginPage extends AppCompatActivity {
                                     String userEmail = currentUser.getEmail();
 
                                     // Verifica se l'utente esiste nel database Room
-                                    userViewModel.getUserByEmail(userEmail).observe(LoginPage.this, user -> {
+                                    appViewModel.getUserByEmail(userEmail).observe(LoginPage.this, user -> {
                                         if (user == null) {
                                             // L'utente non esiste nel database Room, lo aggiungiamo
                                             User newUser = new User();
                                             // Dettagli dell'utente da Firebase
                                             // Inserimento User nel database
-                                            userViewModel.insert(newUser);
+                                            appViewModel.insertUser(newUser);
                                         }
 
                                         // Avvia l'Activity principale
@@ -195,7 +193,7 @@ public class LoginPage extends AppCompatActivity {
                             database.getReference().child("users").child(firebaseUser.getUid()).setValue(map);
 
                             // Verifica se l'utente esiste nel database Room
-                            userViewModel.getUserByEmail(firebaseUser.getEmail()).observe(LoginPage.this, user -> {
+                            appViewModel.getUserByEmail(firebaseUser.getEmail()).observe(LoginPage.this, user -> {
                                 if (user == null) {
                                     // Se l'utente non esiste nel database Room
                                     // Salva i dati aggiuntivi ottenuti dall'account Google nel database Room
@@ -233,7 +231,7 @@ public class LoginPage extends AppCompatActivity {
         newUser.setLast_name(lastName);
         newUser.setImage_avatar(R.drawable.baseline_account_circle_24);
 
-        userViewModel.insert(newUser);
+        appViewModel.insertUser(newUser);
     }
 
     @Override

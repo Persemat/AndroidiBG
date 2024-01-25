@@ -31,8 +31,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import it.unimib.sportq.AppViewModel;
 import it.unimib.sportq.R;
-import it.unimib.sportq.UserViewModel;
 import it.unimib.sportq.adapter.AvatarAdapter;
 import it.unimib.sportq.model.User;
 import it.unimib.sportq.ui.welcome.LoginPage;
@@ -50,7 +50,7 @@ public class FragmentAccount extends Fragment {
     FirebaseUser firebaseUser;
 
     LiveData<User> userLiveData;
-    UserViewModel userViewModel;
+    AppViewModel appViewModel;
 
     public FragmentAccount() {
         // Required empty public constructor
@@ -79,7 +79,7 @@ public class FragmentAccount extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         auth = FirebaseAuth.getInstance();
         firebaseUser = auth.getCurrentUser();
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
 
         Button logoutButton = view.findViewById(R.id.logout_button);
         Button deleteButton = view.findViewById(R.id.delete_account_button);
@@ -92,7 +92,7 @@ public class FragmentAccount extends Fragment {
             Log.d(TAG, "Utente Firebase non trovato");
             Navigation.findNavController(view).navigate(R.id.action_fragmentAccount_to_loginPage);
         } else {
-            userLiveData = userViewModel.getUserByEmail(firebaseUser.getEmail());
+            userLiveData = appViewModel.getUserByEmail(firebaseUser.getEmail());
 
             userLiveData.observe(getViewLifecycleOwner(), user -> {
                 if (user == null) {
@@ -126,11 +126,11 @@ public class FragmentAccount extends Fragment {
                                 Log.d(TAG, "User account deleted from Firebase.");
 
                                 // Ottenere l'utente dal database Room utilizzando ViewModel
-                                userLiveData = userViewModel.getUserByEmail(user.getEmail());
+                                userLiveData = appViewModel.getUserByEmail(user.getEmail());
                                 userLiveData.observe(getViewLifecycleOwner(), existingUser -> {
                                     if (existingUser != null) {
                                         // Eliminare l'utente dal database Room
-                                        userViewModel.delete(existingUser);
+                                        appViewModel.deleteUser(existingUser);
                                         Log.d(TAG, "User deleted from Room database.");
                                         signOutFromGoogle();
                                         Navigation.findNavController(item).navigate(R.id.action_fragmentAccount_to_registrationPage);
@@ -189,7 +189,7 @@ public class FragmentAccount extends Fragment {
                 // Ottieni l'ID dell'immagine cliccata
                 int selectedImageId = (int) view.getTag();
 
-                userLiveData = userViewModel.getUserByEmail(firebaseUser.getEmail());
+                userLiveData = appViewModel.getUserByEmail(firebaseUser.getEmail());
                 userLiveData.observe(getViewLifecycleOwner(), user -> {
                     if (user == null) {
                         Log.d(TAG, "Utente Room non trovato");
@@ -198,7 +198,7 @@ public class FragmentAccount extends Fragment {
                         user.setImage_avatar(selectedImageId);
                         // Log.d(TAG, "Avatar updated");
                         // Aggiorna l'utente nel ViewModel
-                        userViewModel.update(user);
+                        appViewModel.updateUser(user);
                         userLiveData.removeObservers(getViewLifecycleOwner());
                     }
                 });

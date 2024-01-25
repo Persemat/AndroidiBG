@@ -23,11 +23,11 @@ public interface UserDao {
     LiveData<User> getUserByEmail(String email);
 
     @Insert
-    void insertUser(User user);
+    void insert(User user);
 
     @Delete
-    void deleteUser(User user);
+    void delete(User user);
 
     @Update
-    void updateUser(User user);
+    void update(User user);
 }
