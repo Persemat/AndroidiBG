@@ -3,10 +3,11 @@ package it.unimib.sportq.ui.main;
 import android.app.Activity;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import it.unimib.sportq.model.ListData;
 import it.unimib.sportq.adapter.SearchRecyclerViewAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unimib.sportq.R;
+import it.unimib.sportq.model.Sport;
 
 
 /**
@@ -76,32 +78,42 @@ public class FragmentSearch extends Fragment {
 
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-    RecyclerView recyclerView = getView().findViewById(R.id.recycler_view);
-    RecyclerView.LayoutManager layoutManager =
-            new LinearLayoutManager(requireContext(),
-            LinearLayoutManager.VERTICAL, false);
+        RecyclerView recyclerViewSports = getView().findViewById(R.id.recycler_view);
+        RecyclerView.LayoutManager layoutManager =
+                new LinearLayoutManager(requireContext(),
+                        LinearLayoutManager.VERTICAL, false);
 
-   // List<ListData> dataList = getDataList();
+        List<Sport> sportList = getSportList();
 
-    /*SearchRecyclerViewAdapter searchRecyclerViewAdapter = new SearchRecyclerViewAdapter( dataList,
-            SearchRecyclerViewAdapter.OnItemClickListener(){
-                @Override
-                public void onSearchItemClick(ListData dataList) {
-                   //da modificare, per ora come esempio
-                    Snackbar.make(view, dataList.getSport(), Snackbar.LENGTH_SHORT.show());
-                }
-            });
+        SearchRecyclerViewAdapter searchRecyclerViewAdapter = new SearchRecyclerViewAdapter(sportList,
+                new SearchRecyclerViewAdapter.OnItemClickListener(){
+                    @Override
+                    public void onSportItemClick(Sport sportList) {
+                       //da modificare, per ora come esempio
+                        Snackbar.make(view, sportList.getName(), Snackbar.LENGTH_SHORT).show();
+                    }
+                });
 
+        recyclerViewSports.setLayoutManager(layoutManager);
+        recyclerViewSports.setAdapter(searchRecyclerViewAdapter);
 
-    
-
-    recyclerView.setLayoutManager(layoutManager);
-    recyclerView.setAdapter(searchRecyclerViewAdapter);
-
-    public List getDataList(){
-
-        return data;
     }
-    */
+    private List<Sport> getSportList() {
+        List<Sport> sportList = new ArrayList<>();
+
+        // Aggiungi gli sport alla lista
+        sportList.add(new Sport("Calcio", R.drawable.calcio));
+        sportList.add(new Sport("Basket", R.drawable.calcio));
+        sportList.add(new Sport("Tennis", R.drawable.tennis));
+        sportList.add(new Sport("Football", R.drawable.football_avatar));
+        sportList.add(new Sport("Hockey", R.drawable.hockey_avatar));
+        sportList.add(new Sport("Pallavolo", R.drawable.pallavolo));
+        sportList.add(new Sport("Ping Pong", R.drawable.pingpong_avatar));
+
+        return sportList;
+    }
 }

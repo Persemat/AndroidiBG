@@ -12,21 +12,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import it.unimib.sportq.R;
-import it.unimib.sportq.model.ListData;
+import it.unimib.sportq.model.Sport;
 
 
 public class SearchRecyclerViewAdapter extends
         RecyclerView.Adapter<SearchRecyclerViewAdapter.SearchViewHolder> {
 
     public interface OnItemClickListener{
-        void onSearchItemClick(ListData dataList);
+        void onSportItemClick(Sport sportList);
     }
-    private final List<ListData> dataList;
+    private final List<Sport> sportList;
     public final OnItemClickListener onItemClickListener;
 
 
-    public SearchRecyclerViewAdapter(List<ListData> dataList, OnItemClickListener onItemClickListener){
-        this.dataList = dataList;
+    public SearchRecyclerViewAdapter(List<Sport> sportList, OnItemClickListener onItemClickListener){
+        this.sportList = sportList;
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -41,13 +41,13 @@ public class SearchRecyclerViewAdapter extends
     //association between data and layout
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
-        holder.bind(dataList.get(position));
+        holder.bind(sportList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        if (dataList != null){
-            return dataList.size();
+        if (sportList != null){
+            return sportList.size();
         }
         return 0;
     }
@@ -57,27 +57,24 @@ public class SearchRecyclerViewAdapter extends
 
         private final ImageView imageView;
         private final TextView textViewSport;
-        private final TextView textViewPlayer;
 
         public SearchViewHolder(@NonNull View itemView){
             super(itemView);
             imageView = itemView.findViewById(R.id.view_image);
-            textViewPlayer = itemView.findViewById(R.id.view_player);
             textViewSport = itemView.findViewById(R.id.view_sport);
             itemView.setOnClickListener(this);
         }
 
         //method bind for binding the cell with the layout
-        public void bind(ListData listdata){
+        public void bind(Sport sportList){
             //qui devo associare i valori che voglio mostrare
-            textViewSport.setText(listdata.getSport());
-            textViewPlayer.setText(listdata.getSport());
-            imageView.setImageResource(listdata.getImage());
+            textViewSport.setText(sportList.getName());
+            imageView.setImageResource(sportList.getImage());
         }
 
         @Override
         public void onClick(View v) {
-            onItemClickListener.onSearchItemClick(dataList.get(getAdapterPosition()));
+            onItemClickListener.onSportItemClick(sportList.get(getAdapterPosition()));
         }
     }
 }
