@@ -37,9 +37,15 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="250sp"
+        android:id="@+id/recycler_view1"
+        android:scrollbars="vertical"
+        android:layout_marginTop="220dp"
+        android:layout_marginBottom="50dp"
+        tools:listitem="@layout/list_field"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="6.0sp"
         />
 </LinearLayout>
