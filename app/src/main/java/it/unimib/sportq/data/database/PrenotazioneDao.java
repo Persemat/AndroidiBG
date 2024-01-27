@@ -1,4 +1,4 @@
-package it.unimib.sportq.database;
+package it.unimib.sportq.data.database;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

@@ -1,4 +1,4 @@
-package it.unimib.sportq.repository;
+package it.unimib.sportq.data.repository;
 
 import android.app.Application;
 
@@ -8,13 +8,16 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import it.unimib.sportq.database.AppRoomDatabase;
-import it.unimib.sportq.database.PrenotazioneDao;
-import it.unimib.sportq.database.UserDao;
-import it.unimib.sportq.database.UserWithPrenotazioniDao;
+import it.unimib.sportq.data.database.AppRoomDatabase;
+import it.unimib.sportq.data.database.PrenotazioneDao;
+import it.unimib.sportq.data.database.UserDao;
+import it.unimib.sportq.data.database.UserWithPrenotazioniDao;
 import it.unimib.sportq.model.Prenotazione;
 import it.unimib.sportq.model.User;
-import it.unimib.sportq.model.UserWithPrenotazioni;
+
+
+//BISOGNA DIVIDERLA IN UserRepository e PrenotazioniRepository
+
 
 public class AppRepository {
     private UserDao mUserDao;

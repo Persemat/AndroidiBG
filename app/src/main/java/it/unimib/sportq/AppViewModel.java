@@ -9,8 +9,7 @@ import java.util.List;
 
 import it.unimib.sportq.model.Prenotazione;
 import it.unimib.sportq.model.User;
-import it.unimib.sportq.model.UserWithPrenotazioni;
-import it.unimib.sportq.repository.AppRepository;
+import it.unimib.sportq.data.repository.AppRepository;
 
 public class AppViewModel extends AndroidViewModel {
     private AppRepository appRepository;

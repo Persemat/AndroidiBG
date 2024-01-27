@@ -1,4 +1,4 @@
-package it.unimib.sportq.database;
+package it.unimib.sportq.data.database;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
