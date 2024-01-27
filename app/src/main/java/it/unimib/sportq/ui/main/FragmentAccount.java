@@ -111,7 +111,6 @@ public class FragmentAccount extends Fragment {
         // GESTIONE DEL CLICK DEL PULSANTE LOGOUT
         logoutButton.setOnClickListener(item -> {
             auth.getInstance().signOut();
-            signOutFromGoogle();
             Navigation.findNavController(item).navigate(R.id.action_fragmentAccount_to_loginPage);
         });
 
@@ -132,7 +131,6 @@ public class FragmentAccount extends Fragment {
                                         // Eliminare l'utente dal database Room
                                         appViewModel.deleteUser(existingUser);
                                         Log.d(TAG, "User deleted from Room database.");
-                                        signOutFromGoogle();
                                         Navigation.findNavController(item).navigate(R.id.action_fragmentAccount_to_registrationPage);
                                     }
                                 });
@@ -150,25 +148,6 @@ public class FragmentAccount extends Fragment {
 
     } // FINE METODO ONVIEWCREATED()
 
-    private void signOutFromGoogle() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(requireContext(), gso);
-
-        googleSignInClient.signOut()
-                .addOnCompleteListener(requireActivity(), new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Log.d(TAG, "User signed out from google.");
-                        Intent intent = new Intent(getActivity(), LoginPage.class);
-                        startActivity(intent);
-                        requireActivity().finish();
-                    }
-                });
-    }
     private void showPopup(View anchorView) {
 
         // Infla il layout del pop up
