@@ -2,14 +2,17 @@
 package it.unimib.sportq.ui.welcome;
 
 
+import static it.unimib.sportq.util.Constants.USER_COLLISION_ERROR;
+import static it.unimib.sportq.util.Constants.WEAK_PASSWORD_ERROR;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.widget.Button;
-
 
 
 import com.google.android.material.snackbar.Snackbar;
@@ -21,33 +24,36 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.apache.commons.validator.routines.EmailValidator;
 
 
-import it.unimib.sportq.AppViewModel;
+import it.unimib.sportq.data.repository.user.IUserRepository;
+import it.unimib.sportq.model.Result;
 import it.unimib.sportq.ui.main.MainActivity;
 import it.unimib.sportq.R;
 import it.unimib.sportq.model.User;
+import it.unimib.sportq.util.ServiceLocator;
 
 public class    RegistrationPage extends AppCompatActivity {
 
-    //private static String TAG = RegistrationPage.class.getSimpleName();
+    private static String TAG = RegistrationPage.class.getSimpleName();
     private TextInputLayout firstNameTextInputLayout;
     private TextInputLayout lastNameTextInputLayout;
     private TextInputLayout emailTextInputLayout;
     private TextInputLayout newPasswordTextInputLayout;
     private TextInputLayout confirmPasswordTextInputLayout;
-    FirebaseAuth mAuth;
-    FirebaseDatabase database;
-    private AppViewModel appViewModel;
+
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_page);
-        mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-
 
         // Inizializzazione di userViewModel
-        appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(this.getApplication());
+        userViewModel = new ViewModelProvider(
+                this,
+                new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+        userViewModel.setAuthenticationError(false);
 
         firstNameTextInputLayout = findViewById(R.id.text_input_layout_first_name);
         lastNameTextInputLayout = findViewById(R.id.text_input_layout_last_name);
@@ -77,32 +83,28 @@ public class    RegistrationPage extends AppCompatActivity {
 
             if (isNameCorrect(first_name) && isLastNameCorrect(last_name)
                     && isEmailCorrect(email) && isPasswordCorrect(new_password, confirm_password)) {
-                mAuth.createUserWithEmailAndPassword(email, confirm_password)
-                        .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                // Inserimento dell'utente nel database Room
-                                User user = new User();
-                                user.setEmail(email);
-                                user.setFirst_name(first_name);
-                                user.setLast_name(last_name);
-                                user.setImage_avatar(idImageAvatar);
-                                appViewModel.insertUser(user);
-
-                                Intent homeIntent = new Intent(RegistrationPage.this, MainActivity.class);
-                                startActivity(homeIntent);
-                                finish();
-                            }
-                            else {
-                                // If sign in fails, display a message to the user.
-                                // Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                Snackbar.make(
-                                        findViewById(android.R.id.content),
-                                        getString(R.string.authentication_failed),
-                                        Snackbar.LENGTH_SHORT).show();
-                            }
-                        });
+                if (!userViewModel.isAuthenticationError()) {
+                    userViewModel.getUserMutableLiveData(email, new_password, false).observe(
+                            this, result -> {
+                                if (result.isSuccess()) {
+                                    User user = ((Result.UserResponseSuccess) result).getData();
+                                    userViewModel.setAuthenticationError(false);
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    userViewModel.setAuthenticationError(true);
+                                    Snackbar.make(findViewById(android.R.id.content),
+                                            getErrorMessage(((Result.Error) result).getMessage()),
+                                            Snackbar.LENGTH_SHORT).show();
+                                }
+                            });
+                } else {
+                    userViewModel.getUser(email, new_password, false);
+                }
             }
             else {
+                userViewModel.setAuthenticationError(true);
                 Snackbar.make(
                         findViewById(android.R.id.content),
                         getString(R.string.error_data),
@@ -110,6 +112,17 @@ public class    RegistrationPage extends AppCompatActivity {
             }
         });
         // FINE GESTIONE PULSANTE SIGN UP
+
+    }
+    private String getErrorMessage(String message) {
+        switch(message) {
+            case WEAK_PASSWORD_ERROR:
+                return getString(R.string.error_password);
+            case USER_COLLISION_ERROR:
+                return getString(R.string.error_user_collision_message);
+            default:
+                return getString(R.string.unexpected_error);
+        }
     }
     @Override
     public void onStart() {

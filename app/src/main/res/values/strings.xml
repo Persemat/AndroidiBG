@@ -31,6 +31,12 @@
     <string name="zero_prenotations_history">There are 0 history prenotations...</string>
     <string name="back_button" translatable="false">Back button</string>
 
+    <string name="error_password" translatable="false">Password should be at least 8 characters</string>
+    <string name="error_user_collision_message" translatable="false">The email address is already in use by another account</string>
+    <string name="unexpected_error" translatable="false">Unexpected error</string>
+    <string name="error_login_user_message" translatable="false">There is no user record corresponding to this identifier</string>
+    <string name="error_login_password_message" translatable="false">The password is invalid</string>
+
     <string name="soccer">Soccer</string>
     <string name="basket" translatable="false">Basket</string>
     <string name="tennis" translatable="false">Tennis</string>

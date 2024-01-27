@@ -12,6 +12,8 @@ public class User {
     @PrimaryKey
     @NonNull
     private String email;
+    private String full_name;
+    private String id_token;
     @NonNull
     private String first_name;
     @NonNull
@@ -20,6 +22,28 @@ public class User {
     private int image_avatar;
 
     public User() {
+    }
+
+    public User(String full_name, @NonNull String email, String id_token) {
+        this.email = email;
+        this.full_name = full_name;
+        this.id_token = id_token;
+    }
+
+    public String getFull_name() {
+        return full_name;
+    }
+
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
+    }
+
+    public String getId_token() {
+        return id_token;
+    }
+
+    public void setId_token(String id_token) {
+        this.id_token = id_token;
     }
 
     @NonNull

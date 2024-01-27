@@ -1,6 +1,9 @@
 package it.unimib.sportq.ui.welcome;
 
-import androidx.annotation.NonNull;
+import static it.unimib.sportq.util.Constants.INVALID_CREDENTIALS_ERROR;
+import static it.unimib.sportq.util.Constants.INVALID_USER_ERROR;
+
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -8,7 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.Toast;
+
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -18,10 +21,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
-import it.unimib.sportq.AppViewModel;
+
+import it.unimib.sportq.data.repository.user.IUserRepository;
+import it.unimib.sportq.data.repository.user.UserRepository;
+import it.unimib.sportq.model.Result;
 import it.unimib.sportq.model.User;
 import it.unimib.sportq.ui.main.MainActivity;
 import it.unimib.sportq.R;
+import it.unimib.sportq.util.ServiceLocator;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -33,20 +40,19 @@ public class LoginPage extends AppCompatActivity {
     Button loginButton;
     Button googleLoginButton;
     Button forgotPasswordButton;
-    FirebaseAuth mAuth;
-    FirebaseDatabase database;
-    AppViewModel appViewModel;
+    UserViewModel userViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
 
-        mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-
 
         // Inizializzazione di userViewModel
-        appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(this.getApplication());
+        userViewModel = new ViewModelProvider(
+                this,
+                new UserViewModelFactory(userRepository)).get(UserViewModel.class);
 
         emailTextInputLayout = findViewById(R.id.text_input_layout_email);
         passwordTextInputLayout = findViewById(R.id.text_input_layout_password);
@@ -56,7 +62,7 @@ public class LoginPage extends AppCompatActivity {
         forgotPasswordButton = findViewById(R.id.button_forgot_password);
 
         // GESTIONE CLICK PASSWORD DIMENTICATA
-        forgotPasswordButton.setOnClickListener(item -> {
+        /*forgotPasswordButton.setOnClickListener(item -> {
             String email = emailTextInputLayout.getEditText().getText().toString();
             if (isEmailCorrect(email)) {
                 mAuth.sendPasswordResetEmail(email)
@@ -66,7 +72,7 @@ public class LoginPage extends AppCompatActivity {
                             }
                         });
             }
-        });
+        });*/
 
         // CLICCANDO SU IL PULSANTE DI SIGN UP SI PASSA ALLA SCHERMATA DI SIGN UP
         signUpButton.setOnClickListener(item -> {
@@ -82,37 +88,26 @@ public class LoginPage extends AppCompatActivity {
             String password = passwordTextInputLayout.getEditText().getText().toString();
 
             if (isEmailCorrect(email) && isPasswordCorrect(password)) {
-                mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            FirebaseUser currentUser = mAuth.getCurrentUser();
-                            if (currentUser != null) {
-                                String userEmail = currentUser.getEmail();
-
-                                // Verifica se l'utente esiste nel database Room
-                                appViewModel.getUserByEmail(userEmail).observe(LoginPage.this, user -> {
-                                    if (user == null) {
-                                        // L'utente non esiste nel database Room, lo aggiungiamo
-                                        User newUser = new User();
-                                        // Dettagli dell'utente da Firebase
-                                        // Inserimento User nel database
-                                        appViewModel.insertUser(newUser);
-                                    }
-
-                                    // Avvia l'Activity principale
-                                    Intent intent = new Intent(LoginPage.this, MainActivity.class);
+                if (!userViewModel.isAuthenticationError()) {
+                    userViewModel.getUserMutableLiveData(email, password, true).observe(
+                            this, result -> {
+                                if (result.isSuccess()) {
+                                    User user = ((Result.UserResponseSuccess) result).getData();
+                                    userViewModel.setAuthenticationError(false);
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);
                                     finish();
-                                });
-                            }
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Snackbar.make(
-                                    findViewById(android.R.id.content),
-                                    getString(R.string.authentication_failed),
-                                    Snackbar.LENGTH_SHORT).show();
-                        }
-                    });
+                                } else {
+                                    userViewModel.setAuthenticationError(true);
+                                    Snackbar.make(findViewById(android.R.id.content),
+                                            getErrorMessage(((Result.Error) result).getMessage()),
+                                            Snackbar.LENGTH_SHORT).show();
+                                }
+                            });
+
+                } else {
+                    userViewModel.getUser(email, password, true);
+                }
             } else {
                 Snackbar.make(
                         findViewById(android.R.id.content),
@@ -121,7 +116,16 @@ public class LoginPage extends AppCompatActivity {
             }
         }); // FINE GESTIONE PULSANTE LOGIN
     }
-
+    private String getErrorMessage(String errorType) {
+        switch (errorType) {
+            case INVALID_CREDENTIALS_ERROR:
+                return getString(R.string.error_login_password_message);
+            case INVALID_USER_ERROR:
+                return getString(R.string.error_login_user_message);
+            default:
+                return getString(R.string.unexpected_error);
+        }
+    }
     @Override
     public void onStart() {
         super.onStart();
