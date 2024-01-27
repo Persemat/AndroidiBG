@@ -25,6 +25,7 @@ import it.unimib.sportq.R;
 
 public class LoginPage extends AppCompatActivity {
 
+
     private static final String TAG = LoginPage.class.getSimpleName();
     private TextInputLayout emailTextInputLayout;
     private TextInputLayout passwordTextInputLayout;
