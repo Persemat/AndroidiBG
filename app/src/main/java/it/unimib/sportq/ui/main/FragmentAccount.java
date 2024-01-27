@@ -34,8 +34,12 @@ import com.google.firebase.auth.FirebaseUser;
 import it.unimib.sportq.AppViewModel;
 import it.unimib.sportq.R;
 import it.unimib.sportq.adapter.AvatarAdapter;
+import it.unimib.sportq.data.repository.user.IUserRepository;
 import it.unimib.sportq.model.User;
 import it.unimib.sportq.ui.welcome.LoginPage;
+import it.unimib.sportq.ui.welcome.UserViewModel;
+import it.unimib.sportq.ui.welcome.UserViewModelFactory;
+import it.unimib.sportq.util.ServiceLocator;
 
 public class FragmentAccount extends Fragment {
 
@@ -48,9 +52,9 @@ public class FragmentAccount extends Fragment {
 
     FirebaseAuth auth;
     FirebaseUser firebaseUser;
-
-    LiveData<User> userLiveData;
     AppViewModel appViewModel;
+
+    private UserViewModel userViewModel;
 
     public FragmentAccount() {
         // Required empty public constructor
@@ -77,12 +81,16 @@ public class FragmentAccount extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        auth = FirebaseAuth.getInstance();
-        firebaseUser = auth.getCurrentUser();
-        appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
+
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(requireActivity().getApplication());
+        userViewModel = new ViewModelProvider(
+                requireActivity(),
+                new UserViewModelFactory(userRepository)).get(UserViewModel.class);
 
         Button logoutButton = view.findViewById(R.id.logout_button);
         Button deleteButton = view.findViewById(R.id.delete_account_button);
+        /*
         first_name = view.findViewById(R.id.user_firstname);
         last_name = view.findViewById(R.id.user_lastname);
         avatar = view.findViewById(R.id.avatar_image);
@@ -107,13 +115,23 @@ public class FragmentAccount extends Fragment {
                 }
             });
         }
+        */
 
         // GESTIONE DEL CLICK DEL PULSANTE LOGOUT
-        logoutButton.setOnClickListener(item -> {
-            auth.getInstance().signOut();
-            Navigation.findNavController(item).navigate(R.id.action_fragmentAccount_to_loginPage);
+        logoutButton.setOnClickListener(v -> {
+            userViewModel.logout().observe(getViewLifecycleOwner(), result -> {
+                if (result.isSuccess()) {
+                    Navigation.findNavController(view).navigate(
+                            R.id.action_fragmentAccount_to_loginPage);
+                } else {
+                    Snackbar.make(view,
+                            requireActivity().getString(R.string.unexpected_error),
+                            Snackbar.LENGTH_SHORT).show();
+                }
+            });
         });
 
+        /*
         // GESTIONE DEL CLICK DEL PULSANTE DELETE ACCOUNT
         deleteButton.setOnClickListener(item -> {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -143,11 +161,13 @@ public class FragmentAccount extends Fragment {
                         });
             }
         });
+         */
         // GESTIONE DEL CLICK DELL'IMMAGINE AVATAR
-        avatar.setOnClickListener(v -> showPopup(v));
+        // avatar.setOnClickListener(v -> showPopup(v));
 
     } // FINE METODO ONVIEWCREATED()
 
+    /*
     private void showPopup(View anchorView) {
 
         // Infla il layout del pop up
@@ -195,13 +215,9 @@ public class FragmentAccount extends Fragment {
             popupWindow.dismiss(); // Chiudi il popup
         });
     }
-
+*/
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        // Rimuovi tutti gli Observer associati a userLiveData
-        if (userLiveData != null) {
-            userLiveData.removeObservers(getViewLifecycleOwner());
-        }
     }
 }
