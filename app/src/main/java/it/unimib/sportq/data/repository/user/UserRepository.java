@@ -1,5 +1,7 @@
 package it.unimib.sportq.data.repository.user;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import it.unimib.sportq.data.source.user.BaseUserAuthenticationRemoteDataSource;
@@ -41,6 +43,12 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
         userRemoteDataSource.logout();
         return userMutableLiveData;
     }
+    @Override
+    public MutableLiveData<Result> deleteAccount() {
+        Log.d(TAG, "PENE1REPOSITRIIR");
+        userRemoteDataSource.deleteAccount();
+        return userMutableLiveData;
+    }
 
     @Override
     public User getLoggedUser() {
@@ -71,34 +79,26 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
     }
 
     @Override
-    public void onSuccessFromRemoteDatabase(User user) {
+    public void onSuccessFromRemoteDatabase(User user) {Log.d(TAG, "PENE1ONsuccessfromremotedatabaseaseasease");
         Result.UserResponseSuccess result = new Result.UserResponseSuccess(user);
         userMutableLiveData.postValue(result);
     }
 
     @Override
-    public void onSuccessFromRemoteDatabase(String Name) {
-
-    }
-
-    @Override
-    public void onSuccessFromGettingUserFirstName() {
-
-    }
-
-    @Override
-    public void onSuccessFromGettingUserLastName() {
-
-    }
-
-    @Override
     public void onFailureFromRemoteDatabase(String message) {
-
+        Result.Error result = new Result.Error(message);
+        userMutableLiveData.postValue(result);
     }
 
     @Override
     public void onSuccessLogout() {
-        Result.UserResponseSuccess result = new Result.UserResponseSuccess(null);
+        Log.d(TAG, "onSuccessLogout called");
+        Result.UserResponseSuccess result = new Result.UserResponseSuccess(new User());
         userMutableLiveData.postValue(result);
+    }
+
+    @Override
+    public void onSuccessDeleteUser(String idToken) {Log.d(TAG, "PENE1successssdeleeeeeeteee");
+        userDataRemoteDataSource.deleteUser(idToken);
     }
 }

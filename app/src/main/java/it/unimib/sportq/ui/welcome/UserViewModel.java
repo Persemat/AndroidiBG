@@ -1,6 +1,8 @@
 package it.unimib.sportq.ui.welcome;
 
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -65,6 +67,19 @@ public class UserViewModel extends ViewModel {
 
         return userMutableLiveData;
     }
+
+    public MutableLiveData<Result> deleteAccount() {
+        Log.d(TAG, "PENE1VIEWMODEL");
+        if (userMutableLiveData == null) {
+            userMutableLiveData = userRepository.deleteAccount();
+        } else {
+            userRepository.deleteAccount();
+        }
+
+        return userMutableLiveData;
+    }
+
+
     public User getLoggedUser() {
         return userRepository.getLoggedUser();
     }

@@ -1,5 +1,7 @@
 package it.unimib.sportq.data.source.user;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
@@ -57,6 +59,23 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
         firebaseAuth.addAuthStateListener(authStateListener);
         firebaseAuth.signOut();
     }
+
+    public void deleteAccount() {Log.d(TAG, "PENE1userauthAAAAA");
+
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+        firebaseUser.delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "User account deleted.");
+                            userResponseCallback.onSuccessDeleteUser(firebaseUser.getUid());
+                        }
+                    }
+                });
+    }
+
 
     @Override
     public void signUp(String firstName, String lastName, String email, String password) {

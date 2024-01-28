@@ -8,12 +8,10 @@ public interface UserResponseCallback {
     void onFailureFromAuthentication(String message);
     void onSuccessFromRemoteDatabase(User user);
 
-    void onSuccessFromRemoteDatabase(String Name);
-    void onSuccessFromGettingUserFirstName();
-    void onSuccessFromGettingUserLastName();
-
     void onFailureFromRemoteDatabase(String message);
     void onSuccessLogout();
+
+    void onSuccessDeleteUser(String idToken);
 
     // gestione callback utenti in locale
 }

@@ -9,8 +9,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -64,6 +66,27 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
                 userResponseCallback.onFailureFromRemoteDatabase(error.getMessage());
             }
         });
+    }
+
+    @Override
+    public void deleteUser(String idToken) {Log.d(TAG, "PENE1userdataremOTEEE");
+
+        databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken)
+                .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        // Utente eliminato con successo
+                        Log.d(TAG, "User deleted from the database");
+                        userResponseCallback.onSuccessFromRemoteDatabase(new User(idToken));
+                    } else {
+                        // Errore durante l'eliminazione dell'utente
+                        Log.e(TAG, "Error deleting user from the database", task.getException());
+                        userResponseCallback.onFailureFromRemoteDatabase(task.getException().getLocalizedMessage());
+
+                    }
+                }
+            });
     }
 
     public void getUserData(String idToken)

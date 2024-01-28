@@ -30,6 +30,10 @@ public class User {
         this.id_token=id_token;
     }
 
+    public User(String idToken) {
+        this.id_token = idToken;
+    }
+
     public String getFirstName() {
         return firstName;
     }
