@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -133,7 +134,7 @@ public class FragmentAccount extends Fragment {
             });
         });
         // GESTIONE DEL CLICK DELL'IMMAGINE AVATAR
-        // avatar.setOnClickListener(v -> showPopup(v));
+        avatar.setOnClickListener(v -> showPopup(v));
 
     } // FINE METODO ONVIEWCREATED()
     private String getErrorMessage(String errorType) {
@@ -142,7 +143,7 @@ public class FragmentAccount extends Fragment {
                 return getString(R.string.unexpected_error);
         }
     }
-    /*
+
     private void showPopup(View anchorView) {
 
         // Infla il layout del pop up
@@ -156,28 +157,31 @@ public class FragmentAccount extends Fragment {
         // Creazione e impostazione dell'adapter per il gridView
         AvatarAdapter adapter = new AvatarAdapter(anchorView.getContext());
         gridView.setAdapter(adapter);
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "onItemClick() triggered");
                 // Ottieni l'ID dell'immagine cliccata
                 int selectedImageId = (int) view.getTag();
-
-                userLiveData = appViewModel.getUserByEmail(firebaseUser.getEmail());
-                userLiveData.observe(getViewLifecycleOwner(), user -> {
-                    if (user == null) {
-                        Log.d(TAG, "Utente Room non trovato");
-                    } else {
-                        // Aggiorna l'avatar dell'utente con l'ID dell'immagine selezionata
-                        user.setImage_avatar(selectedImageId);
-                        // Log.d(TAG, "Avatar updated");
-                        // Aggiorna l'utente nel ViewModel
-                        appViewModel.updateUser(user);
-                        userLiveData.removeObservers(getViewLifecycleOwner());
-                    }
-                });
+                userViewModel.getUserMutableLiveData(userViewModel.getLoggedUser().getId_token()).observe(
+                        getViewLifecycleOwner(), result -> {
+                            if (result.isSuccess()) {
+                                User user = ((Result.UserResponseSuccess) result).getData();
+                                userViewModel.setUserAvatar(user.getId_token(), selectedImageId);
+                                Context context = view.getContext();
+                                Drawable drawable = ContextCompat.getDrawable(context, selectedImageId);
+                                avatar.setImageDrawable(drawable);
+                                popupWindow.dismiss();
+                            } else {
+                                Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                        getErrorMessage(((Result.Error) result).getMessage()),
+                                        Snackbar.LENGTH_SHORT).show();
+                            }
+                        });
             }
         });
+
 
         // animazione di entrata se lo desideri
         popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
@@ -190,7 +194,7 @@ public class FragmentAccount extends Fragment {
             popupWindow.dismiss(); // Chiudi il popup
         });
     }
-*/
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

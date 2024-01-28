@@ -55,6 +55,11 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
     }
 
     @Override
+    public void setUserAvatar(String idToken, int selectedImage) {
+        userDataRemoteDataSource.setUserAvatar(idToken, selectedImage);
+    }
+
+    @Override
     public void signUp(String firstName, String lastName, String email, int id_avatar, String password) {
         userRemoteDataSource.signUp(firstName, lastName, email, id_avatar, password);
     }

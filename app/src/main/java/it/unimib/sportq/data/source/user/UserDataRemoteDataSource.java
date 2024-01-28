@@ -69,7 +69,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
     }
 
     @Override
-    public void deleteUser(String idToken) {Log.d(TAG, "PENE1userdataremOTEEE");
+    public void deleteUser(String idToken) {
 
         databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken)
                 .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -101,5 +101,18 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
                 userResponseCallback.onSuccessFromRemoteDatabase(user);
             }
         });
+    }
+
+    public void setUserAvatar(String idToken, int selectedImage){
+        databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).child("id_avatar").setValue(selectedImage)
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.e(TAG, "Errore nell'aggiornamento di id_avatar", task.getException());
+                        userResponseCallback.onFailureFromRemoteDatabase(task.getException().getLocalizedMessage());
+                    } else {
+                        Log.d(TAG, "id_avatar aggiornato con successo");
+                        getUserData(idToken);
+                    }
+                });
     }
 }

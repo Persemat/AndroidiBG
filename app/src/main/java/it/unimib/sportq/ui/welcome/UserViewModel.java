@@ -79,6 +79,9 @@ public class UserViewModel extends ViewModel {
         return userMutableLiveData;
     }
 
+    public void setUserAvatar(String idToken, int selectedImage){
+        userRepository.setUserAvatar(idToken, selectedImage);
+    }
 
     public User getLoggedUser() {
         return userRepository.getLoggedUser();
