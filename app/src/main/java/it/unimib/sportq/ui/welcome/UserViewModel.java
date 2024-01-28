@@ -69,7 +69,6 @@ public class UserViewModel extends ViewModel {
     }
 
     public MutableLiveData<Result> deleteAccount() {
-        Log.d(TAG, "PENE1VIEWMODEL");
         if (userMutableLiveData == null) {
             userMutableLiveData = userRepository.deleteAccount();
         } else {
@@ -79,8 +78,9 @@ public class UserViewModel extends ViewModel {
         return userMutableLiveData;
     }
 
-    public void setUserAvatar(String idToken, int selectedImage){
-        userRepository.setUserAvatar(idToken, selectedImage);
+    public MutableLiveData<Result> setUserAvatar(User user, int selectedImage){
+        userRepository.setUserAvatar(user, selectedImage);
+        return userMutableLiveData;
     }
 
     public User getLoggedUser() {

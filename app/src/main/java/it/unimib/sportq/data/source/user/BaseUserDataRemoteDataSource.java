@@ -11,6 +11,6 @@ public abstract class BaseUserDataRemoteDataSource {
     public abstract void getUserData(String idToken);
     public abstract void saveUserData(User user);
     public abstract void deleteUser(String idToken);
-    public abstract void setUserAvatar(String idToken, int selectedImage);
+    public abstract void setUserAvatar(User user, int selectedImage);
 
 }

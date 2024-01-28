@@ -55,8 +55,9 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
     }
 
     @Override
-    public void setUserAvatar(String idToken, int selectedImage) {
-        userDataRemoteDataSource.setUserAvatar(idToken, selectedImage);
+    public MutableLiveData<Result> setUserAvatar(User user, int selectedImage) {
+        userDataRemoteDataSource.setUserAvatar(user, selectedImage);
+        return userMutableLiveData;
     }
 
     @Override
@@ -68,7 +69,7 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
     public void signIn(String email, String password) {
         userRemoteDataSource.signIn(email, password);
     }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void onSuccessFromAuthentication(User user) {
         if (user != null) {

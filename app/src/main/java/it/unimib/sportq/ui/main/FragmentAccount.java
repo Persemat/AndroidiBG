@@ -46,7 +46,6 @@ public class FragmentAccount extends Fragment {
     private ImageView avatar;
     private TextView first_name;
     private TextView last_name;
-
     private UserViewModel userViewModel;
 
     public FragmentAccount() {
@@ -75,6 +74,7 @@ public class FragmentAccount extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         IUserRepository userRepository = ServiceLocator.getInstance().
                 getUserRepository(requireActivity().getApplication());
         userViewModel = new ViewModelProvider(
@@ -97,6 +97,7 @@ public class FragmentAccount extends Fragment {
                         last_name.setText(user.getLastName());
                         email.setText(user.getEmail());
                         int resourceId = user.getId_avatar();
+                        Log.d(TAG, "RISORSASA"+ resourceId);
                         Context context = view.getContext();
                         Drawable drawable = ContextCompat.getDrawable(context, resourceId);
                         avatar.setImageDrawable(drawable);
@@ -164,15 +165,23 @@ public class FragmentAccount extends Fragment {
                 Log.d(TAG, "onItemClick() triggered");
                 // Ottieni l'ID dell'immagine cliccata
                 int selectedImageId = (int) view.getTag();
+                Log.d(TAG, "Selected Image ID: " + selectedImageId);
                 userViewModel.getUserMutableLiveData(userViewModel.getLoggedUser().getId_token()).observe(
                         getViewLifecycleOwner(), result -> {
                             if (result.isSuccess()) {
                                 User user = ((Result.UserResponseSuccess) result).getData();
-                                userViewModel.setUserAvatar(user.getId_token(), selectedImageId);
-                                Context context = view.getContext();
-                                Drawable drawable = ContextCompat.getDrawable(context, selectedImageId);
-                                avatar.setImageDrawable(drawable);
-                                popupWindow.dismiss();
+                                userViewModel.setUserAvatar(user, selectedImageId).observe(
+                                        getViewLifecycleOwner(), result1 -> {
+                                            if(result1.isSuccess())
+                                            {
+                                                Context context = view.getContext();
+                                                Drawable drawable = ContextCompat.getDrawable(context, selectedImageId);
+                                                avatar.setImageDrawable(drawable);
+                                                popupWindow.dismiss();
+                                            }
+                                        }
+                                );
+
                             } else {
                                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
                                         getErrorMessage(((Result.Error) result).getMessage()),

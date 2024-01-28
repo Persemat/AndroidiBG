@@ -103,15 +103,16 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
         });
     }
 
-    public void setUserAvatar(String idToken, int selectedImage){
-        databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).child("id_avatar").setValue(selectedImage)
+    public void setUserAvatar(User user, int selectedImage){
+        databaseReference.child(FIREBASE_USERS_COLLECTION).child(user.getId_token()).child("id_avatar").setValue(selectedImage)
                 .addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
                         Log.e(TAG, "Errore nell'aggiornamento di id_avatar", task.getException());
                         userResponseCallback.onFailureFromRemoteDatabase(task.getException().getLocalizedMessage());
                     } else {
                         Log.d(TAG, "id_avatar aggiornato con successo");
-                        getUserData(idToken);
+                        Log.d(TAG, "id aggiornato"+ user.getId_token());
+                        //userResponseCallback.onSuccessFromRemoteDatabase(user);
                     }
                 });
     }

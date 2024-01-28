@@ -12,7 +12,7 @@ public interface IUserRepository {
     MutableLiveData<Result> logout();
     MutableLiveData<Result> deleteAccount();
     User getLoggedUser();
-    void setUserAvatar(String idToken, int selectedImage);
+    MutableLiveData<Result> setUserAvatar(User user, int selectedImage);
     void signUp(String firstName, String lastName, String email, int id_avatar, String password);
     void signIn(String email, String password);
 }

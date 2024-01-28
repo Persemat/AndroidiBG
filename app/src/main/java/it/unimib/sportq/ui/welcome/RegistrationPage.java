@@ -79,7 +79,7 @@ public class    RegistrationPage extends AppCompatActivity {
             String new_password = newPasswordTextInputLayout.getEditText().getText().toString();
             String confirm_password = confirmPasswordTextInputLayout.getEditText().getText().toString();
             int idImageAvatar = R.drawable.baseline_account_circle_24;
-            // Log.d(TAG, "Id Avatar: " + idImageAvatar);
+            Log.d(TAG, "Id Avatar: " + idImageAvatar);
 
             if (isNameCorrect(first_name) && isLastNameCorrect(last_name)
                     && isEmailCorrect(email) && isPasswordCorrect(new_password, confirm_password)) {
