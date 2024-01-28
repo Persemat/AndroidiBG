@@ -12,24 +12,38 @@ public class User {
     @PrimaryKey
     @NonNull
     private String email;
-    private String full_name;
+    private String firstName;
+    private String lastName;
     private String id_token;
 
     public User() {
     }
 
-    public User(String full_name, @NonNull String email, String id_token) {
-        this.email = email;
-        this.full_name = full_name;
-        this.id_token = id_token;
+    public User(String firstName,String lastName, @NonNull String email, String id_token) {
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.email=email;
+        this.id_token=id_token;
+    }
+    public User(@NonNull String email, String id_token) {
+        this.email=email;
+        this.id_token=id_token;
     }
 
-    public String getFull_name() {
-        return full_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getId_token() {
@@ -53,7 +67,8 @@ public class User {
     public String toString() {
         return "User{" +
                 "email='" + email + '\'' +
-                ", full_name='" + full_name + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", id_token='" + id_token + '\'' +
                 '}';
     }

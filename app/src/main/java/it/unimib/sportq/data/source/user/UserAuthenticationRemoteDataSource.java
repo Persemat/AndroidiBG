@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
 
+import static it.unimib.sportq.util.Constants.FIRST_NAME;
 import static it.unimib.sportq.util.Constants.INVALID_CREDENTIALS_ERROR;
 import static it.unimib.sportq.util.Constants.INVALID_USER_ERROR;
 import static it.unimib.sportq.util.Constants.UNEXPECTED_ERROR;
@@ -37,7 +38,7 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
         if (firebaseUser == null) {
             return null;
         } else {
-            return new User(firebaseUser.getDisplayName(),firebaseUser.getEmail(), firebaseUser.getUid());
+            return new User(firebaseUser.getEmail(), firebaseUser.getUid());
         }
     }
 
@@ -58,13 +59,13 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
     }
 
     @Override
-    public void signUp(String email, String password) {
+    public void signUp(String firstName, String lastName, String email, String password) {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null) {
                     userResponseCallback.onSuccessFromAuthentication(
-                            new User(firebaseUser.getDisplayName(),email, firebaseUser.getUid())
+                            new User(firstName, lastName, email, firebaseUser.getUid())
                     );
                 } else {
                     userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
@@ -82,7 +83,7 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null) {
                     userResponseCallback.onSuccessFromAuthentication(
-                            new User(firebaseUser.getDisplayName(),email, firebaseUser.getUid())
+                            new User(email, firebaseUser.getUid())
                     );
                 } else {
                     userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -65,21 +66,17 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
         });
     }
 
-    @Override
-    public void saveUserDetails(String idToken, String firstName, String lastName) {
-        databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
-                child(FIRST_NAME).setValue(firstName);
-        databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).
-                child(LAST_NAME).setValue(lastName);
-    }
-
-    @Override
-    public void getFirstName(String idToken) {
-
-    }
-
-    @Override
-    public void getLastName(String idToken) {
-
+    public void getUserData(String idToken)
+    {
+        databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).get().addOnCompleteListener(task -> {
+            if(!task.isSuccessful())
+            {
+                Log.d(TAG, "error getting data", task.getException());
+                userResponseCallback.onFailureFromRemoteDatabase(task.getException().getLocalizedMessage());
+            } else {
+                User user = task.getResult().getValue(User.class);
+                userResponseCallback.onSuccessFromRemoteDatabase(user);
+            }
+        });
     }
 }

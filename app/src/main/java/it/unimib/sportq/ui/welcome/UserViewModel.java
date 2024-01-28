@@ -31,16 +31,29 @@ public class UserViewModel extends ViewModel {
         }
         return userMutableLiveData;
     }
+    public MutableLiveData<Result> getUserMutableLiveData(String firstName, String lastName, String email, String password, boolean isUserRegistered) {
+        if (userMutableLiveData == null) {
+            getUserData(firstName, lastName, email, password, isUserRegistered);
+        }
+        return userMutableLiveData;
+    }
+    public MutableLiveData<Result> getUserMutableLiveData(String idToken) {
+        if (userMutableLiveData == null) {
+            getUserData(idToken);
+        }
+        return userMutableLiveData;
+    }
     private void getUserData(String email, String password, boolean isUserRegistered) {
         userMutableLiveData = userRepository.getUser(email, password, isUserRegistered);
     }
-
+    private void getUserData(String firstName, String lastName, String email, String password, boolean isUserRegistered) {
+        userMutableLiveData = userRepository.getUser(firstName, lastName, email, password, isUserRegistered);
+    }
+    private void getUserData(String idToken) {
+        userMutableLiveData = userRepository.getUserData(idToken);
+    }
     public void getUser(String email, String password, boolean isUserRegistered) {
         userRepository.getUser(email, password, isUserRegistered);
-    }
-
-    public void saveUserDetails(String userIdToken, String firstName, String LastName) {
-        userRepository.saveUserDetails(userIdToken, firstName, LastName);
     }
 
     public MutableLiveData<Result> logout() {

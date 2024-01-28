@@ -84,12 +84,12 @@ public class    RegistrationPage extends AppCompatActivity {
             if (isNameCorrect(first_name) && isLastNameCorrect(last_name)
                     && isEmailCorrect(email) && isPasswordCorrect(new_password, confirm_password)) {
                 if (!userViewModel.isAuthenticationError()) {
-                    userViewModel.getUserMutableLiveData(email, new_password, false).observe(
+                    userViewModel.getUserMutableLiveData(first_name, last_name, email, new_password, false).observe(
                             this, result -> {
                                 if (result.isSuccess()) {
                                     User user = ((Result.UserResponseSuccess) result).getData();
                                     Log.d(TAG, user.toString());
-                                    userViewModel.saveUserDetails(user.getId_token(), first_name, last_name);
+
                                     userViewModel.setAuthenticationError(false);
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);

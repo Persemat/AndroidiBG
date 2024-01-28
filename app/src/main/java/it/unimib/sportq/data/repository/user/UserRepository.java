@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import it.unimib.sportq.data.source.user.BaseUserAuthenticationRemoteDataSource;
 import it.unimib.sportq.data.source.user.BaseUserDataRemoteDataSource;
-import it.unimib.sportq.data.source.user.UserDataRemoteDataSource;
 import it.unimib.sportq.model.Result;
 import it.unimib.sportq.model.User;
 
@@ -26,18 +25,17 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
 
     @Override
     public MutableLiveData<Result> getUser(String email, String password, boolean isUserRegistered) {
-        if (isUserRegistered) {
-            signIn(email, password);
-        } else {
-            signUp(email, password);
-        }
+        signIn(email, password);
         return userMutableLiveData;
     }
-
-    public void saveUserDetails(String userIdToken, String firstName, String lastName) {
-        userDataRemoteDataSource.saveUserDetails(userIdToken, firstName, lastName);
+    public MutableLiveData<Result> getUser(String firstName, String lastName, String email, String password, boolean isUserRegistered) {
+        signUp(firstName, lastName, email, password);
+        return userMutableLiveData;
     }
-
+    public MutableLiveData<Result> getUserData(String idToken){
+        userDataRemoteDataSource.getUserData(idToken);
+        return userMutableLiveData;
+    }
     @Override
     public MutableLiveData<Result> logout() {
         userRemoteDataSource.logout();
@@ -50,8 +48,8 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
     }
 
     @Override
-    public void signUp(String email, String password) {
-        userRemoteDataSource.signUp(email, password);
+    public void signUp(String firstName, String lastName, String email, String password) {
+        userRemoteDataSource.signUp(firstName, lastName, email, password);
     }
 
     @Override
@@ -74,6 +72,12 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
 
     @Override
     public void onSuccessFromRemoteDatabase(User user) {
+        Result.UserResponseSuccess result = new Result.UserResponseSuccess(user);
+        userMutableLiveData.postValue(result);
+    }
+
+    @Override
+    public void onSuccessFromRemoteDatabase(String Name) {
 
     }
 

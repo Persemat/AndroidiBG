@@ -8,10 +8,7 @@ public abstract class BaseUserDataRemoteDataSource {
     public void setUserResponseCallback(UserResponseCallback userResponseCallback) {
         this.userResponseCallback = userResponseCallback;
     }
-
+    public abstract void getUserData(String idToken);
     public abstract void saveUserData(User user);
 
-    public abstract void saveUserDetails(String idToken, String firstName, String lastName);
-    public abstract void getFirstName(String idToken);
-    public abstract void getLastName(String idToken);
 }

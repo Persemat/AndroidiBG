@@ -1,5 +1,8 @@
 package it.unimib.sportq.ui.main;
 
+import static it.unimib.sportq.util.Constants.INVALID_CREDENTIALS_ERROR;
+import static it.unimib.sportq.util.Constants.INVALID_USER_ERROR;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -7,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -35,6 +39,7 @@ import it.unimib.sportq.AppViewModel;
 import it.unimib.sportq.R;
 import it.unimib.sportq.adapter.AvatarAdapter;
 import it.unimib.sportq.data.repository.user.IUserRepository;
+import it.unimib.sportq.model.Result;
 import it.unimib.sportq.model.User;
 import it.unimib.sportq.ui.welcome.LoginPage;
 import it.unimib.sportq.ui.welcome.UserViewModel;
@@ -90,33 +95,34 @@ public class FragmentAccount extends Fragment {
 
         Button logoutButton = view.findViewById(R.id.logout_button);
         Button deleteButton = view.findViewById(R.id.delete_account_button);
-        /*
+
         first_name = view.findViewById(R.id.user_firstname);
         last_name = view.findViewById(R.id.user_lastname);
         avatar = view.findViewById(R.id.avatar_image);
         email = view.findViewById(R.id.user_email);
 
-        if(firebaseUser == null) {
-            Log.d(TAG, "Utente Firebase non trovato");
-            Navigation.findNavController(view).navigate(R.id.action_fragmentAccount_to_loginPage);
-        } else {
-            userLiveData = appViewModel.getUserByEmail(firebaseUser.getEmail());
+        User userLogged = userViewModel.getLoggedUser();
+        Log.d(TAG, userLogged.toString());
 
-            userLiveData.observe(getViewLifecycleOwner(), user -> {
-                if (user == null) {
-                    Log.d(TAG, "Utente Room non trovato");
-                    Navigation.findNavController(view).navigate(R.id.action_fragmentAccount_to_loginPage);
-                } else {
-                    first_name.setText(user.getFirst_name());
-                    last_name.setText(user.getLast_name());
-                    avatar.setImageResource(user.getImage_avatar());
-                    Log.d(TAG, "Id avatar: " + user.getImage_avatar());
-                    email.setText(user.getEmail());
-                }
-            });
+
+
+        if(userLogged!=null)
+        {
+            userViewModel.getUserMutableLiveData(userLogged.getId_token()).observe(
+                    getViewLifecycleOwner(), result -> {
+                        if (result.isSuccess()) {
+                            User user = ((Result.UserResponseSuccess) result).getData();
+                            first_name.setText(user.getFirstName());
+                            last_name.setText(user.getLastName());
+                            email.setText(user.getEmail());
+                            //avatar.setImageResource(user.ge());
+                        } else {
+                            Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                    getErrorMessage(((Result.Error) result).getMessage()),
+                                    Snackbar.LENGTH_SHORT).show();
+                        }
+                    });
         }
-        */
-
         // GESTIONE DEL CLICK DEL PULSANTE LOGOUT
         logoutButton.setOnClickListener(v -> {
             userViewModel.logout().observe(getViewLifecycleOwner(), result -> {
@@ -166,7 +172,12 @@ public class FragmentAccount extends Fragment {
         // avatar.setOnClickListener(v -> showPopup(v));
 
     } // FINE METODO ONVIEWCREATED()
-
+    private String getErrorMessage(String errorType) {
+        switch (errorType) {
+            default:
+                return getString(R.string.unexpected_error);
+        }
+    }
     /*
     private void showPopup(View anchorView) {
 
