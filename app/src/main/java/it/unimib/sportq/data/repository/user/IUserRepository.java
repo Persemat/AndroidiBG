@@ -11,4 +11,5 @@ public interface IUserRepository {
     User getLoggedUser();
     void signUp(String email, String password);
     void signIn(String email, String password);
+    void saveUserDetails(String userIdToken, String firstName, String lastName);
 }

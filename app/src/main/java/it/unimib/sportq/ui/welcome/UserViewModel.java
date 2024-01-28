@@ -39,6 +39,9 @@ public class UserViewModel extends ViewModel {
         userRepository.getUser(email, password, isUserRegistered);
     }
 
+    public void saveUserDetails(String userIdToken, String firstName, String LastName) {
+        userRepository.saveUserDetails(userIdToken, firstName, LastName);
+    }
 
     public MutableLiveData<Result> logout() {
         if (userMutableLiveData == null) {

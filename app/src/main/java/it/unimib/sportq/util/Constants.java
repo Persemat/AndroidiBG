@@ -7,4 +7,9 @@ public class Constants {
     public static final String INVALID_CREDENTIALS_ERROR = "invalidCredentials";
     public static final String USER_COLLISION_ERROR = "userCollisionError";
     public static final String UNEXPECTED_ERROR = "unexpected_error";
+
+    public static final String FIREBASE_REALTIME_DATABASE = "https://login-sportq-firebase-default-rtdb.europe-west1.firebasedatabase.app/";
+    public static final String FIREBASE_USERS_COLLECTION = "users";
+    public static final String FIRST_NAME = "first_name";
+    public static final String LAST_NAME = "last_name";
 }

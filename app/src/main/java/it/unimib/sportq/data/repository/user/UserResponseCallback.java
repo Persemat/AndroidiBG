@@ -6,10 +6,13 @@ public interface UserResponseCallback {
 
     void onSuccessFromAuthentication(User user);
     void onFailureFromAuthentication(String message);
-    void onSuccessLogout();
+    void onSuccessFromRemoteDatabase(User user);
 
-    void onSuccessFromLocalDatabase(User user);
-    void onFailureFromLocalDatabase(String message);
+    void onSuccessFromGettingUserFirstName();
+    void onSuccessFromGettingUserLastName();
+
+    void onFailureFromRemoteDatabase(String message);
+    void onSuccessLogout();
 
     // gestione callback utenti in locale
 }

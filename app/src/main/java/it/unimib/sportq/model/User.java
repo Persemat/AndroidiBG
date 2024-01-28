@@ -14,12 +14,6 @@ public class User {
     private String email;
     private String full_name;
     private String id_token;
-    @NonNull
-    private String first_name;
-    @NonNull
-    private String last_name;
-    @NonNull
-    private int image_avatar;
 
     public User() {
     }
@@ -55,29 +49,12 @@ public class User {
         this.email = email;
     }
 
-    @NonNull
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(@NonNull String first_name) {
-        this.first_name = first_name;
-    }
-
-    @NonNull
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(@NonNull String last_name) {
-        this.last_name = last_name;
-    }
-
-    public int getImage_avatar() {
-        return image_avatar;
-    }
-
-    public void setImage_avatar(@NonNull int image_avatar) {
-        this.image_avatar = image_avatar;
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", full_name='" + full_name + '\'' +
+                ", id_token='" + id_token + '\'' +
+                '}';
     }
 }
