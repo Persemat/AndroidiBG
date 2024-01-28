@@ -33,9 +33,9 @@ public class UserViewModel extends ViewModel {
         }
         return userMutableLiveData;
     }
-    public MutableLiveData<Result> getUserMutableLiveData(String firstName, String lastName, String email, String password, boolean isUserRegistered) {
+    public MutableLiveData<Result> getUserMutableLiveData(String firstName, String lastName, String email, String password, int id_avatar, boolean isUserRegistered) {
         if (userMutableLiveData == null) {
-            getUserData(firstName, lastName, email, password, isUserRegistered);
+            getUserData(firstName, lastName, email, password, id_avatar, isUserRegistered);
         }
         return userMutableLiveData;
     }
@@ -48,8 +48,8 @@ public class UserViewModel extends ViewModel {
     private void getUserData(String email, String password, boolean isUserRegistered) {
         userMutableLiveData = userRepository.getUser(email, password, isUserRegistered);
     }
-    private void getUserData(String firstName, String lastName, String email, String password, boolean isUserRegistered) {
-        userMutableLiveData = userRepository.getUser(firstName, lastName, email, password, isUserRegistered);
+    private void getUserData(String firstName, String lastName, String email, String password, int id_avatar, boolean isUserRegistered) {
+        userMutableLiveData = userRepository.getUser(firstName, lastName, email, password, id_avatar, isUserRegistered);
     }
     private void getUserData(String idToken) {
         userMutableLiveData = userRepository.getUserData(idToken);

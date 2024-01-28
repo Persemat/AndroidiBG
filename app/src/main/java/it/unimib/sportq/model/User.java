@@ -15,14 +15,16 @@ public class User {
     private String firstName;
     private String lastName;
     private String id_token;
+    private int id_avatar;
 
     public User() {
     }
 
-    public User(String firstName,String lastName, @NonNull String email, String id_token) {
+    public User(String firstName,String lastName, @NonNull String email, int id_avatar,String id_token) {
         this.firstName=firstName;
         this.lastName=lastName;
         this.email=email;
+        this.id_avatar = id_avatar;
         this.id_token=id_token;
     }
     public User(@NonNull String email, String id_token) {
@@ -32,6 +34,14 @@ public class User {
 
     public User(String idToken) {
         this.id_token = idToken;
+    }
+
+    public int getId_avatar() {
+        return id_avatar;
+    }
+
+    public void setId_avatar(int id_avatar) {
+        this.id_avatar = id_avatar;
     }
 
     public String getFirstName() {
@@ -74,6 +84,7 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", id_token='" + id_token + '\'' +
+                ", id_avatar=" + id_avatar +
                 '}';
     }
 }

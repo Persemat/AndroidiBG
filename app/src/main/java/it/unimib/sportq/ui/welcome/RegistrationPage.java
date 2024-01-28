@@ -84,7 +84,7 @@ public class    RegistrationPage extends AppCompatActivity {
             if (isNameCorrect(first_name) && isLastNameCorrect(last_name)
                     && isEmailCorrect(email) && isPasswordCorrect(new_password, confirm_password)) {
                 if (!userViewModel.isAuthenticationError()) {
-                    userViewModel.getUserMutableLiveData(first_name, last_name, email, new_password, false).observe(
+                    userViewModel.getUserMutableLiveData(first_name, last_name, email, new_password, idImageAvatar, false).observe(
                             this, result -> {
                                 if (result.isSuccess()) {
                                     User user = ((Result.UserResponseSuccess) result).getData();

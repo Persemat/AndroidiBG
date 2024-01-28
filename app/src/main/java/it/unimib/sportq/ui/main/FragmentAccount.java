@@ -1,9 +1,12 @@
 package it.unimib.sportq.ui.main;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -92,7 +95,10 @@ public class FragmentAccount extends Fragment {
                         first_name.setText(user.getFirstName());
                         last_name.setText(user.getLastName());
                         email.setText(user.getEmail());
-                        //avatar.setImageResource(user.ge());
+                        int resourceId = user.getId_avatar();
+                        Context context = view.getContext();
+                        Drawable drawable = ContextCompat.getDrawable(context, resourceId);
+                        avatar.setImageDrawable(drawable);
                     } else {
                         Snackbar.make(requireActivity().findViewById(android.R.id.content),
                                 getErrorMessage(((Result.Error) result).getMessage()),

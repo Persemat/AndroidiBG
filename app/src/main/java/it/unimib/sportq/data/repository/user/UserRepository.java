@@ -30,8 +30,8 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
         signIn(email, password);
         return userMutableLiveData;
     }
-    public MutableLiveData<Result> getUser(String firstName, String lastName, String email, String password, boolean isUserRegistered) {
-        signUp(firstName, lastName, email, password);
+    public MutableLiveData<Result> getUser(String firstName, String lastName, String email, String password, int id_avatar, boolean isUserRegistered) {
+        signUp(firstName, lastName, email, id_avatar, password);
         return userMutableLiveData;
     }
     public MutableLiveData<Result> getUserData(String idToken){
@@ -45,7 +45,6 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
     }
     @Override
     public MutableLiveData<Result> deleteAccount() {
-        Log.d(TAG, "PENE1REPOSITRIIR");
         userRemoteDataSource.deleteAccount();
         return userMutableLiveData;
     }
@@ -56,8 +55,8 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
     }
 
     @Override
-    public void signUp(String firstName, String lastName, String email, String password) {
-        userRemoteDataSource.signUp(firstName, lastName, email, password);
+    public void signUp(String firstName, String lastName, String email, int id_avatar, String password) {
+        userRemoteDataSource.signUp(firstName, lastName, email, id_avatar, password);
     }
 
     @Override
@@ -79,7 +78,7 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
     }
 
     @Override
-    public void onSuccessFromRemoteDatabase(User user) {Log.d(TAG, "PENE1ONsuccessfromremotedatabaseaseasease");
+    public void onSuccessFromRemoteDatabase(User user) {
         Result.UserResponseSuccess result = new Result.UserResponseSuccess(user);
         userMutableLiveData.postValue(result);
     }
@@ -92,13 +91,12 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
 
     @Override
     public void onSuccessLogout() {
-        Log.d(TAG, "onSuccessLogout called");
         Result.UserResponseSuccess result = new Result.UserResponseSuccess(new User());
         userMutableLiveData.postValue(result);
     }
 
     @Override
-    public void onSuccessDeleteUser(String idToken) {Log.d(TAG, "PENE1successssdeleeeeeeteee");
+    public void onSuccessDeleteUser(String idToken) {
         userDataRemoteDataSource.deleteUser(idToken);
     }
 }
