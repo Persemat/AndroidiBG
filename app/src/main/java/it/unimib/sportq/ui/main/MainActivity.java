@@ -1,8 +1,6 @@
 package it.unimib.sportq.ui.main;
 
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,11 +10,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import it.unimib.sportq.BuildConfig;
 import it.unimib.sportq.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,26 +38,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         // For the BottomNavigationView
         NavigationUI.setupWithNavController(bottomNav, navController);
-
-
-    /*
-        String apiKey = BuildConfig.PLACES_API_KEY;
-
-        // Log an error if apiKey is not set.
-        if (TextUtils.isEmpty(apiKey) || apiKey.equals("DEFAULT_API_KEY")) {
-            Log.e("Places test", "No api key");
-            finish();
-            return;
-        }
-
-        // Initialize the SDK
-        Places.initializeWithNewPlacesApiEnabled(getApplicationContext(), apiKey);
-
-        // Create a new PlacesClient instance
-        PlacesClient placesClient = Places.createClient(this);
-    */
-
-
     }
 }
 

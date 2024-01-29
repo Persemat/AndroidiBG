@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
     <!-- Questa uses-permission serve per poter aver l'accesso a internet e al firebase remoto -->
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" tools:node="remove"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" tools:node="remove"/>
 
     <application
         android:allowBackup="true"
@@ -16,8 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SportQ"
         tools:targetApi="31">
-
-        <meta-data android:value="${PLACES_API_KEY}" />
 
         <activity
             android:name=".ui.welcome.LoginPage"
