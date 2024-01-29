@@ -53,5 +53,8 @@
         android:id="@+id/fragmentSport"
         android:name="it.unimib.sportq.ui.main.FragmentSport"
         tools:layout="@layout/fragment_sport" >
+        <action
+            android:id="@+id/action_fragmentSport_to_fragmentSearch"
+            app:destination="@id/fragmentSearch" />
     </fragment>
 </navigation>

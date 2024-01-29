@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -59,5 +60,11 @@ public class FragmentSport extends Fragment {
 
         nomeSport.setText(getArguments().getString("sportName"));
         logoSport.setImageResource(getArguments().getInt("sportImage"));
+
+        ImageView backButton = view.findViewById(R.id.back_button);
+
+        backButton.setOnClickListener(item -> {
+            Navigation.findNavController(item).navigate(R.id.action_fragmentSport_to_fragmentSearch);
+        });
     }
 }
