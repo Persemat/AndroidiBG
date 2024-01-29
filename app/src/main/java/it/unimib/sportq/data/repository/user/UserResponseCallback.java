@@ -9,7 +9,7 @@ public interface UserResponseCallback {
     void onSuccessFromRemoteDatabase(User user);
 
     void onFailureFromRemoteDatabase(String message);
-    void onSuccessLogout();
+    void onSuccessLogout(User user);
 
     void onSuccessDeleteUser(String idToken);
 

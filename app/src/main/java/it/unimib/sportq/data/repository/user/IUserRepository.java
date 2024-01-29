@@ -8,8 +8,8 @@ import it.unimib.sportq.model.User;
 public interface IUserRepository {
     MutableLiveData<Result> getUser(String email, String password, boolean isUserRegistered);
     MutableLiveData<Result> getUser(String firstName, String lastName,String email, String password, int id_avatar, boolean isUserRegistered);
-    MutableLiveData<Result> getUserData(String idToken);
-    MutableLiveData<Result> logout();
+    MutableLiveData<Result> getUserData(User user);
+    MutableLiveData<Result> logout(User user);
     MutableLiveData<Result> deleteAccount();
     User getLoggedUser();
     MutableLiveData<Result> setUserAvatar(User user, int selectedImage);

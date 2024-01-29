@@ -89,7 +89,7 @@ public class FragmentAccount extends Fragment {
         avatar = view.findViewById(R.id.avatar_image);
         email = view.findViewById(R.id.user_email);
 
-        userViewModel.getUserMutableLiveData(userViewModel.getLoggedUser().getId_token()).observe(
+        userViewModel.getUserMutableLiveData(userViewModel.getLoggedUser()).observe(
                 getViewLifecycleOwner(), result -> {
                     if (result.isSuccess()) {
                         User user = ((Result.UserResponseSuccess) result).getData();
@@ -98,6 +98,7 @@ public class FragmentAccount extends Fragment {
                         email.setText(user.getEmail());
                         int resourceId = user.getId_avatar();
                         Log.d(TAG, "RISORSASA"+ resourceId);
+                        Log.d(TAG, user.toString());
                         Context context = view.getContext();
                         Drawable drawable = ContextCompat.getDrawable(context, resourceId);
                         avatar.setImageDrawable(drawable);
@@ -110,7 +111,7 @@ public class FragmentAccount extends Fragment {
 
         // GESTIONE DEL CLICK DEL PULSANTE LOGOUT
         logoutButton.setOnClickListener(v -> {
-            userViewModel.logout().observe(getViewLifecycleOwner(), result -> {
+            userViewModel.logout(userViewModel.getLoggedUser()).observe(getViewLifecycleOwner(), result -> {
                 if (result.isSuccess()) {
                     Navigation.findNavController(view).navigate(
                             R.id.action_fragmentAccount_to_loginPage);
@@ -135,7 +136,7 @@ public class FragmentAccount extends Fragment {
             });
         });
         // GESTIONE DEL CLICK DELL'IMMAGINE AVATAR
-        avatar.setOnClickListener(v -> showPopup(v));
+        //avatar.setOnClickListener(v -> showPopup(v));
 
     } // FINE METODO ONVIEWCREATED()
     private String getErrorMessage(String errorType) {
@@ -166,22 +167,14 @@ public class FragmentAccount extends Fragment {
                 // Ottieni l'ID dell'immagine cliccata
                 int selectedImageId = (int) view.getTag();
                 Log.d(TAG, "Selected Image ID: " + selectedImageId);
-                userViewModel.getUserMutableLiveData(userViewModel.getLoggedUser().getId_token()).observe(
+                userViewModel.setUserAvatar(userViewModel.getLoggedUser(), selectedImageId).observe(
                         getViewLifecycleOwner(), result -> {
                             if (result.isSuccess()) {
-                                User user = ((Result.UserResponseSuccess) result).getData();
-                                userViewModel.setUserAvatar(user, selectedImageId).observe(
-                                        getViewLifecycleOwner(), result1 -> {
-                                            if(result1.isSuccess())
-                                            {
-                                                Context context = view.getContext();
-                                                Drawable drawable = ContextCompat.getDrawable(context, selectedImageId);
-                                                avatar.setImageDrawable(drawable);
-                                                popupWindow.dismiss();
-                                            }
-                                        }
-                                );
-
+                                //User user = ((Result.UserResponseSuccess) result).getData();
+                                Context context = view.getContext();
+                                Drawable drawable = ContextCompat.getDrawable(context, selectedImageId);
+                                avatar.setImageDrawable(drawable);
+                                popupWindow.dismiss();
                             } else {
                                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
                                         getErrorMessage(((Result.Error) result).getMessage()),

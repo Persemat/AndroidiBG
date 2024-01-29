@@ -8,7 +8,7 @@ public abstract class BaseUserDataRemoteDataSource {
     public void setUserResponseCallback(UserResponseCallback userResponseCallback) {
         this.userResponseCallback = userResponseCallback;
     }
-    public abstract void getUserData(String idToken);
+    public abstract void getUserRealtime(User user);
     public abstract void saveUserData(User user);
     public abstract void deleteUser(String idToken);
     public abstract void setUserAvatar(User user, int selectedImage);

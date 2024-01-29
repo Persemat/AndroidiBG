@@ -45,14 +45,14 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
     }
 
     @Override
-    public void logout() {
+    public void logout(User user) {
         FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
                     firebaseAuth.removeAuthStateListener(this);
                     Log.d(TAG, "User logged out");
-                    userResponseCallback.onSuccessLogout();
+                    userResponseCallback.onSuccessLogout(user);
                 }
             }
         };
@@ -60,7 +60,7 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
         firebaseAuth.signOut();
     }
 
-    public void deleteAccount() {Log.d(TAG, "PENE1userauthAAAAA");
+    public void deleteAccount() {
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
@@ -70,6 +70,7 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "User account deleted.");
+
                             userResponseCallback.onSuccessDeleteUser(firebaseUser.getUid());
                         }
                     }

@@ -43,6 +43,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     Log.d(TAG, "User already present in Firebase Realtime Database");
+
                     userResponseCallback.onSuccessFromRemoteDatabase(user);
                 } else {
                     Log.d(TAG, "User not present in Firebase Realtime Database");
@@ -89,16 +90,16 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
             });
     }
 
-    public void getUserData(String idToken)
+    public void getUserRealtime(User user)
     {
-        databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).get().addOnCompleteListener(task -> {
+        databaseReference.child(FIREBASE_USERS_COLLECTION).child(user.getId_token()).get().addOnCompleteListener(task -> {
             if(!task.isSuccessful())
             {
                 Log.d(TAG, "error getting data", task.getException());
                 userResponseCallback.onFailureFromRemoteDatabase(task.getException().getLocalizedMessage());
             } else {
-                User user = task.getResult().getValue(User.class);
-                userResponseCallback.onSuccessFromRemoteDatabase(user);
+                User userRealtime = task.getResult().getValue(User.class);
+                userResponseCallback.onSuccessFromRemoteDatabase(userRealtime);
             }
         });
     }
@@ -112,7 +113,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
                     } else {
                         Log.d(TAG, "id_avatar aggiornato con successo");
                         Log.d(TAG, "id aggiornato"+ user.getId_token());
-                        //userResponseCallback.onSuccessFromRemoteDatabase(user);
+                        userResponseCallback.onSuccessFromRemoteDatabase(user);
                     }
                 });
     }

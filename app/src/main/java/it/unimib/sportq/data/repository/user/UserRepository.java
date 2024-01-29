@@ -34,13 +34,13 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
         signUp(firstName, lastName, email, id_avatar, password);
         return userMutableLiveData;
     }
-    public MutableLiveData<Result> getUserData(String idToken){
-        userDataRemoteDataSource.getUserData(idToken);
+    public MutableLiveData<Result> getUserData(User user){
+        userDataRemoteDataSource.getUserRealtime(user);
         return userMutableLiveData;
     }
     @Override
-    public MutableLiveData<Result> logout() {
-        userRemoteDataSource.logout();
+    public MutableLiveData<Result> logout(User user) {
+        userRemoteDataSource.logout(user);
         return userMutableLiveData;
     }
     @Override
@@ -96,9 +96,8 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
     }
 
     @Override
-    public void onSuccessLogout() {
-        Result.UserResponseSuccess result = new Result.UserResponseSuccess(new User());
-        userMutableLiveData.postValue(result);
+    public void onSuccessLogout(User user) {
+        userDataRemoteDataSource.getUserRealtime(user);
     }
 
     @Override
