@@ -12,6 +12,6 @@ public interface UserResponseCallback {
     void onSuccessLogout(User user);
 
     void onSuccessDeleteUser(String idToken);
-
+    void onSuccessSetAvatar(User user);
     // gestione callback utenti in locale
 }

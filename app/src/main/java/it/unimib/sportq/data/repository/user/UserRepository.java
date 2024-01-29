@@ -104,4 +104,9 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
     public void onSuccessDeleteUser(String idToken) {
         userDataRemoteDataSource.deleteUser(idToken);
     }
+
+    @Override
+    public void onSuccessSetAvatar(User user) {
+        userDataRemoteDataSource.getUserRealtime(user);
+    }
 }

@@ -113,7 +113,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
                     } else {
                         Log.d(TAG, "id_avatar aggiornato con successo");
                         Log.d(TAG, "id aggiornato"+ user.getId_token());
-                        userResponseCallback.onSuccessFromRemoteDatabase(user);
+                        userResponseCallback.onSuccessSetAvatar(user);
                     }
                 });
     }

@@ -136,7 +136,7 @@ public class FragmentAccount extends Fragment {
             });
         });
         // GESTIONE DEL CLICK DELL'IMMAGINE AVATAR
-        //avatar.setOnClickListener(v -> showPopup(v));
+        avatar.setOnClickListener(v -> showPopup(v));
 
     } // FINE METODO ONVIEWCREATED()
     private String getErrorMessage(String errorType) {
