@@ -47,6 +47,16 @@
 
     </androidx.cardview.widget.CardView>
 
+    <Button
+        android:id="@+id/generate_map_btn"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/generate_map"
+        android:backgroundTint="@color/purple_logo"
+        android:layout_marginTop="20dp"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view1"
         android:layout_width="match_parent"

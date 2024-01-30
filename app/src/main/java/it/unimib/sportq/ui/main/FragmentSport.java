@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +27,9 @@ import it.unimib.sportq.databinding.FragmentSportBinding;
 public class FragmentSport extends Fragment {
     private TextView nomeSport;
     private ImageView logoSport;
+
+    private ImageView backButton;
+    private Button generateMapButton;
 
     public FragmentSport() {
         // Required empty public constructor
@@ -61,10 +65,17 @@ public class FragmentSport extends Fragment {
         nomeSport.setText(getArguments().getString("sportName"));
         logoSport.setImageResource(getArguments().getInt("sportImage"));
 
-        ImageView backButton = view.findViewById(R.id.back_button);
+        backButton = view.findViewById(R.id.back_button);
 
         backButton.setOnClickListener(item -> {
             Navigation.findNavController(item).navigate(R.id.action_fragmentSport_to_fragmentSearch);
         });
+
+        generateMapButton = view.findViewById(R.id.generate_map_btn);
+
+        generateMapButton.setOnClickListener(item -> {
+            Navigation.findNavController(item).navigate(R.id.action_fragmentSport_to_mapsActivityCurrentPlace);
+        });
+
     }
 }

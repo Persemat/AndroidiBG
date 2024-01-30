@@ -26,5 +26,6 @@
     <string name="soccer">Calcio</string>
     <string name="volleyball">Pallavolo</string>
     <string name="pool">Biliardo</string>
+    <string name="generate_map">Genera Mappa</string>
 
 </resources>

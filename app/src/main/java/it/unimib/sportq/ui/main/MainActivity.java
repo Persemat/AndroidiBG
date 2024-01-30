@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Create a new PlacesClient instance
         PlacesClient placesClient = Places.createClient(this);
+
+
     }
 }
 
