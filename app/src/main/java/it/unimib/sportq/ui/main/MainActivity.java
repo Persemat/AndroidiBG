@@ -44,24 +44,6 @@ public class MainActivity extends AppCompatActivity {
         // For the BottomNavigationView
         NavigationUI.setupWithNavController(bottomNav, navController);
 
-        /*
-        // Define a variable to hold the Places API key.
-        String apiKey = BuildConfig.PLACES_API_KEY;
-
-        // Log an error if apiKey is not set.
-        if (TextUtils.isEmpty(apiKey) || apiKey.equals("DEFAULT_API_KEY")) {
-            Log.e("Places test", "No api key");
-            finish();
-            return;
-        }
-        Log.d(TAG, "API Key: " +apiKey);
-        // Initialize the SDK
-        Places.initialize(getApplicationContext(), apiKey);
-
-        // Create a new PlacesClient instance
-        PlacesClient placesClient = Places.createClient(this);
-        */
-
     }
 }
 

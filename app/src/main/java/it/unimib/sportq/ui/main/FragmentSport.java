@@ -16,10 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import it.unimib.sportq.R;
-import it.unimib.sportq.databinding.FragmentSportBinding;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,8 +28,7 @@ public class FragmentSport extends Fragment {
     private ImageView logoSport;
 
     private ImageView backButton;
-    private Button generateMapButton;
-
+    private ImageView mapButton;
     public FragmentSport() {
         // Required empty public constructor
     }
@@ -73,14 +69,13 @@ public class FragmentSport extends Fragment {
             Navigation.findNavController(item).navigate(R.id.action_fragmentSport_to_fragmentSearch);
         });
 
-        generateMapButton = view.findViewById(R.id.generate_map_btn);
+        mapButton = view.findViewById(R.id.map);
 
-        generateMapButton.setOnClickListener(item -> {
+        mapButton.setOnClickListener(item -> {
             Navigation.findNavController(item).navigate(R.id.action_fragmentSport_to_mapsActivityCurrentPlace);
             //Intent intent = new Intent(requireActivity(), MapsActivityCurrentPlace.class);
             //intent.putParcelableArrayListExtra("Stadium_list", new ArrayList<>(stadiumList));
             //startActivity(intent);
         });
-
     }
 }

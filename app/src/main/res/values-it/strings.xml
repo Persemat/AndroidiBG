@@ -27,5 +27,6 @@
     <string name="volleyball">Pallavolo</string>
     <string name="pool">Biliardo</string>
     <string name="generate_map">Genera Mappa</string>
+    <string name="click_to_open_map">Clicca per aprire la mappa</string>
 
 </resources>
