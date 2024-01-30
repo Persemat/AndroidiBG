@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import it.unimib.sportq.R;
 import it.unimib.sportq.databinding.FragmentSportBinding;
 
@@ -75,6 +77,9 @@ public class FragmentSport extends Fragment {
 
         generateMapButton.setOnClickListener(item -> {
             Navigation.findNavController(item).navigate(R.id.action_fragmentSport_to_mapsActivityCurrentPlace);
+            //Intent intent = new Intent(requireActivity(), MapsActivityCurrentPlace.class);
+            //intent.putParcelableArrayListExtra("Stadium_list", new ArrayList<>(stadiumList));
+            //startActivity(intent);
         });
 
     }

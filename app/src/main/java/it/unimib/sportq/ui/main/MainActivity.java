@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         // For the BottomNavigationView
         NavigationUI.setupWithNavController(bottomNav, navController);
 
+        /*
         // Define a variable to hold the Places API key.
         String apiKey = BuildConfig.PLACES_API_KEY;
 
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Create a new PlacesClient instance
         PlacesClient placesClient = Places.createClient(this);
-
+        */
 
     }
 }
