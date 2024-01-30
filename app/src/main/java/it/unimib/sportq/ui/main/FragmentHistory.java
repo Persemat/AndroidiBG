@@ -6,12 +6,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import it.unimib.sportq.R;
 
@@ -46,6 +50,22 @@ public class FragmentHistory extends Fragment {
 
         backButton.setOnClickListener(item -> {
             Navigation.findNavController(item).navigate(R.id.action_fragmentHistory_to_fragmentHome);
+        });
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        NavController navController = Navigation.findNavController(view);
+
+        // Aggiungi il listener per il cambiamento di destinazione
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            // Assicurati che il frammento sia ancora associato all'attività
+            if (isAdded()) {
+                // Ottieni il riferimento alla BottomNavigationView dall'attività
+                BottomNavigationView bottomNav = requireActivity().findViewById(R.id.bottom_navigation_view);
+
+                // Imposta manualmente l'elemento "Home" come selezionato quando si è in questo frammento
+                MenuItem homeItem = bottomNav.getMenu().findItem(R.id.fragmentHome);
+                homeItem.setChecked(destination.getId() == R.id.fragmentHome);
+            }
         });
     }
 }

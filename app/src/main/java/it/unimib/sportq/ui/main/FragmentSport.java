@@ -6,15 +6,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import it.unimib.sportq.R;
 
@@ -76,6 +80,23 @@ public class FragmentSport extends Fragment {
             //Intent intent = new Intent(requireActivity(), MapsActivityCurrentPlace.class);
             //intent.putParcelableArrayListExtra("Stadium_list", new ArrayList<>(stadiumList));
             //startActivity(intent);
+        });
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        NavController navController = Navigation.findNavController(view);
+
+        // Aggiungi il listener per il cambiamento di destinazione
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            // Assicurati che il frammento sia ancora associato all'attività
+            if (isAdded()) {
+                // Ottieni il riferimento alla BottomNavigationView dall'attività
+                BottomNavigationView bottomNav = requireActivity().findViewById(R.id.bottom_navigation_view);
+
+                // Imposta manualmente l'elemento "Home" come selezionato quando si è in questo frammento
+                MenuItem homeItem = bottomNav.getMenu().findItem(R.id.fragmentSearch);
+                homeItem.setChecked(destination.getId() == R.id.fragmentSearch);
+            }
         });
     }
 }
