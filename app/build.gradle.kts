@@ -60,6 +60,9 @@ dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     implementation("com.google.android.libraries.places:places:3.3.0")
 
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("com.google.firebase:firebase-database:20.3.0")
     annotationProcessor("androidx.room:room-compiler:2.6.1")

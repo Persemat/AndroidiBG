@@ -12,4 +12,8 @@ public class Constants {
     public static final String FIREBASE_USERS_COLLECTION = "users";
     public static final String FIRST_NAME = "first_name";
     public static final String LAST_NAME = "last_name";
+    public static final int DATABASE_VERSION = 1;
+    public static final String STADIUM_DATABASE_NAME = "stadium_db";
+
+    public static final String PLACES_API_BASE_URL = "https://map.googleapis.com/maps/api/";
 }

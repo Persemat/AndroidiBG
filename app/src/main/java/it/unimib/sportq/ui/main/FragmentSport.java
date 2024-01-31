@@ -10,6 +10,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,8 +19,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.PlaceLikelihood;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Arrays;
+import java.util.List;
+
+import it.unimib.sportq.BuildConfig;
 import it.unimib.sportq.R;
 
 /**
@@ -47,6 +59,7 @@ public class FragmentSport extends Fragment {
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
     }
 
@@ -98,5 +111,7 @@ public class FragmentSport extends Fragment {
                 homeItem.setChecked(destination.getId() == R.id.fragmentSearch);
             }
         });
+
+
     }
 }

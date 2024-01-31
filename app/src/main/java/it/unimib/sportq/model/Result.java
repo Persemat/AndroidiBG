@@ -5,7 +5,7 @@ public abstract class Result {
     }
 
     public boolean isSuccess() {
-        if (this instanceof UserResponseSuccess) {
+        if (this instanceof UserResponseSuccess || this instanceof StadioResponseSuccess) {
             return true;
         } else {
             return false;
@@ -21,8 +21,17 @@ public abstract class Result {
         public UserResponseSuccess(User user) {
             this.user = user;
         }
+
         public User getData() {
             return user;
+        }
+    }
+
+    public static final class StadioResponseSuccess extends Result {
+        private final StadioResponse stadioResponse;
+        public StadioResponseSuccess(StadioResponse stadioResponse) {this.stadioResponse =  stadioResponse;}
+        public StadioResponse getData() {
+            return stadioResponse;
         }
     }
 
