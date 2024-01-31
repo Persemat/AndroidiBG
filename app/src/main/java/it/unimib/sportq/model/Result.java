@@ -1,5 +1,7 @@
 package it.unimib.sportq.model;
 
+import java.util.List;
+
 public abstract class Result {
     private Result() {
     }
@@ -28,10 +30,10 @@ public abstract class Result {
     }
 
     public static final class StadioResponseSuccess extends Result {
-        private final StadioResponse stadioResponse;
-        public StadioResponseSuccess(StadioResponse stadioResponse) {this.stadioResponse =  stadioResponse;}
-        public StadioResponse getData() {
-            return stadioResponse;
+        private final List<Stadio> listaStadi;
+        public StadioResponseSuccess(List<Stadio> listaStadi) {this.listaStadi =  listaStadi;}
+        public List<Stadio> getData() {
+            return listaStadi;
         }
     }
 

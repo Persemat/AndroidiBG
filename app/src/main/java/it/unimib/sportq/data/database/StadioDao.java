@@ -3,6 +3,7 @@ package it.unimib.sportq.data.database;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -14,13 +15,15 @@ import it.unimib.sportq.model.Stadio;
 public interface StadioDao {
 
     @Query("SELECT * FROM stadio ORDER BY stadiumName ASC")
-    List<Stadio> getAllStadium();
+    List<Stadio> getAllStadiums();
 
     @Query("SELECT * FROM stadio WHERE id = :id")
     Stadio getStadiumDao(int id);
 
     @Insert
     void insert(Stadio stadio);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertStadi(List<Stadio> stadioList);
 
     @Delete
     void delete(Stadio stadio);

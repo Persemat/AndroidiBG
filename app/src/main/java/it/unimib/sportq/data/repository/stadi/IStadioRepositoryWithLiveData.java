@@ -7,6 +7,6 @@ import it.unimib.sportq.model.Stadio;
 import it.unimib.sportq.model.User;
 
 public interface IStadioRepositoryWithLiveData {
-    MutableLiveData<Result> getStadio(String id);
+    MutableLiveData<Result> getListaStadi();
 }
 

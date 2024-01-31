@@ -9,5 +9,5 @@ public abstract class BaseStadioRemoteDataSource {
         this.stadioResponseCallback = stadioResponseCallback;
     }
 
-    public abstract void getStadiumList();
+    public abstract void getListaStadi();
 }

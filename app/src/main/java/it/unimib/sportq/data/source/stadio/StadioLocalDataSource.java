@@ -3,7 +3,6 @@ package it.unimib.sportq.data.source.stadio;
 import java.util.List;
 
 import it.unimib.sportq.model.Stadio;
-import it.unimib.sportq.model.StadioApiResponse;
 
 public class StadioLocalDataSource extends BaseStadioLocalDataSource {
 

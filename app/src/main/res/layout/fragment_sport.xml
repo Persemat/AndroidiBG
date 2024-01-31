@@ -95,7 +95,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view1"
+        android:id="@+id/recycler_lista_stadi"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

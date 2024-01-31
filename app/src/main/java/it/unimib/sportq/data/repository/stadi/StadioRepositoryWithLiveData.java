@@ -4,14 +4,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
-import it.unimib.sportq.data.repository.user.UserRepository;
 import it.unimib.sportq.data.source.stadio.BaseStadioLocalDataSource;
 import it.unimib.sportq.data.source.stadio.BaseStadioRemoteDataSource;
-import it.unimib.sportq.data.source.user.BaseUserAuthenticationRemoteDataSource;
-import it.unimib.sportq.data.source.user.BaseUserDataRemoteDataSource;
 import it.unimib.sportq.model.Result;
 import it.unimib.sportq.model.Stadio;
-import it.unimib.sportq.model.StadioApiResponse;
 
 public class StadioRepositoryWithLiveData implements IStadioRepositoryWithLiveData, StadioResponseCallback {
     private static final String TAG = StadioRepositoryWithLiveData.class.getSimpleName();
@@ -29,17 +25,20 @@ public class StadioRepositoryWithLiveData implements IStadioRepositoryWithLiveDa
     }
 
     @Override
-    public MutableLiveData<Result> getStadio(String id) {
-        return null;
+    public MutableLiveData<Result> getListaStadi() {
+        stadioRemoteDataSource.getListaStadi();
+        return stadioMutableLiveData;
     }
-
     @Override
     public void onSuccessFromFindingStadiums(List<Stadio> stadioList) {
-
+        Result.StadioResponseSuccess result = new Result.StadioResponseSuccess(stadioList);
+        stadioMutableLiveData.postValue(result);
     }
 
     @Override
     public void onFailureFromFindingStadiums(String message) {
-
+        Result.Error result = new Result.Error(message);
+        stadioMutableLiveData.postValue(result);
     }
+
 }

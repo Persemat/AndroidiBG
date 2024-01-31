@@ -24,11 +24,12 @@
             android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp" />
+
         <TextView
+            android:id="@+id/nome_stadio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/nome_campo"
-            android:text="nome_campo"
+            android:text="nome_stadio"
             android:textColor="@color/purple_first"
             android:textSize="20sp"
             android:layout_marginTop="20dp"
@@ -36,12 +37,12 @@
             android:layout_toEndOf="@id/view_image"/>
 
         <TextView
-            android:id="@+id/luogo_campo"
+            android:id="@+id/indirizzo_stadio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:layout_marginLeft="50dp"
-            android:text="luogo_campo"
+            android:text="indirizzo_stadio"
             android:textColor="@color/purple_second"
             android:layout_toEndOf="@id/view_image"
             />

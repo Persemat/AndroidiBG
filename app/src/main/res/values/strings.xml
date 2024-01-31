@@ -52,5 +52,4 @@
     <string name="pick_place" translatable="false">Choose a place</string>
     <string name="generate_map">Generate Map</string>
     <string name="click_to_open_map">Click to open map</string>
-
 </resources>

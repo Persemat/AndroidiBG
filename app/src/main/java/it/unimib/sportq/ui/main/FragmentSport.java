@@ -1,13 +1,19 @@
 package it.unimib.sportq.ui.main;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.util.Log;
@@ -27,12 +33,25 @@ import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Arrays;
 import java.util.List;
 
 import it.unimib.sportq.BuildConfig;
 import it.unimib.sportq.R;
+import it.unimib.sportq.adapter.AllStadiumsAdapter;
+import it.unimib.sportq.adapter.SearchRecyclerViewAdapter;
+import it.unimib.sportq.data.repository.stadi.IStadioRepositoryWithLiveData;
+import it.unimib.sportq.data.repository.user.IUserRepository;
+import it.unimib.sportq.data.source.stadio.StadioRemoteDataSource;
+import it.unimib.sportq.model.Result;
+import it.unimib.sportq.model.Sport;
+import it.unimib.sportq.model.Stadio;
+import it.unimib.sportq.model.User;
+import it.unimib.sportq.ui.welcome.UserViewModel;
+import it.unimib.sportq.ui.welcome.UserViewModelFactory;
+import it.unimib.sportq.util.ServiceLocator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,11 +59,13 @@ import it.unimib.sportq.R;
  * create an instance of this fragment.
  */
 public class FragmentSport extends Fragment {
+    private static final String TAG = FragmentSport.class.getSimpleName();
     private TextView nomeSport;
     private ImageView logoSport;
 
     private ImageView backButton;
     private ImageView mapButton;
+    private StadioViewModel stadioViewModel;
     public FragmentSport() {
         // Required empty public constructor
     }
@@ -74,6 +95,17 @@ public class FragmentSport extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        IStadioRepositoryWithLiveData stadioRepository = ServiceLocator.getInstance().
+                getStadioRepositoryWithLiveData(requireActivity().getApplication());
+        stadioViewModel = new ViewModelProvider(
+                requireActivity(),
+                new StadioViewModelFactory(stadioRepository)).get(StadioViewModel.class);
+
+        RecyclerView recyclerViewStadiums = getView().findViewById(R.id.recycler_lista_stadi);
+        RecyclerView.LayoutManager layoutManager =
+                new LinearLayoutManager(requireContext(),
+                        LinearLayoutManager.VERTICAL, false);
+
         nomeSport = view.findViewById(R.id.sport_name);
         logoSport = view.findViewById(R.id.sport_image);
 
@@ -95,8 +127,36 @@ public class FragmentSport extends Fragment {
             //startActivity(intent);
         });
 
+        stadioViewModel.getStadioMutableLiveData().observe(
+                getViewLifecycleOwner(), result -> {
+                    if (result.isSuccess()) {
+                        List<Stadio> listaStadi = ((Result.StadioResponseSuccess) result).getData();
+                        Log.d(TAG, "Grandezza Lista Stadi: " + listaStadi);
+                        AllStadiumsAdapter allStadiumsAdapter = new AllStadiumsAdapter(listaStadi,
+                                new AllStadiumsAdapter.OnItemClickListener(){
+                                    @Override
+                                    public void onStadioItemClick(Stadio stadio) {
+                                        String stadioName = stadio.getStadiumName();
+                                        String stadioAddress = stadio.getAddress();
 
-        /////////////////////////////////////////////////////////////////////////////////////////////////
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("stadioName", stadioName);
+                                        bundle.putString("stadioAddress", stadioAddress);
+
+                                        //Navigation.findNavController(view).navigate(R.id.action_fragmentSearch_to_fragmentSport, bundle);
+                                    }
+                                });
+
+                        recyclerViewStadiums.setLayoutManager(layoutManager);
+                        recyclerViewStadiums.setAdapter(allStadiumsAdapter);
+                    } else {
+                        Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                getErrorMessage(((Result.Error) result).getMessage()),
+                                Snackbar.LENGTH_SHORT).show();
+                    }
+                });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////
         NavController navController = Navigation.findNavController(view);
 
         // Aggiungi il listener per il cambiamento di destinazione
@@ -114,4 +174,11 @@ public class FragmentSport extends Fragment {
 
 
     }
+    private String getErrorMessage(String errorType) {
+        switch (errorType) {
+            default:
+                return getString(R.string.unexpected_error);
+        }
+    }
+
 }

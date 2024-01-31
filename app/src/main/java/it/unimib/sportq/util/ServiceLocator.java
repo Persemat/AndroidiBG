@@ -37,7 +37,7 @@ public class ServiceLocator {
      * @param application Param for accessing the global application state.
      * @return An instance of NewsRoomDatabase.
      */
-    public DatabaseStadiRoom getNewsDao(Application application) {
+    public DatabaseStadiRoom getStadioDao(Application application) {
         return DatabaseStadiRoom.getDatabase(application);
     }
 

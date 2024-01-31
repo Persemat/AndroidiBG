@@ -1,12 +1,16 @@
 package it.unimib.sportq.ui.main;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -18,9 +22,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import it.unimib.sportq.BuildConfig;
 import it.unimib.sportq.R;
+import it.unimib.sportq.util.PermissionManager;
 
 public class MainActivity extends AppCompatActivity {
     private static String TAG = MainActivity.class.getSimpleName();
+
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private PermissionManager permissionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,36 @@ public class MainActivity extends AppCompatActivity {
         // For the BottomNavigationView
         NavigationUI.setupWithNavController(bottomNav, navController);
 
+        permissionManager = PermissionManager.getInstance();
+        if (!permissionManager.isLocationPermissionGranted()) {
+            requestLocationPermission();
+        }
+    }
+    private void requestLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            permissionManager.setLocationPermissionGranted(true);
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode
+                == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {// If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                permissionManager.setLocationPermissionGranted(true);
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }
 
