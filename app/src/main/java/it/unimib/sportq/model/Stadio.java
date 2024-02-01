@@ -9,7 +9,9 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.model.PhotoMetadata;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity(tableName = "stadio")

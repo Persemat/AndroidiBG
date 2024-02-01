@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.imageview.ShapeableImageView;
+
 import java.util.List;
 
 import it.unimib.sportq.R;
@@ -21,10 +23,12 @@ public class AllStadiumsAdapter extends
         void onStadioItemClick(Stadio listaStadi);
     }
     private final List<Stadio> listaStadi;
+    private final int sportImage;
     public final OnItemClickListener onItemClickListener;
 
 
-    public AllStadiumsAdapter(List<Stadio> listaStadi, OnItemClickListener onItemClickListener){
+    public AllStadiumsAdapter(int sportImage, List<Stadio> listaStadi, OnItemClickListener onItemClickListener){
+        this.sportImage = sportImage;
         this.listaStadi = listaStadi;
         this.onItemClickListener = onItemClickListener;
     }
@@ -53,12 +57,13 @@ public class AllStadiumsAdapter extends
 
     //ViewHolder to bind data to the RecyclerView items
     public class SearchViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
+        private final ShapeableImageView imageView;
         private final TextView textViewName;
         private final TextView textViewAddress;
 
         public SearchViewHolder(@NonNull View itemView){
             super(itemView);
+            imageView = itemView.findViewById(R.id.view_image);
             textViewName = itemView.findViewById(R.id.nome_stadio);
             textViewAddress = itemView.findViewById(R.id.indirizzo_stadio);
             itemView.setOnClickListener(this);
@@ -67,6 +72,7 @@ public class AllStadiumsAdapter extends
         //method bind for binding the cell with the layout
         public void bind(Stadio stadio){
             //qui devo associare i valori che voglio mostrare
+            imageView.setImageResource(sportImage);
             textViewName.setText(stadio.getStadiumName());
             textViewAddress.setText(stadio.getAddress());
         }

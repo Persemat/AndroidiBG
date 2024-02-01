@@ -11,13 +11,20 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.model.PhotoMetadata;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.PlaceLikelihood;
+import com.google.android.libraries.places.api.model.PlaceTypes;
 import com.google.android.libraries.places.api.model.RectangularBounds;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
@@ -51,33 +58,60 @@ public class StadioRemoteDataSource extends BaseStadioRemoteDataSource{
     @Override
     public void getListaStadi() {
         if (permissionManager.isLocationPermissionGranted()) {
-            // Use fields to define the data types to return.
-            List<Place.Field> placeFields = Arrays.asList(Place.Field.NAME, Place.Field.ADDRESS,
-                    Place.Field.LAT_LNG);
 
-            // Use the builder to create a FindCurrentPlaceRequest.
-            FindCurrentPlaceRequest request =
-                    FindCurrentPlaceRequest.newInstance(placeFields);
+            RectangularBounds lombardyBounds = RectangularBounds.newInstance(
+                    new LatLng(45.032989, 8.680265), // Angolo sud-ovest della Lombardia
+                    new LatLng(46.385172, 10.496217)// Angolo nord-est della Lombardia
+            );
 
-            // Get the likely places - that is, the businesses and other points of interest that
-            // are the best match for the device's current location.
-            @SuppressWarnings("MissingPermission") final Task<FindCurrentPlaceResponse> placeResult =
-                    placesClient.findCurrentPlace(request);
-            placeResult.addOnCompleteListener (new OnCompleteListener<FindCurrentPlaceResponse>() {
-                @Override
-                public void onComplete(@NonNull Task<FindCurrentPlaceResponse> task) {
-                    if (task.isSuccessful() && task.getResult() != null) {
-                        FindCurrentPlaceResponse response = task.getResult();
-                        // Estrai i luoghi dalla risposta
-                        List<PlaceLikelihood> placeLikelihoods = response.getPlaceLikelihoods();
-                        List<Stadio> stadiumPlaces = new ArrayList<>();
+            // Utilizza la session token di autocompletamento
+            AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
 
-                        // Filtra i luoghi per trovare quelli che potrebbero essere stadi sportivi
-                        for (PlaceLikelihood placeLikelihood : placeLikelihoods) {
-                            Place place = placeLikelihood.getPlace();
-                            List<String> placeTypes = place.getPlaceTypes();
-                            if (placeTypes != null) {
-                                LatLng latLng = place.getLatLng();
+            List<Stadio> stadiumPlaces = new ArrayList<>();
+
+            List<String> queries = Arrays.asList(
+                    "arena sportiva",
+                    "campo da gioco",
+                    "campo di allenamento",
+                    "campo sportivo",
+                    "centro polisportivo",
+                    "centro ricreativo",
+                    "centro sportivo",
+                    "club sportivo",
+                    "complesso sportivo",
+                    "impianto sportivo",
+                    "installazione sportiva",
+                    "luogo sportivo",
+                    "parco sportivo"
+            );
+
+            for (String query : queries) {
+                FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
+                        .setSessionToken(token)
+                        .setCountries("IT")// Limita all'Italia
+                        .setLocationBias(lombardyBounds)
+                        .setQuery(query)
+                        .build();
+                placesClient.findAutocompletePredictions(request).addOnSuccessListener((response) -> {
+                    int predictionsCount = response.getAutocompletePredictions().size();
+                    Log.d(TAG, "Number of predictions: " + predictionsCount);
+                    for (AutocompletePrediction prediction : response.getAutocompletePredictions()) {
+                        String placeId = prediction.getPlaceId();
+                        Log.d(TAG, "Place Id: " + placeId);
+                        // Effettua una chiamata per ottenere i dettagli completi del luogo utilizzando l'ID del luogo
+                        List<Place.Field> placeFields = Arrays.asList(
+                                Place.Field.ID,
+                                Place.Field.NAME,
+                                Place.Field.ADDRESS,
+                                Place.Field.LAT_LNG);
+
+                        FetchPlaceRequest placeRequest = FetchPlaceRequest.newInstance(placeId, placeFields);
+
+                        placesClient.fetchPlace(placeRequest).addOnSuccessListener((placeResponse) -> {
+                            Place place = placeResponse.getPlace();
+                            Log.d(TAG, "Place: " + place.getId());
+                            LatLng latLng = place.getLatLng();
+                            if (latLng != null) {
                                 double latitude = latLng.latitude;
                                 double longitude = latLng.longitude;
                                 Stadio stadio = new Stadio(
@@ -87,15 +121,24 @@ public class StadioRemoteDataSource extends BaseStadioRemoteDataSource{
                                         longitude
                                 );
                                 stadiumPlaces.add(stadio);
+                                Log.d(TAG, "Stadio Aggiunto");
                             }
-                        }
-                        stadioResponseCallback.onSuccessFromFindingStadiums(stadiumPlaces);
+                        }).addOnFailureListener((placeException) -> {
+                            if (placeException instanceof ApiException) {
+                                ApiException apiException = (ApiException) placeException;
+                                Log.e(TAG, "Place details not found: " + apiException.getStatusCode());
+                            }
+                        });
                     }
-                    else {
-                        stadioResponseCallback.onFailureFromFindingStadiums("Could not find stadiums");
+                }).addOnFailureListener((exception) -> {
+                    if (exception instanceof ApiException) {
+                        ApiException apiException = (ApiException) exception;
+                        Log.e(TAG, "Place not found: " + apiException.getStatusCode());
                     }
-                }
-            });
+                });
+            }
+            Log.d(TAG, "List Stadium Size: " + stadiumPlaces.size());
+            stadioResponseCallback.onSuccessFromFindingStadiums(stadiumPlaces);
         } else {
             stadioResponseCallback.onFailureFromFindingStadiums("Position permission is not granted");
         }

@@ -66,6 +66,7 @@ public class FragmentSport extends Fragment {
     private ImageView backButton;
     private ImageView mapButton;
     private StadioViewModel stadioViewModel;
+    private List<Stadio> listaStadi;
     public FragmentSport() {
         // Required empty public constructor
     }
@@ -101,11 +102,6 @@ public class FragmentSport extends Fragment {
                 requireActivity(),
                 new StadioViewModelFactory(stadioRepository)).get(StadioViewModel.class);
 
-        RecyclerView recyclerViewStadiums = getView().findViewById(R.id.recycler_lista_stadi);
-        RecyclerView.LayoutManager layoutManager =
-                new LinearLayoutManager(requireContext(),
-                        LinearLayoutManager.VERTICAL, false);
-
         nomeSport = view.findViewById(R.id.sport_name);
         logoSport = view.findViewById(R.id.sport_image);
 
@@ -130,9 +126,9 @@ public class FragmentSport extends Fragment {
         stadioViewModel.getStadioMutableLiveData().observe(
                 getViewLifecycleOwner(), result -> {
                     if (result.isSuccess()) {
-                        List<Stadio> listaStadi = ((Result.StadioResponseSuccess) result).getData();
+                        listaStadi = ((Result.StadioResponseSuccess) result).getData();
                         Log.d(TAG, "Grandezza Lista Stadi: " + listaStadi);
-                        AllStadiumsAdapter allStadiumsAdapter = new AllStadiumsAdapter(listaStadi,
+                        AllStadiumsAdapter allStadiumsAdapter = new AllStadiumsAdapter(getArguments().getInt("sportImage"), listaStadi,
                                 new AllStadiumsAdapter.OnItemClickListener(){
                                     @Override
                                     public void onStadioItemClick(Stadio stadio) {
@@ -146,7 +142,11 @@ public class FragmentSport extends Fragment {
                                         //Navigation.findNavController(view).navigate(R.id.action_fragmentSearch_to_fragmentSport, bundle);
                                     }
                                 });
+                        RecyclerView.LayoutManager layoutManager =
+                                new LinearLayoutManager(requireContext(),
+                                        LinearLayoutManager.VERTICAL, false);
 
+                        RecyclerView recyclerViewStadiums = getView().findViewById(R.id.recycler_lista_stadi);
                         recyclerViewStadiums.setLayoutManager(layoutManager);
                         recyclerViewStadiums.setAdapter(allStadiumsAdapter);
                     } else {

@@ -1,5 +1,7 @@
 package it.unimib.sportq.data.repository.stadi;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
