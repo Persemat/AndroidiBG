@@ -28,5 +28,9 @@
     <string name="pool">Biliardo</string>
     <string name="generate_map">Genera Mappa</string>
     <string name="click_to_open_map">Clicca per aprire la mappa</string>
+    <string name="add_favorite">Aggiungi a Preferiti</string>
+    <string name="delete_account_question">Sei sicuro di voler eliminare il tuo account?</string>
+    <string name="delete_account_message">Clicca \"Conferma\" per eliminare definitivamente l\'account</string>
+    <string name="confirm_delete">Conferma</string>
 
 </resources>

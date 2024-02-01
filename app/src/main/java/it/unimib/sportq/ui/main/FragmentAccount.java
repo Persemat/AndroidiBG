@@ -25,6 +25,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
 
@@ -123,17 +124,30 @@ public class FragmentAccount extends Fragment {
             });
         });
 
-        deleteButton.setOnClickListener(v ->{
-            userViewModel.deleteAccount().observe(getViewLifecycleOwner(), result -> {
-                if (result.isSuccess()) {
-                    Navigation.findNavController(view).navigate(
-                            R.id.action_fragmentAccount_to_registrationPage); //strano
-                } else {
-                    Snackbar.make(view,
-                            requireActivity().getString(R.string.unexpected_error),
-                            Snackbar.LENGTH_SHORT).show();
-                }
-            });
+        deleteButton.setOnClickListener(v ->{new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.delete_account_question)
+                .setMessage(R.string.delete_account_message)
+                .setPositiveButton(R.string.confirm_delete, (dialog, which) -> {
+                    // gestire quando lo user preme per aggiungere ai preferiti
+                    userViewModel.deleteAccount().observe(getViewLifecycleOwner(), result -> {
+                        if (result.isSuccess()) {
+                            Navigation.findNavController(view).navigate(
+                                    R.id.action_fragmentAccount_to_registrationPage); //strano
+                        } else {
+                            Snackbar.make(view,
+                                    requireActivity().getString(R.string.unexpected_error),
+                                    Snackbar.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    dialog.dismiss(); // Chiudi il dialog
+                })
+                .setNegativeButton(R.string.close, (dialog, which) -> {
+                    // Azione da eseguire quando l'utente preme "Annulla"
+                    dialog.dismiss(); // Chiudi il dialog
+                })
+                .show();
+
         });
         // GESTIONE DEL CLICK DELL'IMMAGINE AVATAR
         avatar.setOnClickListener(v -> showPopup(v));

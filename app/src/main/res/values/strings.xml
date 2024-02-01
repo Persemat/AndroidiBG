@@ -52,4 +52,8 @@
     <string name="pick_place" translatable="false">Choose a place</string>
     <string name="generate_map">Generate Map</string>
     <string name="click_to_open_map">Click to open map</string>
+    <string name="add_favorite">Add Favorite</string>
+    <string name="delete_account_question">Are you sure about deleting your account?</string>
+    <string name="delete_account_message">Click \"Confirm\" to delete your account</string>
+    <string name="confirm_delete">Confirm</string>
 </resources>

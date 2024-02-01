@@ -33,6 +33,7 @@ import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.Serializable;
@@ -130,6 +131,23 @@ public class FragmentSport extends Fragment {
                                         String stadioName = stadio.getStadiumName();
                                         String stadioAddress = stadio.getAddress();
 
+                                        new MaterialAlertDialogBuilder(requireContext())
+                                                .setTitle(stadioName)
+                                                .setMessage("Indirizzo: " + stadioAddress)
+                                                .setPositiveButton(R.string.add_favorite, (dialog, which) -> {
+                                                    // gestire quando lo user preme per aggiungere ai preferiti
+                                                    
+
+
+
+
+                                                    dialog.dismiss(); // Chiudi il dialog
+                                                })
+                                                .setNegativeButton(R.string.close, (dialog, which) -> {
+                                                    // Azione da eseguire quando l'utente preme "Annulla"
+                                                    dialog.dismiss(); // Chiudi il dialog
+                                                })
+                                                .show();
                                         Bundle bundle = new Bundle();
                                         bundle.putString("stadioName", stadioName);
                                         bundle.putString("stadioAddress", stadioAddress);
