@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".ui.main.FragmentSport">
+    tools:context=".ui.main.FragmentSport"
+    android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        >
+        android:layout_height="90dp">
 
         <ImageView
             android:id="@+id/back_button"

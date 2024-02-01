@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -36,6 +37,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -187,8 +190,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
             @Override
             public View getInfoContents(Marker marker) {
                 // Inflate the layouts for the info window, title and snippet.
-                View infoWindow = getLayoutInflater().inflate(R.layout.custom_info_contents,
-                        (FrameLayout) findViewById(R.id.map), false);
+                ViewGroup parentView = (ViewGroup) findViewById(R.id.map).getParent();
+                View infoWindow = getLayoutInflater().inflate(R.layout.custom_info_contents, parentView, false);
 
                 TextView title = infoWindow.findViewById(R.id.title);
                 title.setText(marker.getTitle());
@@ -434,12 +437,15 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
                 Log.d(TAG, "Aggiunta del marker per l'evento: " + stadiumList.get(i).getStadiumName());
                 LatLng stadiumLatLng = new LatLng(stadiumList.get(i).getLatitude(), stadiumList.get(i).getLongitude());
                 String stadiumSnippet = stadiumList.get(i).getStadiumName();
+                BitmapDescriptor markerIcon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET);
                 Marker marker = map.addMarker(new MarkerOptions()
                         .position(stadiumLatLng)
                         .title(stadiumList.get(i).getStadiumName())
+                        .icon(markerIcon)
                         .snippet(stadiumSnippet)); // Usa il nome dello stadio come titolo
                 marker.setTag(stadiumList.get(i));
             }
+            /*
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (Stadio stadio: stadiumList) {
                 builder.include(new LatLng(stadio.getLatitude(), stadio.getLongitude()));
@@ -447,6 +453,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
             LatLngBounds bounds = builder.build();
             int paddingInPixels = 50;
             map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, paddingInPixels));
+             */
+            getDeviceLocation();
         }
     }
 }

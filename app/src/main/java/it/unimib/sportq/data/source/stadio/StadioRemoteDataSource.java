@@ -82,14 +82,22 @@ public class StadioRemoteDataSource extends BaseStadioRemoteDataSource{
                     "impianto sportivo",
                     "installazione sportiva",
                     "luogo sportivo",
-                    "parco sportivo"
+                    "parco sportivo",
+                    "stadio",
+                    "campo da tennis",
+                    "campo da calcio",
+                    "campo da basket",
+                    "campo da baseball",
+                    "campo da football",
+                    "campo da pallavolo",
+                    "pista di atletica"
             );
 
             for (String query : queries) {
                 FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
                         .setSessionToken(token)
-                        .setCountries("IT")// Limita all'Italia
                         .setLocationBias(lombardyBounds)
+                        .setCountries("IT")
                         .setQuery(query)
                         .build();
                 placesClient.findAutocompletePredictions(request).addOnSuccessListener((response) -> {
