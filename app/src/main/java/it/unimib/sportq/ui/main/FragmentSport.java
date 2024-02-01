@@ -35,6 +35,8 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -116,13 +118,6 @@ public class FragmentSport extends Fragment {
 
         mapButton = view.findViewById(R.id.map);
 
-        mapButton.setOnClickListener(item -> {
-            Navigation.findNavController(item).navigate(R.id.action_fragmentSport_to_mapsActivityCurrentPlace);
-            //Intent intent = new Intent(requireActivity(), MapsActivityCurrentPlace.class);
-            //intent.putParcelableArrayListExtra("Stadium_list", new ArrayList<>(stadiumList));
-            //startActivity(intent);
-        });
-
         stadioViewModel.getStadioMutableLiveData().observe(
                 getViewLifecycleOwner(), result -> {
                     if (result.isSuccess()) {
@@ -156,6 +151,15 @@ public class FragmentSport extends Fragment {
                     }
                 });
 
+        mapButton.setOnClickListener(item -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("listaStadi", new ArrayList<>(listaStadi));
+            Navigation.findNavController(item).navigate(R.id.action_fragmentSport_to_mapsActivityCurrentPlace, bundle);
+            //Intent intent = new Intent(requireActivity(), MapsActivityCurrentPlace.class);
+            //intent.putParcelableArrayListExtra("STADIUM_LIST", new ArrayList<>(listaStadi));
+            //startActivity(intent);
+        });
+
         ////////////////////////////////////////////////////////////////////////////////////////////////
         NavController navController = Navigation.findNavController(view);
 
@@ -171,9 +175,8 @@ public class FragmentSport extends Fragment {
                 homeItem.setChecked(destination.getId() == R.id.fragmentSearch);
             }
         });
-
-
     }
+
     private String getErrorMessage(String errorType) {
         switch (errorType) {
             default:

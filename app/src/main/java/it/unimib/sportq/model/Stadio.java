@@ -11,11 +11,12 @@ import androidx.room.PrimaryKey;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.model.PhotoMetadata;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 @Entity(tableName = "stadio")
-public class Stadio{
+public class Stadio implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
     private String stadiumName;

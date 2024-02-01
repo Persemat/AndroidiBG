@@ -38,6 +38,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -55,6 +56,7 @@ import java.util.List;
 
 import it.unimib.sportq.BuildConfig;
 import it.unimib.sportq.R;
+import it.unimib.sportq.model.Stadio;
 
 /**
  * An activity that displays a map showing the place at the device's current location.
@@ -93,10 +95,18 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
     private String[] likelyPlaceAddresses;
     private List[] likelyPlaceAttributions;
     private LatLng[] likelyPlaceLatLngs;
+    private List<Stadio> stadiumList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle bundle = getIntent().getExtras();
+
+        if (bundle != null) {
+            // Recupera la lista di oggetti dal Bundle
+            stadiumList = (List<Stadio>) bundle.getSerializable("listaStadi");
+        }
 
         // Retrieve location and camera position from saved instance state.
         if (savedInstanceState != null) {
@@ -198,6 +208,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
 
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
+
+        map.setOnMapLoadedCallback(() -> updateStadiumMarker());
     }
 
     /**
@@ -412,6 +424,29 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
             }
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage());
+        }
+    }
+
+    private void updateStadiumMarker() {
+        if (map != null && stadiumList != null && !stadiumList.isEmpty()) {
+
+            for (int i = 0; i < stadiumList.size(); i++) {
+                Log.d(TAG, "Aggiunta del marker per l'evento: " + stadiumList.get(i).getStadiumName());
+                LatLng stadiumLatLng = new LatLng(stadiumList.get(i).getLatitude(), stadiumList.get(i).getLongitude());
+                String stadiumSnippet = stadiumList.get(i).getStadiumName();
+                Marker marker = map.addMarker(new MarkerOptions()
+                        .position(stadiumLatLng)
+                        .title(stadiumList.get(i).getStadiumName())
+                        .snippet(stadiumSnippet)); // Usa il nome dello stadio come titolo
+                marker.setTag(stadiumList.get(i));
+            }
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            for (Stadio stadio: stadiumList) {
+                builder.include(new LatLng(stadio.getLatitude(), stadio.getLongitude()));
+            }
+            LatLngBounds bounds = builder.build();
+            int paddingInPixels = 50;
+            map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, paddingInPixels));
         }
     }
 }
