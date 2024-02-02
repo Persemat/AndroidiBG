@@ -2,7 +2,6 @@ package it.unimib.sportq.util;
 
 import android.app.Application;
 
-import it.unimib.sportq.data.database.DatabaseStadiRoom;
 import it.unimib.sportq.data.repository.stadi.IStadioRepositoryWithLiveData;
 import it.unimib.sportq.data.repository.stadi.StadioRepositoryWithLiveData;
 import it.unimib.sportq.data.repository.user.IUserRepository;
@@ -32,14 +31,7 @@ public class ServiceLocator {
         return INSTANCE;
     }
 
-    /**
-     * Returns an instance of NewsRoomDatabase class to manage Room database.
-     * @param application Param for accessing the global application state.
-     * @return An instance of NewsRoomDatabase.
-     */
-    public DatabaseStadiRoom getStadioDao(Application application) {
-        return DatabaseStadiRoom.getDatabase(application);
-    }
+
 
     public IStadioRepositoryWithLiveData getStadioRepositoryWithLiveData(Application application) {
 

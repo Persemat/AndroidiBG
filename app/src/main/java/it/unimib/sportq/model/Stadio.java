@@ -15,10 +15,9 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-@Entity(tableName = "stadio")
+
 public class Stadio implements Serializable {
-    @PrimaryKey(autoGenerate = true)
-    private String id;
+    private String id_stadium;
     private String stadiumName;
     private String address;
     private double latitude;
@@ -26,28 +25,21 @@ public class Stadio implements Serializable {
     public Stadio() {
     }
 
-    public Stadio(String id, String stadiumName, String address, double latitude, double longitude) {
-        this.id = id;
+
+    public Stadio(String id_stadium, String stadiumName, String address, double latitude, double longitude) {
+        this.id_stadium = id_stadium;
         this.stadiumName = stadiumName;
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public Stadio(String stadiumName, String address, double latitude, double longitude) {
-        this.stadiumName = stadiumName;
-        this.address = address;
-        this.latitude = latitude;
-        this.longitude = longitude;
+
+    public String getId_stadium() {
+        return id_stadium;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    public void setId_stadium(String id_stadium) {this.id_stadium = id_stadium;}
 
     public String getStadiumName() {
         return stadiumName;

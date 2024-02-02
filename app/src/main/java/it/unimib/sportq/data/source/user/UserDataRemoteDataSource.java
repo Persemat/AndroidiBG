@@ -138,7 +138,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
     public void addStadiumToFavorite(User user, Stadio stadio) {
         DatabaseReference userFavoritesRef = databaseReference.child(FIREBASE_USERS_COLLECTION)
                 .child(user.getId_token()).child(FIREBASE_USERS_FAVORITE_COLLECTION)
-                .child(stadio.getId());
+                .child(stadio.getId_stadium());
         // Aggiungi le informazioni dello stadio ai preferiti
         userFavoritesRef.child("stadiumName").setValue(stadio.getStadiumName());
         userFavoritesRef.child("stadiumAddress").setValue(stadio.getAddress());

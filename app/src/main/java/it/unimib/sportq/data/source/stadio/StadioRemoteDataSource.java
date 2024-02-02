@@ -123,6 +123,7 @@ public class StadioRemoteDataSource extends BaseStadioRemoteDataSource{
                                 double latitude = latLng.latitude;
                                 double longitude = latLng.longitude;
                                 Stadio stadio = new Stadio(
+                                        place.getId(),
                                         place.getName(),
                                         place.getAddress(),
                                         latitude,
