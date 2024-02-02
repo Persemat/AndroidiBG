@@ -19,7 +19,7 @@ public class UserViewModel extends ViewModel {
     private static final String TAG = UserViewModel.class.getSimpleName();
     private final IUserRepository userRepository;
     private MutableLiveData<Result> userMutableLiveData;
-    private MutableLiveData<Result> userFavoriteStadiumsMutableLiveData;
+    private MutableLiveData<Result> userFavoritesMutableLiveData;
     private boolean authenticationError;
 
 
@@ -90,15 +90,15 @@ public class UserViewModel extends ViewModel {
     public void addStadiumToFavorite(User user, Stadio stadio) {
         userRepository.addStadiumToFavorite(user, stadio);
     }
-
-    /*
-    public MutableLiveData<Result> getUserPreferences(String idToken) {
-        if (idToken != null) {
-            userPreferencesMutableLiveData = userRepository.getUserPreferences(idToken);
-        }
-        return userPreferencesMutableLiveData;
+    public void removeStadiumFromFavorite(User user, Stadio stadio) {
+        userRepository.removeStadiumFromFavorite(user, stadio);
     }
-    */
+
+    public MutableLiveData<Result> getUserFavoriteList(User user) {
+        userRepository.getUserFavoriteList(user);
+        return userFavoritesMutableLiveData;
+    }
+
     public User getLoggedUser() {
         return userRepository.getLoggedUser();
     }

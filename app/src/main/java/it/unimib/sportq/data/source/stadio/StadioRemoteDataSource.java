@@ -70,7 +70,6 @@ public class StadioRemoteDataSource extends BaseStadioRemoteDataSource{
             List<Stadio> stadiumPlaces = new ArrayList<>();
 
             List<String> queries = Arrays.asList(
-                    "arena sportiva",
                     "campo da gioco",
                     "campo di allenamento",
                     "campo sportivo",
@@ -80,8 +79,6 @@ public class StadioRemoteDataSource extends BaseStadioRemoteDataSource{
                     "club sportivo",
                     "complesso sportivo",
                     "impianto sportivo",
-                    "installazione sportiva",
-                    "luogo sportivo",
                     "parco sportivo",
                     "stadio",
                     "campo da tennis",
@@ -102,6 +99,7 @@ public class StadioRemoteDataSource extends BaseStadioRemoteDataSource{
                         .build();
                 placesClient.findAutocompletePredictions(request).addOnSuccessListener((response) -> {
                     int predictionsCount = response.getAutocompletePredictions().size();
+                    Log.d(TAG, "Query" + query);
                     Log.d(TAG, "Number of predictions: " + predictionsCount);
                     for (AutocompletePrediction prediction : response.getAutocompletePredictions()) {
                         String placeId = prediction.getPlaceId();

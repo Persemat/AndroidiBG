@@ -1,6 +1,7 @@
 package it.unimib.sportq.ui.main;
 
 import android.content.Context;
+import android.graphics.Gainmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.Task;
@@ -68,6 +70,7 @@ public class FragmentSport extends Fragment {
 
     private ImageView backButton;
     private ImageView mapButton;
+    private ProgressBar progressBar;
     private StadioViewModel stadioViewModel;
     private UserViewModel userViewModel;
     private List<Stadio> listaStadi;
@@ -85,7 +88,6 @@ public class FragmentSport extends Fragment {
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
     }
 
@@ -119,12 +121,12 @@ public class FragmentSport extends Fragment {
         logoSport.setImageResource(getArguments().getInt("sportImage"));
 
         backButton = view.findViewById(R.id.back_button);
-
         backButton.setOnClickListener(item -> {
             Navigation.findNavController(item).navigate(R.id.action_fragmentSport_to_fragmentSearch);
         });
 
-        mapButton = view.findViewById(R.id.map);
+        progressBar = view.findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
 
         stadioViewModel.getStadioMutableLiveData().observe(
                 getViewLifecycleOwner(), result -> {
@@ -168,13 +170,11 @@ public class FragmentSport extends Fragment {
                     }
                 });
 
+        mapButton = view.findViewById(R.id.map);
         mapButton.setOnClickListener(item -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("listaStadi", new ArrayList<>(listaStadi));
             Navigation.findNavController(item).navigate(R.id.action_fragmentSport_to_mapsActivityCurrentPlace, bundle);
-            //Intent intent = new Intent(requireActivity(), MapsActivityCurrentPlace.class);
-            //intent.putParcelableArrayListExtra("STADIUM_LIST", new ArrayList<>(listaStadi));
-            //startActivity(intent);
         });
 
         ////////////////////////////////////////////////////////////////////////////////////////////////

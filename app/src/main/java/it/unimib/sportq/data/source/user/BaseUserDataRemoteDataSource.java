@@ -16,5 +16,7 @@ public abstract class BaseUserDataRemoteDataSource {
     public abstract void setUserAvatar(User user, int selectedImage);
 
     public abstract void addStadiumToFavorite(User user, Stadio stadio);
+    public abstract void removeStadiumFromFavorite(User user, Stadio stadio);
+    public abstract void getUserFavoriteList(User user);
 
 }

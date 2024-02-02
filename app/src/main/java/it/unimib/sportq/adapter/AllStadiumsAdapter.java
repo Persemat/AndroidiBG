@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.unimib.sportq.R;
@@ -22,7 +23,7 @@ public class AllStadiumsAdapter extends
     public interface OnItemClickListener{
         void onStadioItemClick(Stadio listaStadi);
     }
-    private final List<Stadio> listaStadi;
+    private List<Stadio> listaStadi;
     private final int sportImage;
     public final OnItemClickListener onItemClickListener;
 

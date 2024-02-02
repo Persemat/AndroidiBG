@@ -1,5 +1,8 @@
 package it.unimib.sportq.data.repository.user;
 
+import java.util.List;
+
+import it.unimib.sportq.model.Stadio;
 import it.unimib.sportq.model.User;
 
 public interface UserResponseCallback {
@@ -10,6 +13,8 @@ public interface UserResponseCallback {
 
     void onFailureFromRemoteDatabase(String message);
     void onSuccessLogout(User user);
+
+    void onSuccessFromRemoteDatabase(List<Stadio> favoriteList);
 
     void onSuccessDeleteUser(User user);
     void onSuccessGetUserToDelete(User user);

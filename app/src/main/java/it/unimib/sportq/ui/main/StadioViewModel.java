@@ -26,4 +26,5 @@ public class StadioViewModel extends ViewModel {
     private void getListaStadi() {
         stadioMutableLiveData = stadioRepository.getListaStadi();
     }
+
 }

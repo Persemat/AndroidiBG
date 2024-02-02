@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.unimib.sportq.model.Stadio;
 import it.unimib.sportq.model.User;
@@ -142,7 +143,36 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
         // Aggiungi le informazioni dello stadio ai preferiti
         userFavoritesRef.child("stadiumName").setValue(stadio.getStadiumName());
         userFavoritesRef.child("stadiumAddress").setValue(stadio.getAddress());
-        userFavoritesRef.child("atitude").setValue(stadio.getLatitude());
+        userFavoritesRef.child("latitude").setValue(stadio.getLatitude());
         userFavoritesRef.child("longitude").setValue(stadio.getLongitude());
+    }
+
+    @Override
+    public void removeStadiumFromFavorite(User user, Stadio stadio) {
+        databaseReference.child(FIREBASE_USERS_COLLECTION)
+                .child(user.getId_token()).child(FIREBASE_USERS_FAVORITE_COLLECTION)
+                .child(stadio.getId_stadium()).removeValue();
+    }
+
+    @Override
+    public void getUserFavoriteList(User user) {
+        databaseReference.child(FIREBASE_USERS_COLLECTION).child(user.getId_token()).
+                child(FIREBASE_USERS_FAVORITE_COLLECTION).get().addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.d(TAG, "Error getting data", task.getException());
+                        userResponseCallback.onFailureFromRemoteDatabase(task.getException().getLocalizedMessage());
+                    }
+                    else {
+                        Log.d(TAG, "Successful read: " + task.getResult().getValue());
+
+                        List<Stadio> favoriteList = new ArrayList<>();
+                        for(DataSnapshot ds : task.getResult().getChildren()) {
+                            Stadio stadio = ds.getValue(Stadio.class);
+                            favoriteList.add(stadio);
+                        }
+
+                        userResponseCallback.onSuccessFromRemoteDatabase(favoriteList);
+                    }
+                });
     }
 }
