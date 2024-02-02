@@ -12,7 +12,7 @@ public abstract class BaseUserAuthenticationRemoteDataSource {
     }
     public abstract User getLoggedUser();
     public abstract void logout(User user);
-    public abstract void deleteAccount();
+    public abstract void deleteAccount(User user);
     public abstract void signUp(String firstName, String lastName, String email, int id_avatar, String password);
     public abstract void signIn(String email, String password);
 }

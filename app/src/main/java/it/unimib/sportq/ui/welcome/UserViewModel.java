@@ -68,11 +68,11 @@ public class UserViewModel extends ViewModel {
         return userMutableLiveData;
     }
 
-    public MutableLiveData<Result> deleteAccount() {
+    public MutableLiveData<Result> deleteAccount(User user) {
         if (userMutableLiveData == null) {
-            userMutableLiveData = userRepository.deleteAccount();
+            userMutableLiveData = userRepository.deleteAccount(user);
         } else {
-            userRepository.deleteAccount();
+            userRepository.deleteAccount(user);
         }
 
         return userMutableLiveData;

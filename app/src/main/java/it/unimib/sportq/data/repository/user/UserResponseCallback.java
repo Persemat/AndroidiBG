@@ -11,7 +11,8 @@ public interface UserResponseCallback {
     void onFailureFromRemoteDatabase(String message);
     void onSuccessLogout(User user);
 
-    void onSuccessDeleteUser(String idToken);
+    void onSuccessDeleteUser(User user);
+    void onSuccessGetUserToDelete(User user);
     void onSuccessSetAvatar(User user);
     // gestione callback utenti in locale
 }

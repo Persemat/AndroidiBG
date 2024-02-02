@@ -10,7 +10,7 @@ public interface IUserRepository {
     MutableLiveData<Result> getUser(String firstName, String lastName,String email, String password, int id_avatar, boolean isUserRegistered);
     MutableLiveData<Result> getUserData(User user);
     MutableLiveData<Result> logout(User user);
-    MutableLiveData<Result> deleteAccount();
+    MutableLiveData<Result> deleteAccount(User user);
     User getLoggedUser();
     MutableLiveData<Result> setUserAvatar(User user, int selectedImage);
     void signUp(String firstName, String lastName, String email, int id_avatar, String password);

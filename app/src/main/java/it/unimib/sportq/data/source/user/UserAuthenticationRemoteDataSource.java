@@ -60,7 +60,7 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
         firebaseAuth.signOut();
     }
 
-    public void deleteAccount() {
+    public void deleteAccount(User user) {
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
@@ -70,8 +70,7 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "User account deleted.");
-
-                            userResponseCallback.onSuccessDeleteUser(firebaseUser.getUid());
+                            userResponseCallback.onSuccessDeleteUser(user);
                         }
                     }
                 });
