@@ -6,8 +6,11 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.Set;
+
 import it.unimib.sportq.data.repository.user.IUserRepository;
 import it.unimib.sportq.model.Result;
+import it.unimib.sportq.model.Stadio;
 import it.unimib.sportq.model.User;
 
 
@@ -16,6 +19,7 @@ public class UserViewModel extends ViewModel {
     private static final String TAG = UserViewModel.class.getSimpleName();
     private final IUserRepository userRepository;
     private MutableLiveData<Result> userMutableLiveData;
+    private MutableLiveData<Result> userFavoriteStadiumsMutableLiveData;
     private boolean authenticationError;
 
 
@@ -83,10 +87,21 @@ public class UserViewModel extends ViewModel {
         return userMutableLiveData;
     }
 
+    public void addStadiumToFavorite(User user, Stadio stadio) {
+        userRepository.addStadiumToFavorite(user, stadio);
+    }
+
+    /*
+    public MutableLiveData<Result> getUserPreferences(String idToken) {
+        if (idToken != null) {
+            userPreferencesMutableLiveData = userRepository.getUserPreferences(idToken);
+        }
+        return userPreferencesMutableLiveData;
+    }
+    */
     public User getLoggedUser() {
         return userRepository.getLoggedUser();
     }
-
 
     public boolean isAuthenticationError() {
         return authenticationError;

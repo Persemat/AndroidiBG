@@ -2,6 +2,7 @@ package it.unimib.sportq.data.source.user;
 
 import static it.unimib.sportq.util.Constants.FIREBASE_REALTIME_DATABASE;
 import static it.unimib.sportq.util.Constants.FIREBASE_USERS_COLLECTION;
+import static it.unimib.sportq.util.Constants.FIREBASE_USERS_FAVORITE_COLLECTION;
 import static it.unimib.sportq.util.Constants.FIRST_NAME;
 import static it.unimib.sportq.util.Constants.LAST_NAME;
 
@@ -22,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import it.unimib.sportq.model.Stadio;
 import it.unimib.sportq.model.User;
 
 public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
@@ -130,5 +132,17 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
                         userResponseCallback.onSuccessSetAvatar(user);
                     }
                 });
+    }
+
+    @Override
+    public void addStadiumToFavorite(User user, Stadio stadio) {
+        DatabaseReference userFavoritesRef = databaseReference.child(FIREBASE_USERS_COLLECTION)
+                .child(user.getId_token()).child(FIREBASE_USERS_FAVORITE_COLLECTION)
+                .child(stadio.getId());
+        // Aggiungi le informazioni dello stadio ai preferiti
+        userFavoritesRef.child("stadiumName").setValue(stadio.getStadiumName());
+        userFavoritesRef.child("stadiumAddress").setValue(stadio.getAddress());
+        userFavoritesRef.child("atitude").setValue(stadio.getLatitude());
+        userFavoritesRef.child("longitude").setValue(stadio.getLongitude());
     }
 }

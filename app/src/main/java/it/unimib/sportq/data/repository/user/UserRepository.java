@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import it.unimib.sportq.data.source.user.BaseUserAuthenticationRemoteDataSource;
 import it.unimib.sportq.data.source.user.BaseUserDataRemoteDataSource;
 import it.unimib.sportq.model.Result;
+import it.unimib.sportq.model.Stadio;
 import it.unimib.sportq.model.User;
 
 public class UserRepository implements IUserRepository,UserResponseCallback{
@@ -58,6 +59,11 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
     public MutableLiveData<Result> setUserAvatar(User user, int selectedImage) {
         userDataRemoteDataSource.setUserAvatar(user, selectedImage);
         return userMutableLiveData;
+    }
+
+    @Override
+    public void addStadiumToFavorite(User user, Stadio stadio) {
+        userDataRemoteDataSource.addStadiumToFavorite(user, stadio);
     }
 
     @Override

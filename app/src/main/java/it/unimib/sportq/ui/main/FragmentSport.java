@@ -69,6 +69,7 @@ public class FragmentSport extends Fragment {
     private ImageView backButton;
     private ImageView mapButton;
     private StadioViewModel stadioViewModel;
+    private UserViewModel userViewModel;
     private List<Stadio> listaStadi;
     public FragmentSport() {
         // Required empty public constructor
@@ -105,6 +106,12 @@ public class FragmentSport extends Fragment {
                 requireActivity(),
                 new StadioViewModelFactory(stadioRepository)).get(StadioViewModel.class);
 
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(requireActivity().getApplication());
+        userViewModel = new ViewModelProvider(
+                requireActivity(),
+                new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+
         nomeSport = view.findViewById(R.id.sport_name);
         logoSport = view.findViewById(R.id.sport_image);
 
@@ -135,11 +142,8 @@ public class FragmentSport extends Fragment {
                                                 .setTitle(stadioName)
                                                 .setMessage("Indirizzo: " + stadioAddress)
                                                 .setPositiveButton(R.string.add_favorite, (dialog, which) -> {
-                                                    // gestire quando lo user preme per aggiungere ai preferiti
-                                                    
 
-
-
+                                                    userViewModel.addStadiumToFavorite(userViewModel.getLoggedUser(), stadio);
 
                                                     dialog.dismiss(); // Chiudi il dialog
                                                 })
@@ -148,11 +152,6 @@ public class FragmentSport extends Fragment {
                                                     dialog.dismiss(); // Chiudi il dialog
                                                 })
                                                 .show();
-                                        Bundle bundle = new Bundle();
-                                        bundle.putString("stadioName", stadioName);
-                                        bundle.putString("stadioAddress", stadioAddress);
-
-                                        //Navigation.findNavController(view).navigate(R.id.action_fragmentSearch_to_fragmentSport, bundle);
                                     }
                                 });
                         RecyclerView.LayoutManager layoutManager =

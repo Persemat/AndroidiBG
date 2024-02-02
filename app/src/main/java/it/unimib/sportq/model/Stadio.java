@@ -18,7 +18,7 @@ import java.util.Objects;
 @Entity(tableName = "stadio")
 public class Stadio implements Serializable {
     @PrimaryKey(autoGenerate = true)
-    private long id;
+    private String id;
     private String stadiumName;
     private String address;
     private double latitude;
@@ -26,7 +26,7 @@ public class Stadio implements Serializable {
     public Stadio() {
     }
 
-    public Stadio(long id, String stadiumName, String address, double latitude, double longitude) {
+    public Stadio(String id, String stadiumName, String address, double latitude, double longitude) {
         this.id = id;
         this.stadiumName = stadiumName;
         this.address = address;
@@ -41,11 +41,11 @@ public class Stadio implements Serializable {
         this.longitude = longitude;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

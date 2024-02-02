@@ -3,6 +3,7 @@ package it.unimib.sportq.data.repository.user;
 import androidx.lifecycle.MutableLiveData;
 
 import it.unimib.sportq.model.Result;
+import it.unimib.sportq.model.Stadio;
 import it.unimib.sportq.model.User;
 
 public interface IUserRepository {
@@ -13,6 +14,7 @@ public interface IUserRepository {
     MutableLiveData<Result> deleteAccount(User user);
     User getLoggedUser();
     MutableLiveData<Result> setUserAvatar(User user, int selectedImage);
+    void addStadiumToFavorite(User user, Stadio stadio);
     void signUp(String firstName, String lastName, String email, int id_avatar, String password);
     void signIn(String email, String password);
 }

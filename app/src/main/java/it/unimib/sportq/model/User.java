@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.Relation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "user")
@@ -16,16 +17,18 @@ public class User {
     private String lastName;
     private String id_token;
     private int id_avatar;
+    private List<Stadio> stadiPreferiti;
 
     public User() {
     }
 
-    public User(String firstName,String lastName, @NonNull String email, int id_avatar,String id_token) {
+    public User(String firstName,String lastName, @NonNull String email, int id_avatar, String id_token) {
         this.firstName=firstName;
         this.lastName=lastName;
         this.email=email;
         this.id_avatar = id_avatar;
         this.id_token=id_token;
+        this.stadiPreferiti = new ArrayList<>();
     }
     public User(@NonNull String email, String id_token) {
         this.email=email;
@@ -77,14 +80,11 @@ public class User {
         this.email = email;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", id_token='" + id_token + '\'' +
-                ", id_avatar=" + id_avatar +
-                '}';
+    public List<Stadio> getStadiPreferiti() {
+        return stadiPreferiti;
+    }
+
+    public void setStadiPreferiti(List<Stadio> stadiPreferiti) {
+        this.stadiPreferiti = stadiPreferiti;
     }
 }
