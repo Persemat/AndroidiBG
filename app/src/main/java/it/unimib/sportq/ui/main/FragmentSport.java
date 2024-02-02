@@ -70,7 +70,6 @@ public class FragmentSport extends Fragment {
 
     private ImageView backButton;
     private ImageView mapButton;
-    private ProgressBar progressBar;
     private StadioViewModel stadioViewModel;
     private UserViewModel userViewModel;
     private List<Stadio> listaStadi;
@@ -124,9 +123,6 @@ public class FragmentSport extends Fragment {
         backButton.setOnClickListener(item -> {
             Navigation.findNavController(item).navigate(R.id.action_fragmentSport_to_fragmentSearch);
         });
-
-        progressBar = view.findViewById(R.id.progress_bar);
-        progressBar.setVisibility(View.VISIBLE);
 
         stadioViewModel.getStadioMutableLiveData().observe(
                 getViewLifecycleOwner(), result -> {

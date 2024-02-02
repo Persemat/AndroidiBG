@@ -91,15 +91,6 @@
 
     </androidx.cardview.widget.CardView>
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/purple_logo"
-        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_lista_stadi"

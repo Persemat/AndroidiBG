@@ -37,6 +37,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import it.unimib.sportq.BuildConfig;
 import it.unimib.sportq.model.Stadio;
@@ -89,7 +90,7 @@ public class StadioRemoteDataSource extends BaseStadioRemoteDataSource{
                     "campo da pallavolo",
                     "pista di atletica"
             );
-
+            AtomicInteger queriesCount = new AtomicInteger(queries.size());
             for (String query : queries) {
                 FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
                         .setSessionToken(token)
@@ -129,6 +130,11 @@ public class StadioRemoteDataSource extends BaseStadioRemoteDataSource{
                                 );
                                 stadiumPlaces.add(stadio);
                                 Log.d(TAG, "Stadio Aggiunto");
+                                if(queriesCount.decrementAndGet()==0)
+                                {
+                                    Log.d(TAG, " List stadium size"+ stadiumPlaces.size());
+                                    stadioResponseCallback.onSuccessFromFindingStadiums(stadiumPlaces);
+                                }
                             }
                         }).addOnFailureListener((placeException) -> {
                             if (placeException instanceof ApiException) {
@@ -144,8 +150,6 @@ public class StadioRemoteDataSource extends BaseStadioRemoteDataSource{
                     }
                 });
             }
-            Log.d(TAG, "List Stadium Size: " + stadiumPlaces.size());
-            stadioResponseCallback.onSuccessFromFindingStadiums(stadiumPlaces);
         } else {
             stadioResponseCallback.onFailureFromFindingStadiums("Position permission is not granted");
         }
