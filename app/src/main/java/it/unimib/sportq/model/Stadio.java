@@ -1,4 +1,5 @@
 package it.unimib.sportq.model;
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -22,16 +23,20 @@ public class Stadio implements Serializable {
     private String address;
     private double latitude;
     private double longitude;
+    private boolean isFavorite;
+    private Bitmap fotoStadio;
     public Stadio() {
     }
 
 
-    public Stadio(String id_stadium, String stadiumName, String address, double latitude, double longitude) {
+    public Stadio(String id_stadium, String stadiumName, String address, double latitude, double longitude, Bitmap fotoStadio) {
         this.id_stadium = id_stadium;
         this.stadiumName = stadiumName;
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.fotoStadio = fotoStadio;
+        this.isFavorite = false;
     }
 
 
@@ -71,6 +76,22 @@ public class Stadio implements Serializable {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public Bitmap getFotoStadio() {
+        return fotoStadio;
+    }
+
+    public void setFotoStadio(Bitmap fotoStadio) {
+        this.fotoStadio = fotoStadio;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 }
 

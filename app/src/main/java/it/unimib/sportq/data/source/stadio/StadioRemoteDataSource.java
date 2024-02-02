@@ -7,6 +7,7 @@ import static it.unimib.sportq.util.Constants.USER_COLLISION_ERROR;
 import static it.unimib.sportq.util.Constants.WEAK_PASSWORD_ERROR;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.PlaceLikelihood;
 import com.google.android.libraries.places.api.model.PlaceTypes;
 import com.google.android.libraries.places.api.model.RectangularBounds;
+import com.google.android.libraries.places.api.net.FetchPhotoRequest;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
@@ -110,7 +112,8 @@ public class StadioRemoteDataSource extends BaseStadioRemoteDataSource{
                                 Place.Field.ID,
                                 Place.Field.NAME,
                                 Place.Field.ADDRESS,
-                                Place.Field.LAT_LNG);
+                                Place.Field.LAT_LNG,
+                                Place.Field.PHOTO_METADATAS);
 
                         FetchPlaceRequest placeRequest = FetchPlaceRequest.newInstance(placeId, placeFields);
 
@@ -118,23 +121,44 @@ public class StadioRemoteDataSource extends BaseStadioRemoteDataSource{
                             Place place = placeResponse.getPlace();
                             Log.d(TAG, "Place: " + place.getId());
                             LatLng latLng = place.getLatLng();
-                            if (latLng != null) {
-                                double latitude = latLng.latitude;
-                                double longitude = latLng.longitude;
-                                Stadio stadio = new Stadio(
-                                        place.getId(),
-                                        place.getName(),
-                                        place.getAddress(),
-                                        latitude,
-                                        longitude
-                                );
-                                stadiumPlaces.add(stadio);
-                                Log.d(TAG, "Stadio Aggiunto");
-                                if(queriesCount.decrementAndGet()==0)
-                                {
-                                    Log.d(TAG, " List stadium size"+ stadiumPlaces.size());
-                                    stadioResponseCallback.onSuccessFromFindingStadiums(stadiumPlaces);
-                                }
+                            List<PhotoMetadata> metadata = place.getPhotoMetadatas();
+                            if (latLng != null && metadata != null) {
+
+                                PhotoMetadata photoMetadata = metadata.get(0);
+                                FetchPhotoRequest photoRequest = FetchPhotoRequest.builder(photoMetadata)
+                                        .setMaxWidth(500) // Optional.
+                                        .setMaxHeight(300) // Optional.
+                                        .build();
+                                placesClient.fetchPhoto(photoRequest).addOnSuccessListener((fetchPhotoResponse) -> {
+
+                                    Bitmap bitmap = fetchPhotoResponse.getBitmap();
+                                    double latitude = latLng.latitude;
+                                    double longitude = latLng.longitude;
+                                    Stadio stadio = new Stadio(
+                                            place.getId(),
+                                            place.getName(),
+                                            place.getAddress(),
+                                            latitude,
+                                            longitude,
+                                            bitmap
+                                    );
+                                    stadiumPlaces.add(stadio);
+                                    Log.d(TAG, "Stadio Aggiunto");
+                                    if(queriesCount.decrementAndGet()==0)
+                                    {
+                                        Log.d(TAG, " List stadium size"+ stadiumPlaces.size());
+                                        stadioResponseCallback.onSuccessFromFindingStadiums(stadiumPlaces);
+                                    }
+
+                                }).addOnFailureListener((exception) -> {
+                                    if (exception instanceof ApiException) {
+                                        final ApiException apiException = (ApiException) exception;
+                                        Log.e(TAG, "Place not found: " + exception.getMessage());
+                                        final int statusCode = apiException.getStatusCode();
+                                        // TODO: Handle error with given status code.
+                                    }
+                                });
+
                             }
                         }).addOnFailureListener((placeException) -> {
                             if (placeException instanceof ApiException) {

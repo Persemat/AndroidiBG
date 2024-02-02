@@ -34,6 +34,8 @@
     <string name="insert_email_reset_password">Inserire l\'email per il reset della password</string>
     <string name="confirm">Conferma</string>
     <string name="email_sent">Email inviata per il reset della password</string>
-    <string name="added_favorite">Aggiunto alla lista preferiti</string>
+    <string name="added_favorite">Aggiunto alla lista Preferiti</string>
+    <string name="remove_favorite">Rimuovi dai Preferiti</string>
+    <string name="removed_favorite">Rimosso dalla lista Preferiti</string>
 
 </resources>

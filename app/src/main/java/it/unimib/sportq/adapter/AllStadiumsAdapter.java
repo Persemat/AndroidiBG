@@ -24,12 +24,11 @@ public class AllStadiumsAdapter extends
         void onStadioItemClick(Stadio listaStadi);
     }
     private List<Stadio> listaStadi;
-    private final int sportImage;
+
     public final OnItemClickListener onItemClickListener;
 
 
-    public AllStadiumsAdapter(int sportImage, List<Stadio> listaStadi, OnItemClickListener onItemClickListener){
-        this.sportImage = sportImage;
+    public AllStadiumsAdapter(List<Stadio> listaStadi, OnItemClickListener onItemClickListener){
         this.listaStadi = listaStadi;
         this.onItemClickListener = onItemClickListener;
     }
@@ -73,7 +72,7 @@ public class AllStadiumsAdapter extends
         //method bind for binding the cell with the layout
         public void bind(Stadio stadio){
             //qui devo associare i valori che voglio mostrare
-            imageView.setImageResource(sportImage);
+            imageView.setImageBitmap(stadio.getFotoStadio());
             textViewName.setText(stadio.getStadiumName());
             textViewAddress.setText(stadio.getAddress());
         }
