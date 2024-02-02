@@ -39,6 +39,11 @@ public class Stadio implements Serializable {
         this.isFavorite = false;
     }
 
+    public Stadio(String stadiumName, double latitude, double longitude) {
+        this.stadiumName = stadiumName;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 
     public String getId_stadium() {
         return id_stadium;

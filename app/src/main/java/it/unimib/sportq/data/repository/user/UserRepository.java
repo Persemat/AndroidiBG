@@ -49,9 +49,8 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
         return userMutableLiveData;
     }
     @Override
-    public MutableLiveData<Result> deleteAccount(User user) {
+    public void deleteAccount(User user) {
         userRemoteDataSource.deleteAccount(user);
-        return userMutableLiveData;
     }
 
     @Override
@@ -133,12 +132,7 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
 
     @Override
     public void onSuccessDeleteUser(User user) {
-        userDataRemoteDataSource.getUserRealtimeToDelete(user);
-    }
-
-    @Override
-    public void onSuccessGetUserToDelete(User user) {
-        userDataRemoteDataSource.deleteUser(user);
+        userDataRemoteDataSource.deleteUserRealtime(user);
     }
 
     @Override

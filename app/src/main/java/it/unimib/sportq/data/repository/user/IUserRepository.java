@@ -11,7 +11,7 @@ public interface IUserRepository {
     MutableLiveData<Result> getUser(String firstName, String lastName,String email, String password, int id_avatar, boolean isUserRegistered);
     MutableLiveData<Result> getUserData(User user);
     MutableLiveData<Result> logout(User user);
-    MutableLiveData<Result> deleteAccount(User user);
+    void deleteAccount(User user);
     User getLoggedUser();
     void resetPassword(String email);
     MutableLiveData<Result> setUserAvatar(User user, int selectedImage);

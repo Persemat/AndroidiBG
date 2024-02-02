@@ -10,9 +10,8 @@ public abstract class BaseUserDataRemoteDataSource {
         this.userResponseCallback = userResponseCallback;
     }
     public abstract void getUserRealtime(User user);
-    public abstract void getUserRealtimeToDelete(User user);
     public abstract void saveUserData(User user);
-    public abstract void deleteUser(User user);
+    public abstract void deleteUserRealtime(User user);
     public abstract void setUserAvatar(User user, int selectedImage);
 
     public abstract void addStadiumToFavorite(User user, Stadio stadio);

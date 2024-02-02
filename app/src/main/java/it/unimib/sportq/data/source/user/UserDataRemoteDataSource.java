@@ -73,7 +73,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
     }
 
     @Override
-    public void deleteUser(User user) {
+    public void deleteUserRealtime(User user) {
 
         databaseReference.child(FIREBASE_USERS_COLLECTION).child(user.getId_token())
                 .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -82,12 +82,9 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
                     if (task.isSuccessful()) {
                         // Utente eliminato con successo
                         Log.d(TAG, "User deleted from the database");
-                        userResponseCallback.onSuccessFromRemoteDatabase(user);
                     } else {
                         // Errore durante l'eliminazione dell'utente
                         Log.e(TAG, "Error deleting user from the database", task.getException());
-                        userResponseCallback.onFailureFromRemoteDatabase(task.getException().getLocalizedMessage());
-
                     }
                 }
             });
@@ -103,20 +100,6 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
             } else {
                 User userRealtime = task.getResult().getValue(User.class);
                 userResponseCallback.onSuccessFromRemoteDatabase(userRealtime);
-            }
-        });
-    }
-
-    public void getUserRealtimeToDelete(User user)
-    {
-        databaseReference.child(FIREBASE_USERS_COLLECTION).child(user.getId_token()).get().addOnCompleteListener(task -> {
-            if(!task.isSuccessful())
-            {
-                Log.d(TAG, "error getting data", task.getException());
-                userResponseCallback.onFailureFromRemoteDatabase(task.getException().getLocalizedMessage());
-            } else {
-                User userRealtime = task.getResult().getValue(User.class);
-                userResponseCallback.onSuccessGetUserToDelete(userRealtime);
             }
         });
     }

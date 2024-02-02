@@ -72,14 +72,8 @@ public class UserViewModel extends ViewModel {
         return userMutableLiveData;
     }
 
-    public MutableLiveData<Result> deleteAccount(User user) {
-        if (userMutableLiveData == null) {
-            userMutableLiveData = userRepository.deleteAccount(user);
-        } else {
-            userRepository.deleteAccount(user);
-        }
-
-        return userMutableLiveData;
+    public void deleteAccount(User user) {
+        userRepository.deleteAccount(user);
     }
 
     public MutableLiveData<Result> setUserAvatar(User user, int selectedImage){

@@ -209,8 +209,13 @@ public class FragmentSport extends Fragment {
 
         mapButton = view.findViewById(R.id.map);
         mapButton.setOnClickListener(item -> {
+
+            List<Stadio> listaStadiMarker = new ArrayList<>();
+            for (Stadio stadio : listaStadi) {
+                listaStadiMarker.add(new Stadio(stadio.getStadiumName(), stadio.getLatitude(), stadio.getLongitude()));
+            }
             Bundle bundle = new Bundle();
-            bundle.putSerializable("listaStadi", new ArrayList<>(listaStadi));
+            bundle.putSerializable("listaStadi", new ArrayList<>(listaStadiMarker));
             Navigation.findNavController(item).navigate(R.id.action_fragmentSport_to_mapsActivityCurrentPlace, bundle);
         });
 

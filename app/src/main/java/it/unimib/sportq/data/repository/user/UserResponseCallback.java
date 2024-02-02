@@ -17,7 +17,7 @@ public interface UserResponseCallback {
     void onSuccessFromRemoteDatabase(List<Stadio> favoriteList);
 
     void onSuccessDeleteUser(User user);
-    void onSuccessGetUserToDelete(User user);
+
     void onSuccessSetAvatar(User user);
     // gestione callback utenti in locale
 }

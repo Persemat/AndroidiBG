@@ -128,19 +128,12 @@ public class FragmentAccount extends Fragment {
                 .setTitle(R.string.delete_account_question)
                 .setMessage(R.string.delete_account_message)
                 .setPositiveButton(R.string.confirm, (dialog, which) -> {
-                    // gestire quando lo user preme per aggiungere ai preferiti
-                    userViewModel.deleteAccount(userViewModel.getLoggedUser()).observe(getViewLifecycleOwner(), result -> {
-                        if (result.isSuccess()) {
-                            Navigation.findNavController(view).navigate(
-                                    R.id.action_fragmentAccount_to_loginPage); //strano
-                        } else {
-                            Snackbar.make(view,
-                                    requireActivity().getString(R.string.unexpected_error),
-                                    Snackbar.LENGTH_SHORT).show();
-                        }
-                    });
 
+                    userViewModel.deleteAccount(userViewModel.getLoggedUser());
                     dialog.dismiss(); // Chiudi il dialog
+
+                    Navigation.findNavController(view).navigate(
+                            R.id.action_fragmentAccount_to_loginPage);
                 })
                 .setNegativeButton(R.string.close, (dialog, which) -> {
                     // Azione da eseguire quando l'utente preme "Annulla"
