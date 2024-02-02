@@ -53,7 +53,10 @@
     <string name="generate_map">Generate Map</string>
     <string name="click_to_open_map">Click to open map</string>
     <string name="add_favorite">Add Favorite</string>
+    <string name="added_favorite">Added to favorite list</string>
     <string name="delete_account_question">Are you sure about deleting your account?</string>
     <string name="delete_account_message">Click \"Confirm\" to delete your account</string>
-    <string name="confirm_delete">Confirm</string>
+    <string name="confirm">Confirm</string>
+    <string name="insert_email_reset_password">Insert email to reset password</string>
+    <string name="email_sent">Email sent for password reset</string>
 </resources>

@@ -76,6 +76,16 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
                 });
     }
 
+    @Override
+    public void sendEmailPasswordReset(String email) {
+        firebaseAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "Email sent.");
+                    }
+                });
+    }
+
 
     @Override
     public void signUp(String firstName, String lastName, String email, int id_avatar, String password) {

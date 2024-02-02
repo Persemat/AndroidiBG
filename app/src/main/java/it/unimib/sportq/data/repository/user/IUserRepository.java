@@ -13,6 +13,7 @@ public interface IUserRepository {
     MutableLiveData<Result> logout(User user);
     MutableLiveData<Result> deleteAccount(User user);
     User getLoggedUser();
+    void resetPassword(String email);
     MutableLiveData<Result> setUserAvatar(User user, int selectedImage);
     void addStadiumToFavorite(User user, Stadio stadio);
     void removeStadiumFromFavorite(User user, Stadio stadio);

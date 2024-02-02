@@ -136,6 +136,8 @@ public class FragmentSport extends Fragment {
                                         String stadioName = stadio.getStadiumName();
                                         String stadioAddress = stadio.getAddress();
 
+                                        //get dalla listra dei preferiti per controllare se è gia preferito
+                                        //se è gia presente apre il dialog per rimuovere il preferito
                                         new MaterialAlertDialogBuilder(requireContext())
                                                 .setTitle(stadioName)
                                                 .setMessage("Indirizzo: " + stadioAddress)
@@ -143,14 +145,22 @@ public class FragmentSport extends Fragment {
 
                                                     userViewModel.addStadiumToFavorite(userViewModel.getLoggedUser(), stadio);
 
+
                                                     dialog.dismiss(); // Chiudi il dialog
+                                                    Snackbar.make(
+                                                            requireActivity().findViewById(android.R.id.content),
+                                                            getString(R.string.added_favorite),
+                                                            Snackbar.LENGTH_SHORT
+                                                    ).show();
                                                 })
                                                 .setNegativeButton(R.string.close, (dialog, which) -> {
                                                     // Azione da eseguire quando l'utente preme "Annulla"
                                                     dialog.dismiss(); // Chiudi il dialog
                                                 })
                                                 .show();
+
                                     }
+
                                 });
                         RecyclerView.LayoutManager layoutManager =
                                 new LinearLayoutManager(requireContext(),

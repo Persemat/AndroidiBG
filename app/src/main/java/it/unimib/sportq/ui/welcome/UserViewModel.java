@@ -99,6 +99,11 @@ public class UserViewModel extends ViewModel {
         return userFavoritesMutableLiveData;
     }
 
+    public void resetPassword(String email)
+    {
+        userRepository.resetPassword(email);
+    }
+
     public User getLoggedUser() {
         return userRepository.getLoggedUser();
     }

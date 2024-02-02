@@ -127,7 +127,7 @@ public class FragmentAccount extends Fragment {
         deleteButton.setOnClickListener(v ->{new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.delete_account_question)
                 .setMessage(R.string.delete_account_message)
-                .setPositiveButton(R.string.confirm_delete, (dialog, which) -> {
+                .setPositiveButton(R.string.confirm, (dialog, which) -> {
                     // gestire quando lo user preme per aggiungere ai preferiti
                     userViewModel.deleteAccount(userViewModel.getLoggedUser()).observe(getViewLifecycleOwner(), result -> {
                         if (result.isSuccess()) {

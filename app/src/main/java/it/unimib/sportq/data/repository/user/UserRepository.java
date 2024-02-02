@@ -60,6 +60,11 @@ public class UserRepository implements IUserRepository,UserResponseCallback{
     }
 
     @Override
+    public void resetPassword(String email) {
+        userRemoteDataSource.sendEmailPasswordReset(email);
+    }
+
+    @Override
     public MutableLiveData<Result> setUserAvatar(User user, int selectedImage) {
         userDataRemoteDataSource.setUserAvatar(user, selectedImage);
         return userMutableLiveData;

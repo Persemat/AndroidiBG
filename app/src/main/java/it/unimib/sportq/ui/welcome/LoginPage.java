@@ -6,6 +6,7 @@ import static it.unimib.sportq.util.Constants.INVALID_USER_ERROR;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +14,9 @@ import android.util.Log;
 import android.widget.Button;
 
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -61,18 +64,21 @@ public class LoginPage extends AppCompatActivity {
         googleLoginButton = findViewById(R.id.button_google_login);
         forgotPasswordButton = findViewById(R.id.button_forgot_password);
 
+
+
         // GESTIONE CLICK PASSWORD DIMENTICATA
-        /*forgotPasswordButton.setOnClickListener(item -> {
+
+        forgotPasswordButton.setOnClickListener(item -> {
             String email = emailTextInputLayout.getEditText().getText().toString();
             if (isEmailCorrect(email)) {
-                mAuth.sendPasswordResetEmail(email)
-                        .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                Log.d(TAG, "Email sent.");
-                            }
-                        });
+                userViewModel.resetPassword(email);
+                Snackbar.make(
+                        findViewById(android.R.id.content),
+                        getString(R.string.email_sent),
+                        Snackbar.LENGTH_SHORT).show();
             }
-        });*/
+
+        });
 
         // CLICCANDO SU IL PULSANTE DI SIGN UP SI PASSA ALLA SCHERMATA DI SIGN UP
         signUpButton.setOnClickListener(item -> {
