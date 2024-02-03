@@ -45,14 +45,14 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
     }
 
     @Override
-    public void logout(User user) {
+    public void logout() {
         FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
                     firebaseAuth.removeAuthStateListener(this);
                     Log.d(TAG, "User logged out");
-                    userResponseCallback.onSuccessLogout(user);
+                    userResponseCallback.onSuccessLogout();
                 }
             }
         };

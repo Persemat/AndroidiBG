@@ -94,15 +94,16 @@ public class FragmentAccount extends Fragment {
                 getViewLifecycleOwner(), result -> {
                     if (result.isSuccess()) {
                         User user = ((Result.UserResponseSuccess) result).getData();
-                        first_name.setText(user.getFirstName());
-                        last_name.setText(user.getLastName());
-                        email.setText(user.getEmail());
-                        int resourceId = user.getId_avatar();
-                        Log.d(TAG, "RISORSASA"+ resourceId);
-                        Log.d(TAG, user.toString());
-                        Context context = view.getContext();
-                        Drawable drawable = ContextCompat.getDrawable(context, resourceId);
-                        avatar.setImageDrawable(drawable);
+                        if (user != null) {
+                            first_name.setText(user.getFirstName());
+                            last_name.setText(user.getLastName());
+                            email.setText(user.getEmail());
+                            int resourceId = user.getId_avatar();
+                            Log.d(TAG, user.toString());
+                            Context context = view.getContext();
+                            Drawable drawable = ContextCompat.getDrawable(context, resourceId);
+                            avatar.setImageDrawable(drawable);
+                        }
                     } else {
                         Snackbar.make(requireActivity().findViewById(android.R.id.content),
                                 getErrorMessage(((Result.Error) result).getMessage()),
@@ -112,7 +113,7 @@ public class FragmentAccount extends Fragment {
 
         // GESTIONE DEL CLICK DEL PULSANTE LOGOUT
         logoutButton.setOnClickListener(v -> {
-            userViewModel.logout(userViewModel.getLoggedUser()).observe(getViewLifecycleOwner(), result -> {
+            userViewModel.logout().observe(getViewLifecycleOwner(), result -> {
                 if (result.isSuccess()) {
                     Navigation.findNavController(view).navigate(
                             R.id.action_fragmentAccount_to_loginPage);

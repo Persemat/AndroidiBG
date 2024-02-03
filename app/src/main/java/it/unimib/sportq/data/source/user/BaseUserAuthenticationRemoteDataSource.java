@@ -11,7 +11,7 @@ public abstract class BaseUserAuthenticationRemoteDataSource {
         this.userResponseCallback = userResponseCallback;
     }
     public abstract User getLoggedUser();
-    public abstract void logout(User user);
+    public abstract void logout();
     public abstract void deleteAccount(User user);
     public abstract void sendEmailPasswordReset(String email);
     public abstract void signUp(String firstName, String lastName, String email, int id_avatar, String password);

@@ -12,7 +12,7 @@ public interface UserResponseCallback {
     void onSuccessFromRemoteDatabase(User user);
 
     void onFailureFromRemoteDatabase(String message);
-    void onSuccessLogout(User user);
+    void onSuccessLogout();
 
     void onSuccessFromRemoteDatabase(List<Stadio> favoriteList);
 
