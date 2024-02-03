@@ -18,80 +18,28 @@
             android:padding="16dp">
 
 
-                <TextView
-                    android:id="@+id/motivational_quotes"
-                    android:text="prova"
-                    android:textColor="@color/purple_logo"
-                    android:textSize="20sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
-
-
             <TextView
-                android:id="@+id/prenotazioni_title"
+                android:id="@+id/motivational_quotes"
+                android:text="prova"
+                android:textColor="@color/purple_logo"
+                android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
-                android:text="Prenotazioni attive"
-                android:textSize="25sp"
-                android:textStyle="bold"
-
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/motivational_quotes" />
-
-            <View
-                android:id="@+id/divider_prenotazioni"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@android:color/darker_gray"
+                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/prenotazioni_title" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
-            <LinearLayout
-                android:id="@+id/prenotazioni_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider_prenotazioni">
+
+
+
 
                 <!-- Dentro questo layout ci andranno tutte le prenotazioni-->
 
-            </LinearLayout>
 
-            <TextView
-                android:id="@+id/storico_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
-                android:text="Storico Prenotazioni"
-                android:textSize="25sp"
-                android:textStyle="bold"
 
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/prenotazioni_container" />
 
-            <View
-                android:id="@+id/divider_storico"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@android:color/darker_gray"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/storico_title" />
+
 
             <!-- CardView per "Storico Prenotazioni" -->
             <androidx.cardview.widget.CardView
@@ -104,7 +52,7 @@
                 app:cardElevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider_storico">
+                app:layout_constraintTop_toBottomOf="@+id/motivational_quotes">
 
                 <!-- Contenuto del CardView -->
                 <TextView

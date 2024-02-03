@@ -115,6 +115,7 @@ public class FragmentAccount extends Fragment {
         logoutButton.setOnClickListener(v -> {
             userViewModel.logout().observe(getViewLifecycleOwner(), result -> {
                 if (result.isSuccess()) {
+                    Log.d(TAG, "entraaa?LOGOUT");
                     Navigation.findNavController(view).navigate(
                             R.id.action_fragmentAccount_to_loginPage);
                 } else {
@@ -130,11 +131,19 @@ public class FragmentAccount extends Fragment {
                 .setMessage(R.string.delete_account_message)
                 .setPositiveButton(R.string.confirm, (dialog, which) -> {
 
-                    userViewModel.deleteAccount(userViewModel.getLoggedUser());
+                    userViewModel.deleteAccount().observe(getViewLifecycleOwner(), result -> {
+                        if (result.isSuccess()) {
+                            Log.d(TAG, "entraaa?1");
+                            Navigation.findNavController(view).navigate(
+                                    R.id.action_fragmentAccount_to_registrationPage);
+                            Log.d(TAG, "entraaa?2");
+                        } else {
+                            Snackbar.make(view,
+                                    requireActivity().getString(R.string.unexpected_error),
+                                    Snackbar.LENGTH_SHORT).show();
+                        }
+                    });
                     dialog.dismiss(); // Chiudi il dialog
-
-                    Navigation.findNavController(view).navigate(
-                            R.id.action_fragmentAccount_to_loginPage);
                 })
                 .setNegativeButton(R.string.close, (dialog, which) -> {
                     // Azione da eseguire quando l'utente preme "Annulla"
@@ -143,6 +152,7 @@ public class FragmentAccount extends Fragment {
                 .show();
 
         });
+
         // GESTIONE DEL CLICK DELL'IMMAGINE AVATAR
         avatar.setOnClickListener(v -> showPopup(v));
 

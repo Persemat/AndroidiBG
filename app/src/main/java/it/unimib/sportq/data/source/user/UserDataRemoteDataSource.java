@@ -82,9 +82,11 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
                     if (task.isSuccessful()) {
                         // Utente eliminato con successo
                         Log.d(TAG, "User deleted from the database");
+                        userResponseCallback.onSuccessDeleteUserRealtime();
                     } else {
                         // Errore durante l'eliminazione dell'utente
                         Log.e(TAG, "Error deleting user from the database", task.getException());
+                        userResponseCallback.onFailureFromRemoteDatabase(task.getException().getLocalizedMessage());
                     }
                 }
             });

@@ -60,9 +60,10 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
         firebaseAuth.signOut();
     }
 
-    public void deleteAccount(User user) {
+    public void deleteAccount() {
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        User user = new User(firebaseUser.getEmail(), firebaseUser.getUid());
 
         firebaseUser.delete()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
