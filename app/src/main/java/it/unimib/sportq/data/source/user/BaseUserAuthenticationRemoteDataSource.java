@@ -1,6 +1,9 @@
 package it.unimib.sportq.data.source.user;
 
+import java.util.List;
+
 import it.unimib.sportq.data.repository.user.UserResponseCallback;
+import it.unimib.sportq.model.Stadio;
 import it.unimib.sportq.model.User;
 
 public abstract class BaseUserAuthenticationRemoteDataSource {

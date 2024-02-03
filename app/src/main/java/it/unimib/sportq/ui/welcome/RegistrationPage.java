@@ -24,8 +24,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.apache.commons.validator.routines.EmailValidator;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import it.unimib.sportq.data.repository.user.IUserRepository;
 import it.unimib.sportq.model.Result;
+import it.unimib.sportq.model.Stadio;
 import it.unimib.sportq.ui.main.MainActivity;
 import it.unimib.sportq.R;
 import it.unimib.sportq.model.User;
@@ -80,6 +84,12 @@ public class    RegistrationPage extends AppCompatActivity {
             String confirm_password = confirmPasswordTextInputLayout.getEditText().getText().toString();
             int idImageAvatar = R.drawable.baseline_account_circle_24;
             Log.d(TAG, "Id Avatar: " + idImageAvatar);
+
+            List<Stadio> listaPreferiti = new ArrayList<>();
+
+
+
+
 
             if (isNameCorrect(first_name) && isLastNameCorrect(last_name)
                     && isEmailCorrect(email) && isPasswordCorrect(new_password, confirm_password)) {

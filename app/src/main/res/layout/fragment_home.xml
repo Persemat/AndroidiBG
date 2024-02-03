@@ -7,17 +7,21 @@
     tools:context=".ui.main.FragmentHome"
     android:background="@color/white">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="UselessParent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="16dp">
 
-
+            <View
+                android:id="@+id/linea_sopra_prova"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintBottom_toTopOf="@+id/motivational_quotes"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
             <TextView
                 android:id="@+id/motivational_quotes"
                 android:text="prova"
@@ -28,47 +32,65 @@
                 android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="2dp"
+                android:paddingBottom="3dp"/>
 
-
-
-
-
-                <!-- Dentro questo layout ci andranno tutte le prenotazioni-->
-
-
-
-
-
-
-            <!-- CardView per "Storico Prenotazioni" -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardview_storico"
+            <View
+                android:id="@+id/linea_sotto_quotes"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="20dp"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardElevation="4dp"
+                android:layout_height="2dp"
+                android:background="@android:color/darker_gray"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/motivational_quotes">
+                app:layout_constraintTop_toBottomOf="@+id/motivational_quotes" />
 
-                <!-- Contenuto del CardView -->
-                <TextView
-                    android:id="@+id/textViewCentered"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="16dp"
-                    android:gravity="center"
-                    android:text="@string/zero_prenotations_history"
-                    android:textSize="20sp" />
-            </androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/image_sport"
+                android:layout_width="wrap_content"
+                android:layout_height="130dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/immagine_sport"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/motivational_quotes"/>
+
+
+            <TextView
+                android:id="@+id/lista_preferiti_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="10dp"
+                android:text="Lista Preferiti"
+                android:textSize="25sp"
+                android:textStyle="bold"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_sport"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_favorites"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lista_preferiti_title"
+                android:layout_marginBottom="80dp"/>
+
+
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+
+
+
+
+
+
+
 
 </FrameLayout>

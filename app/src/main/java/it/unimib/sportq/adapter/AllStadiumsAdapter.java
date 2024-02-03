@@ -15,6 +15,7 @@ import java.util.List;
 
 import it.unimib.sportq.R;
 import it.unimib.sportq.model.Stadio;
+import it.unimib.sportq.util.BitmapUtils;
 
 
 public class AllStadiumsAdapter extends
@@ -72,7 +73,7 @@ public class AllStadiumsAdapter extends
         //method bind for binding the cell with the layout
         public void bind(Stadio stadio){
             //qui devo associare i valori che voglio mostrare
-            imageView.setImageBitmap(stadio.getFotoStadio());
+            imageView.setImageBitmap(BitmapUtils.stringToBitmap(stadio.getFotoStadio()));
             textViewName.setText(stadio.getStadiumName());
             textViewAddress.setText(stadio.getAddress());
         }

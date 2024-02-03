@@ -128,7 +128,7 @@ public class FragmentSport extends Fragment {
                 getViewLifecycleOwner(), result -> {
                     if (result.isSuccess()) {
                         listaStadi = ((Result.StadioResponseSuccess) result).getData();
-                        Log.d(TAG, "Grandezza Lista Stadi: " + listaStadi);
+                        Log.d(TAG, "Grandezza Lista Stadi: " + listaStadi.size());
                         AllStadiumsAdapter allStadiumsAdapter = new AllStadiumsAdapter(listaStadi,
                                 new AllStadiumsAdapter.OnItemClickListener(){
                                     @Override
@@ -141,9 +141,8 @@ public class FragmentSport extends Fragment {
                                                     .setTitle(stadioName)
                                                     .setMessage("Indirizzo: " + stadioAddress)
                                                     .setPositiveButton(R.string.add_favorite, (dialog, which) -> {
-
-                                                        userViewModel.addStadiumToFavorite(userViewModel.getLoggedUser(), stadio);
                                                         stadio.setFavorite(true);
+                                                        userViewModel.addStadiumToFavorite(userViewModel.getLoggedUser(), stadio);
 
 
                                                         dialog.dismiss(); // Chiudi il dialog
@@ -167,7 +166,6 @@ public class FragmentSport extends Fragment {
                                                         userViewModel.removeStadiumFromFavorite(userViewModel.getLoggedUser(), stadio);
                                                         stadio.setFavorite(false);
 
-
                                                         dialog.dismiss(); // Chiudi il dialog
                                                         Snackbar.make(
                                                                 requireActivity().findViewById(android.R.id.content),
@@ -181,15 +179,6 @@ public class FragmentSport extends Fragment {
                                                     })
                                                     .show();
                                         }
-
-
-                                        //get dalla listra dei preferiti per controllare se è gia preferito
-                                        //se è gia presente apre il dialog per rimuovere il preferito
-
-
-
-
-
                                     }
 
                                 });

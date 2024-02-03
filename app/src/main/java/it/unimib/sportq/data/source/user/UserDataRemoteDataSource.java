@@ -26,6 +26,7 @@ import java.util.List;
 
 import it.unimib.sportq.model.Stadio;
 import it.unimib.sportq.model.User;
+import it.unimib.sportq.util.BitmapUtils;
 
 public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
 
@@ -50,6 +51,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
                     userResponseCallback.onSuccessFromRemoteDatabase(user);
                 } else {
                     Log.d(TAG, "User not present in Firebase Realtime Database");
+
                     databaseReference.child(FIREBASE_USERS_COLLECTION).child(user.getId_token()).setValue(user)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -126,10 +128,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
                 .child(user.getId_token()).child(FIREBASE_USERS_FAVORITE_COLLECTION)
                 .child(stadio.getId_stadium());
         // Aggiungi le informazioni dello stadio ai preferiti
-        userFavoritesRef.child("stadiumName").setValue(stadio.getStadiumName());
-        userFavoritesRef.child("stadiumAddress").setValue(stadio.getAddress());
-        userFavoritesRef.child("latitude").setValue(stadio.getLatitude());
-        userFavoritesRef.child("longitude").setValue(stadio.getLongitude());
+        userFavoritesRef.setValue(stadio);
     }
 
     @Override
@@ -154,7 +153,9 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
                         for(DataSnapshot ds : task.getResult().getChildren()) {
                             Stadio stadio = ds.getValue(Stadio.class);
                             favoriteList.add(stadio);
+                            Log.d(TAG, stadio.toString());
                         }
+
 
                         userResponseCallback.onSuccessFromRemoteDatabase(favoriteList);
                     }

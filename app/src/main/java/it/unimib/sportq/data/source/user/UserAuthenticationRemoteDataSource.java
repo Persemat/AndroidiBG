@@ -21,6 +21,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import it.unimib.sportq.model.Stadio;
 import it.unimib.sportq.model.User;
 
 public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRemoteDataSource{

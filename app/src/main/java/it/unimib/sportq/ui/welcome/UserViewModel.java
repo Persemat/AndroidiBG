@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.List;
 import java.util.Set;
 
 import it.unimib.sportq.data.repository.user.IUserRepository;
@@ -94,9 +95,17 @@ public class UserViewModel extends ViewModel {
         userRepository.removeStadiumFromFavorite(user, stadio);
     }
 
-    public MutableLiveData<Result> getUserFavoriteList(User user) {
-        userRepository.getUserFavoriteList(user);
+    public MutableLiveData<Result> getUserFavoriteListMutableLiveData(User user) {
+        if(userFavoritesMutableLiveData == null)
+        {
+            getUserFavoriteList(user);
+        }
+
         return userFavoritesMutableLiveData;
+    }
+    private void getUserFavoriteList(User user)
+    {
+        userFavoritesMutableLiveData = userRepository.getUserFavoriteList(user);
     }
 
     public void resetPassword(String email)

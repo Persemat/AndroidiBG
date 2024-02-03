@@ -17,7 +17,6 @@ public class User {
     private String lastName;
     private String id_token;
     private int id_avatar;
-    private List<Stadio> stadiPreferiti;
 
     public User() {
     }
@@ -28,7 +27,6 @@ public class User {
         this.email=email;
         this.id_avatar = id_avatar;
         this.id_token=id_token;
-        this.stadiPreferiti = new ArrayList<>();
     }
     public User(@NonNull String email, String id_token) {
         this.email=email;
@@ -78,13 +76,5 @@ public class User {
 
     public void setEmail(@NonNull String email) {
         this.email = email;
-    }
-
-    public List<Stadio> getStadiPreferiti() {
-        return stadiPreferiti;
-    }
-
-    public void setStadiPreferiti(List<Stadio> stadiPreferiti) {
-        this.stadiPreferiti = stadiPreferiti;
     }
 }

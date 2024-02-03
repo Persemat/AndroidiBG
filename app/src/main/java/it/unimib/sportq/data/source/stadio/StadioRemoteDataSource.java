@@ -44,6 +44,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import it.unimib.sportq.BuildConfig;
 import it.unimib.sportq.model.Stadio;
 import it.unimib.sportq.ui.main.MapsActivityCurrentPlace;
+import it.unimib.sportq.util.BitmapUtils;
 import it.unimib.sportq.util.PermissionManager;
 
 public class StadioRemoteDataSource extends BaseStadioRemoteDataSource{
@@ -132,6 +133,7 @@ public class StadioRemoteDataSource extends BaseStadioRemoteDataSource{
                                 placesClient.fetchPhoto(photoRequest).addOnSuccessListener((fetchPhotoResponse) -> {
 
                                     Bitmap bitmap = fetchPhotoResponse.getBitmap();
+                                    String bitmapString = BitmapUtils.bitmapToString(bitmap);
                                     double latitude = latLng.latitude;
                                     double longitude = latLng.longitude;
                                     Stadio stadio = new Stadio(
@@ -140,7 +142,7 @@ public class StadioRemoteDataSource extends BaseStadioRemoteDataSource{
                                             place.getAddress(),
                                             latitude,
                                             longitude,
-                                            bitmap
+                                            bitmapString
                                     );
                                     stadiumPlaces.add(stadio);
                                     Log.d(TAG, "Stadio Aggiunto");

@@ -1,20 +1,7 @@
 package it.unimib.sportq.model;
 import android.graphics.Bitmap;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Embedded;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.libraries.places.api.model.PhotoMetadata;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
 
 
 public class Stadio implements Serializable {
@@ -24,12 +11,12 @@ public class Stadio implements Serializable {
     private double latitude;
     private double longitude;
     private boolean isFavorite;
-    private Bitmap fotoStadio;
+    private String fotoStadio;
     public Stadio() {
     }
 
 
-    public Stadio(String id_stadium, String stadiumName, String address, double latitude, double longitude, Bitmap fotoStadio) {
+    public Stadio(String id_stadium, String stadiumName, String address, double latitude, double longitude, String fotoStadio) {
         this.id_stadium = id_stadium;
         this.stadiumName = stadiumName;
         this.address = address;
@@ -43,6 +30,15 @@ public class Stadio implements Serializable {
         this.stadiumName = stadiumName;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public Stadio(String id_stadium, String stadiumName) {
+        this.id_stadium = id_stadium;
+        this.stadiumName = stadiumName;
+    }
+
+    public Stadio(String id_stadium) {
+        this.id_stadium = id_stadium;
     }
 
     public String getId_stadium() {
@@ -83,11 +79,11 @@ public class Stadio implements Serializable {
         this.longitude = longitude;
     }
 
-    public Bitmap getFotoStadio() {
+    public String getFotoStadio() {
         return fotoStadio;
     }
 
-    public void setFotoStadio(Bitmap fotoStadio) {
+    public void setFotoStadio(String fotoStadio) {
         this.fotoStadio = fotoStadio;
     }
 
@@ -97,6 +93,19 @@ public class Stadio implements Serializable {
 
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
+    }
+
+    @Override
+    public String toString() {
+        return "Stadio{" +
+                "id_stadium='" + id_stadium + '\'' +
+                ", stadiumName='" + stadiumName + '\'' +
+                ", address='" + address + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", isFavorite=" + isFavorite +
+                ", fotoStadio=" + fotoStadio +
+                '}';
     }
 }
 
