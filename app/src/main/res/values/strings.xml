@@ -61,4 +61,6 @@
     <string name="confirm">Confirm</string>
     <string name="insert_email_reset_password">Insert email to reset password</string>
     <string name="email_sent">Email sent for password reset</string>
+
+    <string name="developed_by" translatable="false">Developed by "Androidi_BG"</string>
 </resources>
