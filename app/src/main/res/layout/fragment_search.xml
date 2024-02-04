@@ -11,7 +11,6 @@
         android:layout_height="match_parent"
         android:id="@+id/recycler_view"
         android:scrollbars="vertical"
-        android:layout_marginBottom="80dp"
         tools:listitem="@layout/list_sports"
         android:divider="@android:color/transparent"
         android:dividerHeight="6.0sp"
