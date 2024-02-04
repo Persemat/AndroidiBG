@@ -168,8 +168,6 @@ public class FragmentAccount extends Fragment {
 
         // Infla il layout del pop up
         View popupView = LayoutInflater.from(anchorView.getContext()).inflate(R.layout.popup_avatar, null);
-        // Assegnamento del bottone per chiusura pop up
-        Button closeButton = popupView.findViewById(R.id.close_popup);
         // Creazione del pop up
         PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         // Inizializzazione del gridView nel popupView
@@ -202,17 +200,10 @@ public class FragmentAccount extends Fragment {
             }
         });
 
-
         // animazione di entrata se lo desideri
         popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
         // Visualizzazione del popup nella posizione desiderata, ad esempio, al centro dell'ancora
         popupWindow.showAtLocation(anchorView, Gravity.CENTER, 0, 0);
-
-        // Gestisci il click del pulsante di chiusura del popup
-        closeButton.setOnClickListener(v -> {
-            // Esegui le azioni desiderate quando il pulsante di chiusura del popup viene premuto
-            popupWindow.dismiss(); // Chiudi il popup
-        });
     }
 
     @Override

@@ -15,17 +15,20 @@ public class AvatarAdapter extends BaseAdapter {
     // Array di immagini o dati che desideri visualizzare nella GridView
     private int[] mThumbIds = {
             R.drawable.baseline_account_circle_24,
-            R.drawable.bici_avatar,
-            R.drawable.bowling_avatar,
-            R.drawable.calcio_avatar,
-            R.drawable.football_avatar,
-            R.drawable.hockey_avatar,
-            R.drawable.pingpong_avatar,
-            R.drawable.albu,
-            R.drawable.ale,
-            R.drawable.michi,
-            R.drawable.perse,
-            R.drawable.wapi
+            R.drawable.avatar_badminton,
+            R.drawable.avatar_baseball,
+            R.drawable.avatar_bowling,
+            R.drawable.avatar_basketball,
+            R.drawable.avatar_football,
+            R.drawable.avatar_pool,
+            R.drawable.avatar_soccer,
+            R.drawable.avatar_tennis,
+            R.drawable.avatar_volleyball,
+            R.drawable.avatar_albu,
+            R.drawable.avatar_ale,
+            R.drawable.avatar_michi,
+            R.drawable.avatar_perse,
+            R.drawable.avatar_wapi
     };
 
     public AvatarAdapter(Context context) {
