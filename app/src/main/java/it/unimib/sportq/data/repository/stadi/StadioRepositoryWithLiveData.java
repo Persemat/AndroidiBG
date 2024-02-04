@@ -1,7 +1,5 @@
 package it.unimib.sportq.data.repository.stadi;
 
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
@@ -12,7 +10,6 @@ import it.unimib.sportq.model.Result;
 import it.unimib.sportq.model.Stadio;
 
 public class StadioRepositoryWithLiveData implements IStadioRepositoryWithLiveData, StadioResponseCallback {
-    private static final String TAG = StadioRepositoryWithLiveData.class.getSimpleName();
 
     private final BaseStadioRemoteDataSource stadioRemoteDataSource;
     private final BaseStadioLocalDataSource stadioLocalDataSource;

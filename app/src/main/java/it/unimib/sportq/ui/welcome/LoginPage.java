@@ -3,40 +3,27 @@ package it.unimib.sportq.ui.welcome;
 import static it.unimib.sportq.util.Constants.INVALID_CREDENTIALS_ERROR;
 import static it.unimib.sportq.util.Constants.INVALID_USER_ERROR;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
-
-
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
-
-import it.unimib.sportq.data.repository.user.IUserRepository;
-import it.unimib.sportq.data.repository.user.UserRepository;
-import it.unimib.sportq.model.Result;
-import it.unimib.sportq.model.User;
-import it.unimib.sportq.ui.main.MainActivity;
 import it.unimib.sportq.R;
+import it.unimib.sportq.data.repository.user.IUserRepository;
+import it.unimib.sportq.model.Result;
+import it.unimib.sportq.ui.main.MainActivity;
 import it.unimib.sportq.util.ServiceLocator;
 
 public class LoginPage extends AppCompatActivity {
-
-
-    private static final String TAG = LoginPage.class.getSimpleName();
     private TextInputLayout emailTextInputLayout;
     private TextInputLayout passwordTextInputLayout;
     Button signUpButton;
@@ -96,7 +83,6 @@ public class LoginPage extends AppCompatActivity {
                     userViewModel.getUserMutableLiveData(email, password, true).observe(
                             this, result -> {
                                 if (result.isSuccess()) {
-                                    User user = ((Result.UserResponseSuccess) result).getData();
                                     userViewModel.setAuthenticationError(false);
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);

@@ -1,13 +1,8 @@
 package it.unimib.sportq.ui.welcome;
 
 
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import java.util.List;
-import java.util.Set;
 
 import it.unimib.sportq.data.repository.user.IUserRepository;
 import it.unimib.sportq.model.Result;
@@ -16,8 +11,6 @@ import it.unimib.sportq.model.User;
 
 
 public class UserViewModel extends ViewModel {
-
-    private static final String TAG = UserViewModel.class.getSimpleName();
     private final IUserRepository userRepository;
     private MutableLiveData<Result> userMutableLiveData;
     private MutableLiveData<Result> userFavoritesMutableLiveData;

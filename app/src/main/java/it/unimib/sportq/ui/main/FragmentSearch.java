@@ -1,27 +1,23 @@
 package it.unimib.sportq.ui.main;
 
-import android.app.Activity;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import it.unimib.sportq.adapter.SearchRecyclerViewAdapter;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.google.android.material.snackbar.Snackbar;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import it.unimib.sportq.R;
+import it.unimib.sportq.adapter.SearchRecyclerViewAdapter;
 import it.unimib.sportq.model.Sport;
 
 
@@ -31,7 +27,7 @@ import it.unimib.sportq.model.Sport;
  * create an instance of this fragment.
  */
 public class FragmentSearch extends Fragment {
-    private static String TAG = FragmentSearch.class.getSimpleName();
+    private static final String TAG = FragmentSearch.class.getSimpleName();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

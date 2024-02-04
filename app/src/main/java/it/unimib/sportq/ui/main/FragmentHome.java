@@ -1,37 +1,25 @@
 package it.unimib.sportq.ui.main;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import it.unimib.sportq.R;
-import it.unimib.sportq.adapter.AllStadiumsAdapter;
-import it.unimib.sportq.adapter.AvatarAdapter;
 import it.unimib.sportq.adapter.PreferitiAdapter;
 import it.unimib.sportq.data.repository.user.IUserRepository;
 import it.unimib.sportq.model.Result;
@@ -137,7 +125,7 @@ public class FragmentHome extends Fragment {
 
     public String randomQuotes()
     {
-        String frase [] = new String[10];
+        String[] frase = new String[10];
             frase[0] = "Arrivare secondo significa soltanto essere il primo degli sconfitti.";
             frase[1] = "La forza mentale distingue i campioni dai quasi campioni.";
             frase[2] = "Se non credi in te stesso, troverai sempre un modo per non vincere.";

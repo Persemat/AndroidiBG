@@ -158,10 +158,7 @@ public class FragmentAccount extends Fragment {
 
     } // FINE METODO ONVIEWCREATED()
     private String getErrorMessage(String errorType) {
-        switch (errorType) {
-            default:
-                return getString(R.string.unexpected_error);
-        }
+        return errorType;
     }
 
     private void showPopup(View anchorView) {

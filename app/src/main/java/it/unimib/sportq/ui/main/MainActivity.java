@@ -2,12 +2,9 @@ package it.unimib.sportq.ui.main;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -16,16 +13,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import it.unimib.sportq.BuildConfig;
 import it.unimib.sportq.R;
 import it.unimib.sportq.util.PermissionManager;
 
 public class MainActivity extends AppCompatActivity {
-    private static String TAG = MainActivity.class.getSimpleName();
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private PermissionManager permissionManager;

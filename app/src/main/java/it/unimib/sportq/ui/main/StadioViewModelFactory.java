@@ -5,8 +5,6 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import it.unimib.sportq.data.repository.stadi.IStadioRepositoryWithLiveData;
-import it.unimib.sportq.data.repository.user.IUserRepository;
-import it.unimib.sportq.ui.welcome.UserViewModel;
 
 public class StadioViewModelFactory implements ViewModelProvider.Factory {
     private final IStadioRepositoryWithLiveData stadioRepository;

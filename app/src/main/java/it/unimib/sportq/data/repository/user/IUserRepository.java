@@ -2,8 +2,6 @@ package it.unimib.sportq.data.repository.user;
 
 import androidx.lifecycle.MutableLiveData;
 
-import java.util.List;
-
 import it.unimib.sportq.model.Result;
 import it.unimib.sportq.model.Stadio;
 import it.unimib.sportq.model.User;

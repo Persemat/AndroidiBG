@@ -5,39 +5,29 @@ package it.unimib.sportq.ui.welcome;
 import static it.unimib.sportq.util.Constants.USER_COLLISION_ERROR;
 import static it.unimib.sportq.util.Constants.WEAK_PASSWORD_ERROR;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
+import it.unimib.sportq.R;
 import it.unimib.sportq.data.repository.user.IUserRepository;
 import it.unimib.sportq.model.Result;
-import it.unimib.sportq.model.Stadio;
-import it.unimib.sportq.ui.main.MainActivity;
-import it.unimib.sportq.R;
 import it.unimib.sportq.model.User;
+import it.unimib.sportq.ui.main.MainActivity;
 import it.unimib.sportq.util.ServiceLocator;
 
 public class RegistrationPage extends AppCompatActivity {
 
-    private static String TAG = RegistrationPage.class.getSimpleName();
+    private static final String TAG = RegistrationPage.class.getSimpleName();
     private TextInputLayout firstNameTextInputLayout;
     private TextInputLayout lastNameTextInputLayout;
     private TextInputLayout emailTextInputLayout;
@@ -84,12 +74,6 @@ public class RegistrationPage extends AppCompatActivity {
             String confirm_password = confirmPasswordTextInputLayout.getEditText().getText().toString();
             int idImageAvatar = R.drawable.baseline_account_circle_24;
             Log.d(TAG, "Id Avatar: " + idImageAvatar);
-
-            List<Stadio> listaPreferiti = new ArrayList<>();
-
-
-
-
 
             if (isNameCorrect(first_name) && isLastNameCorrect(last_name)
                     && isEmailCorrect(email) && isPasswordCorrect(new_password, confirm_password)) {

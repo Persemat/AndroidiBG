@@ -12,17 +12,16 @@ package it.unimib.sportq.ui.main;
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,12 +40,10 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.PlaceLikelihood;
@@ -400,12 +397,6 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
                         DEFAULT_ZOOM));
             }
         };
-
-        // Display the dialog.
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle(R.string.pick_place)
-                .setItems(likelyPlaceNames, listener)
-                .show();
     }
 
     /**
@@ -445,15 +436,6 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
                         .snippet(stadiumSnippet)); // Usa il nome dello stadio come titolo
                 marker.setTag(stadiumList.get(i));
             }
-            /*
-            LatLngBounds.Builder builder = new LatLngBounds.Builder();
-            for (Stadio stadio: stadiumList) {
-                builder.include(new LatLng(stadio.getLatitude(), stadio.getLongitude()));
-            }
-            LatLngBounds bounds = builder.build();
-            int paddingInPixels = 50;
-            map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, paddingInPixels));
-             */
             getDeviceLocation();
         }
     }

@@ -3,8 +3,6 @@ package it.unimib.sportq.data.source.user;
 import static it.unimib.sportq.util.Constants.FIREBASE_REALTIME_DATABASE;
 import static it.unimib.sportq.util.Constants.FIREBASE_USERS_COLLECTION;
 import static it.unimib.sportq.util.Constants.FIREBASE_USERS_FAVORITE_COLLECTION;
-import static it.unimib.sportq.util.Constants.FIRST_NAME;
-import static it.unimib.sportq.util.Constants.LAST_NAME;
 
 import android.util.Log;
 
@@ -14,7 +12,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +23,6 @@ import java.util.List;
 
 import it.unimib.sportq.model.Stadio;
 import it.unimib.sportq.model.User;
-import it.unimib.sportq.util.BitmapUtils;
 
 public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource{
 

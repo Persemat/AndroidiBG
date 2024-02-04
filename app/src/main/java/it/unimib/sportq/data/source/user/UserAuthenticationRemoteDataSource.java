@@ -1,16 +1,5 @@
 package it.unimib.sportq.data.source.user;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.google.firebase.auth.FirebaseUser;
-
-
-import static it.unimib.sportq.util.Constants.FIRST_NAME;
 import static it.unimib.sportq.util.Constants.INVALID_CREDENTIALS_ERROR;
 import static it.unimib.sportq.util.Constants.INVALID_USER_ERROR;
 import static it.unimib.sportq.util.Constants.UNEXPECTED_ERROR;
@@ -21,10 +10,15 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.FirebaseUser;
 
-import it.unimib.sportq.model.Stadio;
 import it.unimib.sportq.model.User;
 
 public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRemoteDataSource{

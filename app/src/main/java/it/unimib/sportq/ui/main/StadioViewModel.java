@@ -4,12 +4,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import it.unimib.sportq.data.repository.stadi.IStadioRepositoryWithLiveData;
-import it.unimib.sportq.data.repository.user.IUserRepository;
 import it.unimib.sportq.model.Result;
-import it.unimib.sportq.ui.welcome.UserViewModel;
 
 public class StadioViewModel extends ViewModel {
-    private static final String TAG = StadioViewModel.class.getSimpleName();
     private final IStadioRepositoryWithLiveData stadioRepository;
     private MutableLiveData<Result> stadioMutableLiveData;
 

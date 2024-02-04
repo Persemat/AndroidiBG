@@ -20,5 +20,4 @@ public interface UserResponseCallback {
     void onSuccessDeleteUserRealtime();
 
     void onSuccessSetAvatar(User user);
-    // gestione callback utenti in locale
 }

@@ -1,7 +1,5 @@
 package it.unimib.sportq.data.repository.user;
 
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
@@ -13,7 +11,6 @@ import it.unimib.sportq.model.Stadio;
 import it.unimib.sportq.model.User;
 
 public class UserRepository implements IUserRepository,UserResponseCallback{
-    private static final String TAG = UserRepository.class.getSimpleName();
 
     private final BaseUserAuthenticationRemoteDataSource userRemoteDataSource;
     private final BaseUserDataRemoteDataSource userDataRemoteDataSource;

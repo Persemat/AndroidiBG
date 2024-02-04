@@ -1,14 +1,16 @@
 package it.unimib.sportq.ui.main;
 
-import android.content.Context;
-import android.graphics.Gainmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -16,44 +18,19 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import com.google.android.gms.tasks.Task;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.PlaceLikelihood;
-import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
-import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
-import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import it.unimib.sportq.BuildConfig;
 import it.unimib.sportq.R;
 import it.unimib.sportq.adapter.AllStadiumsAdapter;
-import it.unimib.sportq.adapter.SearchRecyclerViewAdapter;
 import it.unimib.sportq.data.repository.stadi.IStadioRepositoryWithLiveData;
 import it.unimib.sportq.data.repository.user.IUserRepository;
-import it.unimib.sportq.data.source.stadio.StadioRemoteDataSource;
 import it.unimib.sportq.model.Result;
-import it.unimib.sportq.model.Sport;
 import it.unimib.sportq.model.Stadio;
-import it.unimib.sportq.model.User;
 import it.unimib.sportq.ui.welcome.UserViewModel;
 import it.unimib.sportq.ui.welcome.UserViewModelFactory;
 import it.unimib.sportq.util.ServiceLocator;
@@ -226,10 +203,7 @@ public class FragmentSport extends Fragment {
     }
 
     private String getErrorMessage(String errorType) {
-        switch (errorType) {
-            default:
-                return getString(R.string.unexpected_error);
-        }
+        return errorType;
     }
 
 }
