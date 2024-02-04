@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.FragmentHome"
-    android:background="@color/white">
+    android:background="@color/primary_container">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:layout_marginTop="10dp"
+            >
 
             <View
                 android:id="@+id/linea_sopra_prova"
@@ -21,7 +23,8 @@
                 app:layout_constraintBottom_toTopOf="@+id/motivational_quotes"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                />
             <TextView
                 android:id="@+id/motivational_quotes"
                 android:text="prova"
@@ -51,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="130dp"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/immagine_sport"
+                android:src="@drawable/sport_image"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/motivational_quotes"/>
 
@@ -60,12 +63,11 @@
                 android:id="@+id/lista_preferiti_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="10dp"
+                android:textColor="@color/purple_logo"
+                android:layout_marginTop="30dp"
                 android:text="Lista Preferiti"
                 android:textSize="25sp"
                 android:textStyle="bold"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_sport"/>
 
@@ -73,7 +75,6 @@
                 android:id="@+id/recycler_favorites"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lista_preferiti_title" />
