@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
-        android:background="@color/purple_logo_third"
+        android:background="@color/white"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sign_up"
-                android:textColor="@color/white"
+                android:textColor="@color/purple_logo"
                 android:textSize="35sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -87,16 +87,15 @@
                 app:layout_constraintStart_toStartOf="@+id/left_guideline"
                 app:layout_constraintTop_toBottomOf="@+id/textview_sign_up"
                 app:startIconDrawable="@drawable/baseline_account_circle_24"
-                app:boxStrokeColor="@color/grey_separator"
-                app:hintTextColor="@color/white"
-                android:textColorHint="@color/white">
+                app:hintTextColor="@color/purple_logo">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/text_input_first_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/account_first_name"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textColor="@color/purple_logo"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -109,16 +108,15 @@
                 app:layout_constraintStart_toStartOf="@+id/left_guideline"
                 app:layout_constraintTop_toBottomOf="@+id/text_input_layout_first_name"
                 app:startIconDrawable="@drawable/baseline_account_circle_24"
-                app:boxStrokeColor="@color/grey_separator"
-                app:hintTextColor="@color/white"
-                android:textColorHint="@color/white">
+                app:hintTextColor="@color/purple_logo">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/text_input_last_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/account_last_name"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textColor="@color/purple_logo"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -131,16 +129,15 @@
                 app:layout_constraintStart_toStartOf="@+id/left_guideline"
                 app:layout_constraintTop_toBottomOf="@+id/text_input_layout_last_name"
                 app:startIconDrawable="@drawable/ic_baseline_email_24"
-                app:boxStrokeColor="@color/grey_separator"
-                app:hintTextColor="@color/white"
-                android:textColorHint="@color/white">
+                app:hintTextColor="@color/purple_logo">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/text_input_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/purple_logo"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -154,16 +151,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_input_layout_email"
                 app:passwordToggleEnabled="true"
                 app:startIconDrawable="@drawable/ic_baseline_vpn_key_24"
-                app:boxStrokeColor="@color/grey_separator"
-                app:hintTextColor="@color/white"
-                android:textColorHint="@color/white">
+                app:hintTextColor="@color/purple_logo">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/text_input_new_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/new_password"
-                    android:inputType="textPassword" />     <!-- android:id="@+id/text_input_password"/> -->
+                    android:inputType="textPassword"
+                    android:textColor="@color/purple_logo"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -178,16 +174,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_input_layout_new_password"
                 app:passwordToggleEnabled="true"
                 app:startIconDrawable="@drawable/ic_baseline_vpn_key_24"
-                app:boxStrokeColor="@color/grey_separator"
-                app:hintTextColor="@color/white"
-                android:textColorHint="@color/white">
+                app:hintTextColor="@color/purple_logo">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/text_input_confirm_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/confirm_password"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textColor="@color/purple_logo"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -218,7 +213,7 @@
                 android:text="@string/already_have_account"
                 android:textSize="14sp"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintBottom_toTopOf="@+id/relative_layout"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button_sign_up"
                 app:layout_constraintEnd_toStartOf="@+id/button_login" />
@@ -235,69 +230,6 @@
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@+id/textview_already_account"
                 app:textAllCaps="false" />
-
-            <RelativeLayout
-                android:id="@+id/relative_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="45dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/button_sign_up">
-
-
-                <View
-                    android:id="@+id/line1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="24dp"
-                    android:layout_toStartOf="@id/textview_or"
-                    android:background="@color/grey_separator" />
-
-                <TextView
-                    android:id="@+id/textview_or"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="OR" />
-
-                <View
-                    android:id="@+id/line2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="24dp"
-                    android:layout_toEndOf="@id/textview_or"
-                    android:background="@color/grey_separator" />
-
-            </RelativeLayout>
-
-            <Button
-                android:id="@+id/button_google_login"
-                style="@style/Widget.Material3.Button.ElevatedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="24dp"
-                android:text="@string/google_login"
-                android:textColor="@color/google_login_text"
-                android:textSize="14sp"
-                android:elevation="3dp"
-                app:backgroundTint="@color/google_login_button"
-                app:icon="@drawable/google__g__logo"
-                app:iconGravity="textStart"
-                app:iconTint="@null"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/relative_layout"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -41,7 +41,6 @@ public class LoginPage extends AppCompatActivity {
     private TextInputLayout passwordTextInputLayout;
     Button signUpButton;
     Button loginButton;
-    Button googleLoginButton;
     Button forgotPasswordButton;
     UserViewModel userViewModel;
     @Override
@@ -61,7 +60,6 @@ public class LoginPage extends AppCompatActivity {
         passwordTextInputLayout = findViewById(R.id.text_input_layout_password);
         signUpButton = findViewById(R.id.button_sign_up);
         loginButton = findViewById(R.id.button_login);
-        googleLoginButton = findViewById(R.id.button_google_login);
         forgotPasswordButton = findViewById(R.id.button_forgot_password);
 
 

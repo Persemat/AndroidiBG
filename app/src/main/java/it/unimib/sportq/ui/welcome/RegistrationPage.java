@@ -35,7 +35,7 @@ import it.unimib.sportq.R;
 import it.unimib.sportq.model.User;
 import it.unimib.sportq.util.ServiceLocator;
 
-public class    RegistrationPage extends AppCompatActivity {
+public class RegistrationPage extends AppCompatActivity {
 
     private static String TAG = RegistrationPage.class.getSimpleName();
     private TextInputLayout firstNameTextInputLayout;
@@ -134,16 +134,6 @@ public class    RegistrationPage extends AppCompatActivity {
                 return getString(R.string.error_user_collision_message);
             default:
                 return getString(R.string.unexpected_error);
-        }
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
         }
     }
 
